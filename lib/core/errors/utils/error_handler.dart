@@ -1,5 +1,4 @@
 // Create: lib/core/errors/handlers/error_handler.dart
-import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
 import '../failures/server_failures.dart';

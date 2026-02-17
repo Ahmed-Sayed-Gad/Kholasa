@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../domain/upload/entities/upload_file.dart';
 import '../../../domain/upload/usecases/pick_and_validate_file_usecase.dart';
 import 'upload_state.dart';
 @injectable
