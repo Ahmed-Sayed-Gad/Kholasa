@@ -1,0 +1,13 @@
+import 'package:injectable/injectable.dart';
+import '../../../api/auth/request/Reset Password.dart';
+import '../../../core/errors/result/results.dart';
+import '../repositories/Reset_password_reposetories.dart';
+
+@injectable
+class ResetPasswordUseCase {
+  final ResetPasswordReposetories _resetPasswordReposetories;
+  ResetPasswordUseCase(this._resetPasswordReposetories);
+  Future<Result<void>> resetPassword(Reset_Password request) {
+    return _resetPasswordReposetories.resetPassword(request);
+  }
+}

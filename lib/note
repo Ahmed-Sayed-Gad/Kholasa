@@ -1,0 +1,61 @@
+1- first step in routs make a class for name
+class approutsname{}
+2- interface class App_Routs_page{
+static Route route(RouteSettings settings){
+  switch(settings.name){
+    case App_Routs_names.loginScreen:
+      return MaterialPageRoute(builder: (context)=>const LoginScreen());
+      default:
+        return MaterialPageRoute(builder: (context)=>const LoginScreen());
+}
+}
+3- initialRoute: App_Routs_names.loginScreen, open in screen login
+4- onGenerateRoute: App_Routs_page.route, takes routs from App_Routs_page.dart
+
+5-    appBar: AppBar(
+           title: Row(
+             children: [
+               Icon(Icons.arrow_back_ios_new, color: Colors.black),
+               SizedBox(width: 8),
+               Text(
+                 "Login",
+                 style: TextStyle(color: Colors.black),
+               ),
+             ],
+           ),
+           centerTitle: false,
+           backgroundColor: Colors.white,
+           elevation: 0,
+         ),
+good way for AppBar
+retrofit
+Add :
+dependencies:
+  retrofit: ^4.6.0
+  logger: ^2.6.0  # for logging purpose
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  retrofit_generator: ^9.6.0
+  build_runner: ^2.5.4
+  json_serializable: ^6.9.5
+  ========================
+in file
+    if you forget part 'Api_Clint.g.dart'; will not created a granted file
+import 'package:retrofit/retrofit.dart';
+import 'package:dio/dio.dart';
+
+import '../Request/Request.dart';
+part 'Api_Clint.g.dart';
+
+@RestApi(baseUrl: "https://exam.elevateegy.com/api/")
+abstract class ApiClient {
+  factory ApiClient(Dio dio, {String? baseUrl}) = _ApiClient;
+
+  @POST("v1/auth/signUp")
+  Future<void> signUp(@Body() SignUpRequest request);
+}
+SidnUp_Data_Source_Imp he is integration with ApiClint
+
+
+
