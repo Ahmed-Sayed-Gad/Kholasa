@@ -33,7 +33,7 @@ class UploadCard extends StatelessWidget {
       return const UploadIdleView();
     }
 
-    if (state is UploadPicking) {
+    if (state is UploadLoading) {
       return const UploadLoadingView();
     }
 

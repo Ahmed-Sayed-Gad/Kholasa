@@ -46,10 +46,6 @@ import '../../Data/auth/repositories_impl/SignUp_Rpo_Imp.dart' as _i253;
 import '../../Data/auth/repositories_impl/VerifyResetCodeRepoImpl.dart'
     as _i654;
 import '../../Data/home/repositries_Imp/home_repository_impl.dart' as _i850;
-import '../../Data/summarize/data_source/summarize_fake_data_source.dart'
-    as _i269;
-import '../../Data/summarize/repositories_impl/summarize_repository_impl.dart'
-    as _i835;
 import '../../Data/upload/data_sources/file_picker_data_source.dart' as _i1060;
 import '../../domain/auth/repositories/change_password_repository.dart'
     as _i118;
@@ -73,7 +69,8 @@ import '../../domain/home/UsaCase/get_recent_items_use_case.dart' as _i865;
 import '../../domain/home/UsaCase/remember_me_usecase.dart' as _i1017;
 import '../../domain/models/use_cases_imp/remember_me_use_case_imp.dart'
     as _i656;
-import '../../domain/summarize/repositories/summarize_repository.dart' as _i704;
+import '../../domain/summarize/use_case/generate_summary_use_case.dart'
+    as _i218;
 import '../../domain/upload/repositories/upload_repository.dart' as _i881;
 import '../../domain/upload/usecases/pick_and_validate_file_usecase.dart'
     as _i742;
@@ -104,7 +101,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i52.AuthErrorHandler>(() => _i52.AuthErrorHandler());
     gh.factory<_i295.HomeErrorHandler>(() => _i295.HomeErrorHandler());
     gh.factory<_i637.ErrorHandler>(() => _i637.ErrorHandler());
-    gh.factory<_i98.SummarizeCubit>(() => _i98.SummarizeCubit());
+    gh.factory<_i727.UploadCubit>(() => _i727.UploadCubit());
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i558.FlutterSecureStorage>(() => appModule.secureStorage);
     gh.lazySingleton<_i1060.FilePickerDataSource>(
@@ -113,32 +110,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i787.UploadSessionCubit>(
       () => _i787.UploadSessionCubit(),
     );
-    gh.lazySingleton<_i536.HomeRepository>(() => _i850.HomeRepositoryImpl());
-    gh.lazySingleton<_i881.UploadRepository>(
-      () => uploadModule.uploadRepository(gh<_i1060.FilePickerDataSource>()),
+    gh.factory<_i98.SummarizeCubit>(
+      () => _i98.SummarizeCubit(gh<_i218.GenerateSummaryUseCase>()),
     );
     gh.lazySingleton<_i559.ApiClient>(
       () => appModule.provideApiClient(gh<_i361.Dio>()),
     );
-    gh.lazySingleton<_i704.SummarizeRepository>(
-      () => _i835.SummarizeRepositoryImpl(gh<_i269.SummarizeFakeDataSource>()),
-    );
-    gh.lazySingleton<_i308.RememberMeRepository>(
-      () => _i906.RememberMeRepositoryImpl(gh<_i558.FlutterSecureStorage>()),
-    );
-    gh.factory<_i329.SignUpDataSource>(
-      () => _i112.SidnUp_Data_Source_Imp(
+    gh.factory<_i431.ChangePasswordDataSource>(
+      () => _i396.ChangePasswordDataSourceImpl(
         gh<_i559.ApiClient>(),
-        gh<_i52.AuthErrorHandler>(),
+        gh<_i295.HomeErrorHandler>(),
       ),
     );
-    gh.factory<_i742.PickAndValidateFileUseCase>(
-      () =>
-          uploadModule.pickAndValidateFileUseCase(gh<_i881.UploadRepository>()),
-    );
-    gh.factory<_i727.UploadCubit>(
-      () => _i727.UploadCubit(gh<_i742.PickAndValidateFileUseCase>()),
-    );
+    gh.lazySingleton<_i536.HomeRepository>(() => _i850.HomeRepositoryImpl());
     gh.factory<_i866.ResetPasswordRemoteDataSource>(
       () => _i811.ResetPasswordRemoteDataSourceImpl(
         gh<_i559.ApiClient>(),
@@ -151,17 +135,36 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i52.AuthErrorHandler>(),
       ),
     );
+    gh.lazySingleton<_i881.UploadRepository>(
+      () => uploadModule.uploadRepository(gh<_i1060.FilePickerDataSource>()),
+    );
+    gh.factory<_i742.PickAndValidateFileUseCase>(
+      () =>
+          uploadModule.pickAndValidateFileUseCase(gh<_i881.UploadRepository>()),
+    );
     gh.factory<_i84.VerifyResetCodeRemoteDataSource>(
       () => _i79.VerifyResetCodeRemoteDataSourceImpl(
         gh<_i559.ApiClient>(),
         gh<_i52.AuthErrorHandler>(),
       ),
     );
-    gh.factory<_i431.ChangePasswordDataSource>(
-      () => _i396.ChangePasswordDataSourceImpl(
-        gh<_i559.ApiClient>(),
-        gh<_i295.HomeErrorHandler>(),
+    gh.factory<_i1056.ForgotPasswordReposetories>(
+      () => _i911.ForgotPasswordRepoImpl(
+        gh<_i961.ForgotPasswordRemoteDataSource>(),
       ),
+    );
+    gh.factory<_i223.VerifyResetCodeReposetories>(
+      () => _i654.VerifyResetCodeRepoImp(
+        gh<_i84.VerifyResetCodeRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i118.ChangePasswordRepository>(
+      () => _i819.ChangePasswordRepositoryImpl(
+        gh<_i431.ChangePasswordDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i308.RememberMeRepository>(
+      () => _i906.RememberMeRepositoryImpl(gh<_i558.FlutterSecureStorage>()),
     );
     gh.factory<_i753.SignInRemoteDataSource>(
       () => _i1040.Signinremotedatasourceimpl(
@@ -169,31 +172,40 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i52.AuthErrorHandler>(),
       ),
     );
+    gh.factory<_i329.SignUpDataSource>(
+      () => _i112.SidnUp_Data_Source_Imp(
+        gh<_i559.ApiClient>(),
+        gh<_i52.AuthErrorHandler>(),
+      ),
+    );
+    gh.factory<_i147.SignUp_Rpo>(
+      () => _i253.SignUp_Repo_Imp(gh<_i329.SignUpDataSource>()),
+    );
+    gh.lazySingleton<_i1017.RememberMeUseCase>(
+      () => _i656.RememberMeUseCaseImpl(gh<_i308.RememberMeRepository>()),
+    );
     gh.factory<_i676.GetHomeBannersUseCase>(
       () => _i676.GetHomeBannersUseCase(gh<_i536.HomeRepository>()),
     );
     gh.factory<_i865.GetRecentItemsUseCase>(
       () => _i865.GetRecentItemsUseCase(gh<_i536.HomeRepository>()),
     );
+    gh.factory<_i346.SignUp_UsaCase>(
+      () => _i346.SignUp_UsaCase(gh<_i147.SignUp_Rpo>()),
+    );
     gh.factory<_i218.SignInRepositories>(
       () => _i681.SignInRepoImpl(gh<_i753.SignInRemoteDataSource>()),
     );
-    gh.factory<_i1056.ForgotPasswordReposetories>(
-      () => _i911.ForgotPasswordRepoImpl(
-        gh<_i961.ForgotPasswordRemoteDataSource>(),
-      ),
+    gh.factory<_i342.VerifyResetCodeUseCase>(
+      () =>
+          _i342.VerifyResetCodeUseCase(gh<_i223.VerifyResetCodeReposetories>()),
     );
     gh.factory<_i670.ResetPasswordReposetories>(
       () =>
           _i251.ResetPasswordRepoImp(gh<_i866.ResetPasswordRemoteDataSource>()),
     );
-    gh.factory<_i223.VerifyResetCodeReposetories>(
-      () => _i654.VerifyResetCodeRepoImp(
-        gh<_i84.VerifyResetCodeRemoteDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i1017.RememberMeUseCase>(
-      () => _i656.RememberMeUseCaseImpl(gh<_i308.RememberMeRepository>()),
+    gh.factory<_i681.ResetPasswordUseCase>(
+      () => _i681.ResetPasswordUseCase(gh<_i670.ResetPasswordReposetories>()),
     );
     gh.factory<_i236.SignInUseCase>(
       () => _i236.SignInUseCase(gh<_i218.SignInRepositories>()),
@@ -201,32 +213,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i906.SignInCubit>(
       () => _i906.SignInCubit(gh<_i236.SignInUseCase>()),
     );
-    gh.factory<_i147.SignUp_Rpo>(
-      () => _i253.SignUp_Repo_Imp(gh<_i329.SignUpDataSource>()),
-    );
-    gh.factory<_i118.ChangePasswordRepository>(
-      () => _i819.ChangePasswordRepositoryImpl(
-        gh<_i431.ChangePasswordDataSource>(),
-      ),
-    );
-    gh.factory<_i288.HomeCubit>(
-      () => _i288.HomeCubit(
-        gh<_i676.GetHomeBannersUseCase>(),
-        gh<_i865.GetRecentItemsUseCase>(),
-      ),
-    );
     gh.factory<_i468.ForgotPasswordUseCase>(
       () =>
           _i468.ForgotPasswordUseCase(gh<_i1056.ForgotPasswordReposetories>()),
-    );
-    gh.factory<_i848.ForgetPasswordCubit>(
-      () => _i848.ForgetPasswordCubit(gh<_i468.ForgotPasswordUseCase>()),
-    );
-    gh.factory<_i681.ResetPasswordUseCase>(
-      () => _i681.ResetPasswordUseCase(gh<_i670.ResetPasswordReposetories>()),
-    );
-    gh.factory<_i346.SignUp_UsaCase>(
-      () => _i346.SignUp_UsaCase(gh<_i147.SignUp_Rpo>()),
     );
     gh.factory<_i548.SignUpCubit>(
       () => _i548.SignUpCubit(gh<_i346.SignUp_UsaCase>()),
@@ -234,18 +223,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1.ChangePasswordUseCase>(
       () => _i1.ChangePasswordUseCase(gh<_i118.ChangePasswordRepository>()),
     );
-    gh.factory<_i342.VerifyResetCodeUseCase>(
-      () =>
-          _i342.VerifyResetCodeUseCase(gh<_i223.VerifyResetCodeReposetories>()),
+    gh.factory<_i1071.VerifyCodeCubit>(
+      () => _i1071.VerifyCodeCubit(gh<_i342.VerifyResetCodeUseCase>()),
+    );
+    gh.factory<_i288.HomeCubit>(
+      () => _i288.HomeCubit(
+        gh<_i676.GetHomeBannersUseCase>(),
+        gh<_i865.GetRecentItemsUseCase>(),
+      ),
+    );
+    gh.factory<_i848.ForgetPasswordCubit>(
+      () => _i848.ForgetPasswordCubit(gh<_i468.ForgotPasswordUseCase>()),
     );
     gh.factory<_i63.ChangePasswordCubit>(
       () => _i63.ChangePasswordCubit(gh<_i1.ChangePasswordUseCase>()),
     );
     gh.factory<_i578.ResetPasswordCubit>(
       () => _i578.ResetPasswordCubit(gh<_i681.ResetPasswordUseCase>()),
-    );
-    gh.factory<_i1071.VerifyCodeCubit>(
-      () => _i1071.VerifyCodeCubit(gh<_i342.VerifyResetCodeUseCase>()),
     );
     return this;
   }

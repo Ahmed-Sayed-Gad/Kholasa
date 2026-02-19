@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../cubit/upload_cubit.dart';
 import '../cubit/upload_state.dart';
 import '../widgets/upload_card.dart';
 import '../widgets/upload_tabs.dart';
+import '../../summarize/view/summarize_view.dart';
+import '../../../core/theme/color_manager.dart';
 
 class UploadView extends StatelessWidget {
   const UploadView({super.key});
@@ -15,8 +16,7 @@ class UploadView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text('uploda'),
-        centerTitle: false,
+        title: const Text('Upload'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -31,11 +31,21 @@ class UploadView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-
             const UploadTabs(),
             const SizedBox(height: 16),
 
-            BlocBuilder<UploadCubit, UploadState>(
+            /// ✅ الحل هنا
+            BlocConsumer<UploadCubit, UploadState>(
+              listener: (context, state) {
+                if (state is UploadSuccess) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SummarizeView(file: state.file),
+                    ),
+                  );
+                }
+              },
               builder: (context, state) {
                 return UploadCard(state: state);
               },
