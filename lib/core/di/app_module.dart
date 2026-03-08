@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../Data/export/repositories_impl/export_repository_impl.dart';
 import '../../Data/upload/data_sources/file_picker_data_source.dart';
 import '../../Data/upload/upload_repository_impl.dart';
 import '../../api/Api_Client.dart';
+import '../../domain/export/repositories/export_repository.dart';
+import '../../domain/export/use_case/export_summary_use_case.dart';
 import '../../domain/upload/repositories/upload_repository.dart';
 import '../../domain/upload/usecases/pick_and_validate_file_usecase.dart';
 
@@ -47,4 +50,17 @@ abstract class UploadModule {
       UploadRepository repository,
       ) =>
       PickAndValidateFileUseCase(repository);
+}
+@module
+abstract class ExportModule {
+
+  @lazySingleton
+  ExportRepository exportRepository() =>
+      ExportRepositoryImpl();
+
+  @factory
+  ExportSummaryUseCase exportSummaryUseCase(
+      ExportRepository repository,
+      ) =>
+      ExportSummaryUseCase(repository);
 }

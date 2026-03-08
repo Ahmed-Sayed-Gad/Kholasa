@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../Data/summarize/data_source/summarize_fake_data_source.dart';
 import '../../../Data/summarize/repositories_impl/summarize_repository_impl.dart';
+import '../../../core/di/di.dart';
 import '../../../domain/summarize/use_case/generate_summary_use_case.dart';
+import '../../export/cubit/export_cubit.dart';
 import '../cubit/summarize_cubit.dart';
 import 'summarize_body.dart';
 
@@ -16,20 +17,30 @@ class SummarizeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => SummarizeCubit(
-        GenerateSummaryUseCase(
-          SummarizeRepositoryImpl(
-            SummarizeFakeDataSource(),
-          ),
+    return MultiBlocProvider(
+      providers: [
+
+        BlocProvider(
+          create: (_) => SummarizeCubit(
+            GenerateSummaryUseCase(
+              SummarizeRepositoryImpl(
+                SummarizeFakeDataSource(),
+              ),
+            ),
+          )..init(file),
         ),
-      )..init(file),
+
+        BlocProvider(
+          create: (_) => getIt<ExportCubit>(),
+        ),
+
+      ],
+
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Summary'),
         ),
         body: const SummarizeBody(),
       ),
-    );
-  }
+    );  }
 }

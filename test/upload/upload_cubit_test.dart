@@ -16,7 +16,7 @@
 //
 //   setUp(() {
 //     useCase = MockPickAndValidateFileUseCase();
-//     cubit = UploadCubit(useCase);
+// cubit= UploadCubit(useCase);
 //   });
 //
 //   tearDown(() {

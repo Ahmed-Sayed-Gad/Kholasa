@@ -63,6 +63,8 @@ import '../../domain/auth/use_case/ResetPasswordUseCase.dart' as _i681;
 import '../../domain/auth/use_case/SignInUseCase.dart' as _i236;
 import '../../domain/auth/use_case/SignUp_UsaCase.dart' as _i346;
 import '../../domain/auth/use_case/VerifyResetCodeUseCase.dart' as _i342;
+import '../../domain/export/repositories/export_repository.dart' as _i205;
+import '../../domain/export/use_case/export_summary_use_case.dart' as _i155;
 import '../../domain/home/repositories/home_repository.dart' as _i536;
 import '../../domain/home/UsaCase/get_home_banners_use_case.dart' as _i676;
 import '../../domain/home/UsaCase/get_recent_items_use_case.dart' as _i865;
@@ -80,6 +82,7 @@ import '../../presentation/auth/cubit/reset_password_cubit.dart' as _i578;
 import '../../presentation/auth/cubit/signin_cubit.dart' as _i906;
 import '../../presentation/auth/cubit/signup_cubit.dart' as _i548;
 import '../../presentation/auth/cubit/verify_reset_code_cubit.dart' as _i1071;
+import '../../presentation/export/cubit/export_cubit.dart' as _i457;
 import '../../presentation/home/cubit/home_cubit.dart' as _i288;
 import '../../presentation/session/cubit/upload_session_cubit.dart' as _i787;
 import '../../presentation/summarize/cubit/summarize_cubit.dart' as _i98;
@@ -98,6 +101,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final appModule = _$AppModule();
     final uploadModule = _$UploadModule();
+    final exportModule = _$ExportModule();
     gh.factory<_i52.AuthErrorHandler>(() => _i52.AuthErrorHandler());
     gh.factory<_i295.HomeErrorHandler>(() => _i295.HomeErrorHandler());
     gh.factory<_i637.ErrorHandler>(() => _i637.ErrorHandler());
@@ -106,6 +110,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i558.FlutterSecureStorage>(() => appModule.secureStorage);
     gh.lazySingleton<_i1060.FilePickerDataSource>(
       () => uploadModule.filePickerDataSource(),
+    );
+    gh.lazySingleton<_i205.ExportRepository>(
+      () => exportModule.exportRepository(),
     );
     gh.lazySingleton<_i787.UploadSessionCubit>(
       () => _i787.UploadSessionCubit(),
@@ -163,6 +170,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i431.ChangePasswordDataSource>(),
       ),
     );
+    gh.factory<_i155.ExportSummaryUseCase>(
+      () => exportModule.exportSummaryUseCase(gh<_i205.ExportRepository>()),
+    );
     gh.lazySingleton<_i308.RememberMeRepository>(
       () => _i906.RememberMeRepositoryImpl(gh<_i558.FlutterSecureStorage>()),
     );
@@ -183,6 +193,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1017.RememberMeUseCase>(
       () => _i656.RememberMeUseCaseImpl(gh<_i308.RememberMeRepository>()),
+    );
+    gh.factory<_i457.ExportCubit>(
+      () => _i457.ExportCubit(gh<_i155.ExportSummaryUseCase>()),
     );
     gh.factory<_i676.GetHomeBannersUseCase>(
       () => _i676.GetHomeBannersUseCase(gh<_i536.HomeRepository>()),
@@ -248,3 +261,5 @@ extension GetItInjectableX on _i174.GetIt {
 class _$AppModule extends _i460.AppModule {}
 
 class _$UploadModule extends _i460.UploadModule {}
+
+class _$ExportModule extends _i460.ExportModule {}
