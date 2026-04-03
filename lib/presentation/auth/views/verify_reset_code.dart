@@ -24,7 +24,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
   void _submit(BuildContext context) {
     if (_code.length != 6) return;
 
-    context.read<VerifyCodeCubit>().verifyCode(_code);
+    context.read<VerifyResetCodeCubit>().verifyCode(_code);
   }
 
   Widget _box(int index) {
@@ -51,24 +51,24 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<VerifyCodeCubit>(),
-      child: BlocConsumer<VerifyCodeCubit, VerifyCodeState>(
+      create: (_) => getIt<VerifyResetCodeCubit>(),
+      child: BlocConsumer<VerifyResetCodeCubit, VerifyResetCodeState>(
         listener: (context, state) {
-          if (state is VerifyCodeSuccess) {
+          if (state is VerifyResetCodeSuccess) {
             Navigator.pushReplacementNamed(
               context,
               App_Routs_names.resetPasswordScreen,
             );
           }
 
-          if (state is VerifyCodeError) {
+          if (state is VerifyResetCodeError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
             );
           }
         },
         builder: (context, state) {
-          final loading = state is VerifyCodeLoading;
+          final loading = state is VerifyResetCodeLoading;
 
           return Scaffold(
             appBar: AppBar(title: const Text("Verification")),

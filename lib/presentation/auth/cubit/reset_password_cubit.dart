@@ -8,9 +8,9 @@ import 'reset_password_state.dart';
 
 @injectable
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {
-  final ResetPasswordUseCase useCase;
+  final ResetPasswordUseCase _useCase;
 
-  ResetPasswordCubit(this.useCase) : super(ResetPasswordInitial());
+  ResetPasswordCubit(this._useCase) : super(ResetPasswordInitial());
 
   Future<void> resetPassword({
     required String email,
@@ -18,10 +18,10 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   }) async {
     emit(ResetPasswordLoading());
 
-    final result = await useCase.resetPassword(
+    final result = await _useCase(
       Reset_Password(
         email: email,
-        newPassword: password,
+        password: password,
       ),
     );
 
@@ -29,8 +29,8 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       onSuccess: (_) {
         emit(ResetPasswordSuccess());
       },
-      onFailure: (f) {
-        emit(ResetPasswordError(f.userFriendlyMessage));
+      onFailure: (failure) {
+        emit(ResetPasswordError(failure.userFriendlyMessage));
       },
     );
   }

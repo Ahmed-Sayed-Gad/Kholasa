@@ -1,13 +1,16 @@
 import 'package:injectable/injectable.dart';
-import '../../../api/auth/request/Forgot_Password_Request.dart';
+
 import '../../../core/errors/result/results.dart';
 import '../repositories/forgot_password_reposetories.dart';
+import '../../../api/auth/request/Forgot_Password_Request.dart';
 
 @injectable
 class ForgotPasswordUseCase {
-  final ForgotPasswordReposetories _forgotPasswordReposetories;
-  ForgotPasswordUseCase(this._forgotPasswordReposetories);
-  Future<Result<void>> forgotPasswordSendCode(ForgotPasswordRequest request) {
-    return _forgotPasswordReposetories.forgotPasswordSendCode(request);
+  final ForgotPasswordRepositories repository;
+
+  ForgotPasswordUseCase(this.repository);
+
+  Future<Result<void>> call(ForgotPasswordRequest request) {
+    return repository.forgotPasswordSendCode(request);
   }
 }

@@ -2,26 +2,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
+import '../../../api/auth/request/SignUpRequest.dart';
 import '../../../domain/auth/use_case/SignUp_UsaCase.dart';
 import 'signup_state.dart';
 
 @injectable
 class SignUpCubit extends Cubit<SignUpState> {
-  final SignUp_UsaCase useCase;
+  final SignUpUseCase _useCase;
 
-  SignUpCubit(this.useCase) : super(SignUpInitial());
+  SignUpCubit(this._useCase) : super(SignUpInitial());
 
-  Future<void> signUp(request) async {
+  Future<void> signUp(SignUpRequest request) async {
     emit(SignUpLoading());
 
-    final result = await useCase.signUp(request);
+    final result = await _useCase(request);
 
     result.fold(
       onSuccess: (_) {
         emit(SignUpSuccess());
       },
-      onFailure: (f) {
-        emit(SignUpError(f.userFriendlyMessage));
+      onFailure: (failure) {
+        emit(SignUpError(failure.userFriendlyMessage));
       },
     );
   }

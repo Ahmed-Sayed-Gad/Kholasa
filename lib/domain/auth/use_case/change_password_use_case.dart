@@ -8,8 +8,13 @@ import '../repositories/change_password_repository.dart';
 @injectable
 class ChangePasswordUseCase {
   final ChangePasswordRepository repository;
+
   ChangePasswordUseCase(this.repository);
-  Future<Result<ChangeProfilePasswordResponse>> execute(String token, ChangePasswordRequest request) {
+
+  Future<Result<ChangeProfilePasswordResponse>> call(
+      String token,
+      ChangePasswordRequest request,
+      ) {
     return repository.changePassword(token, request);
   }
 }

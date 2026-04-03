@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:injectable/injectable.dart';
+
+@lazySingleton
 class SummarizeFakeDataSource {
   Future<String> summarize(File file) async {
     await Future.delayed(const Duration(seconds: 2));

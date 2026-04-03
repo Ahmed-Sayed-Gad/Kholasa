@@ -1,12 +1,13 @@
-sealed class VerifyCodeState {}
+abstract class VerifyResetCodeState {}
 
-class VerifyCodeInitial extends VerifyCodeState {}
+class VerifyResetCodeInitial extends VerifyResetCodeState {}
 
-class VerifyCodeLoading extends VerifyCodeState {}
+class VerifyResetCodeLoading extends VerifyResetCodeState {}
 
-class VerifyCodeSuccess extends VerifyCodeState {}
+class VerifyResetCodeSuccess extends VerifyResetCodeState {}
 
-class VerifyCodeError extends VerifyCodeState {
+class VerifyResetCodeError extends VerifyResetCodeState {
   final String message;
-  VerifyCodeError(this.message);
+
+  VerifyResetCodeError(this.message);
 }
