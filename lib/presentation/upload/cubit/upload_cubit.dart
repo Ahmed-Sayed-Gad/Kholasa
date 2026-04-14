@@ -1,29 +1,39 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../domain/upload/usecases/pick_and_validate_file_usecase.dart';
-import 'upload_state.dart';
-@injectable
-class UploadCubit extends Cubit<UploadState> {
-  final PickAndValidateFileUseCase useCase;
 
-  UploadCubit(this.useCase) : super(UploadIdle());
+import 'upload_state.dart';
+
+@injectable
+
+class UploadCubit extends Cubit<UploadState> {
+  UploadCubit() : super(const UploadIdle());
 
   Future<void> pickFile() async {
-    emit(UploadPicking());
-
     try {
-      final file = await useCase.execute();
+      emit(const UploadLoading());
 
-      if (!file.isValid) {
-        emit(UploadFailure(file.errorMessage ?? 'Invalid file'));
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
+      );
+
+      if (result == null) {
+        emit(const UploadIdle());
         return;
       }
 
-      emit(UploadReady(file));
-    } catch (_) {
-      emit(UploadFailure('Failed to pick file'));
+      final file = File(result.files.single.path!);
+
+      // ⬅️ هنا بنقول: الملف اتاخد خلاص
+      emit(UploadSuccess(file));
+    } catch (e) {
+      emit(const UploadFailure('Failed to pick file'));
     }
   }
 
-  void reset() => emit(UploadIdle());
-}
+  void reset() {
+    emit(const UploadIdle());
+  } }

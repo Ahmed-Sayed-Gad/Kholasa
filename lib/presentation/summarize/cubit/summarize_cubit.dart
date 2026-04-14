@@ -1,23 +1,25 @@
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../domain/summarize/entities/summary_result.dart';
+import '../../../domain/summarize/use_case/generate_summary_use_case.dart';
 import 'summarize_state.dart';
-
 @injectable
 class SummarizeCubit extends Cubit<SummarizeState> {
-  SummarizeCubit() : super(const SummarizeInitial());
+  final GenerateSummaryUseCase generateSummaryUseCase;
 
-  // تغيير طول الملخص
-  void changeLength(SummaryLength length) {
-    emit(
-      state.copyWith(length: length),
-    );
+  SummarizeCubit(this.generateSummaryUseCase)
+      : super(SummarizeInitial(file: File('')));
+
+  void init(File file) {
+    emit(SummarizeInitial(file: file));
   }
 
-  // اختيار / إزالة Focus Area
+  void changeLength(SummaryLength length) {
+    emit((state as SummarizeInitial).copyWith(length: length));
+  }
+
   void toggleFocusArea(String area) {
-    final updated = Set<String>.from(state.focusAreas);
+    final updated = List<String>.from(state.focusAreas);
 
     if (updated.contains(area)) {
       updated.remove(area);
@@ -25,32 +27,22 @@ class SummarizeCubit extends Cubit<SummarizeState> {
       updated.add(area);
     }
 
-    emit(
-      state.copyWith(focusAreas: updated),
-    );
+    emit((state as SummarizeInitial).copyWith(focusAreas: updated));
   }
 
-  // Generate Summary
   Future<void> generateSummary() async {
-    emit(
-      SummarizeLoading(
-        length: state.length,
-        focusAreas: state.focusAreas,
-      ),
-    );
+    emit(SummarizeLoading.from(state));
 
-    await Future.delayed(const Duration(seconds: 2));
-
-    emit(
-      SummarizeSuccess(
-        result: SummaryResult(
-          summary: 'This is a fake AI summary.',
-          pages: 3,
-          language: 'en',
-        ),
-        length: state.length,
+    try {
+      final summary = await generateSummaryUseCase(
+        file: state.file,
+        length: state.length.name,
         focusAreas: state.focusAreas,
-      ),
-    );
+      );
+
+      emit(SummarizeSuccess.from(state, summary));
+    } catch (e) {
+      emit(SummarizeError.from(state, e.toString()));
+    }
   }
 }

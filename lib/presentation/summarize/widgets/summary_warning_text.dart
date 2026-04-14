@@ -6,10 +6,14 @@ class SummaryWarningText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Please upload a document first',
-      style: TextStyle(color: ColorManager.yellow),
-      textAlign: TextAlign.center,
+    return Center(
+      child: Text(
+        'Please upload a document first',
+        style: TextStyle(
+          color: ColorManager.yellow,
+          fontSize: 12,
+        ),
+      ),
     );
   }
 }

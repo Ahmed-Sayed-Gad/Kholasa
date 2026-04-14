@@ -1,24 +1,25 @@
-import '../../../domain/upload/entities/upload_file.dart';
+import 'dart:io';
 
-sealed class UploadState {}
-
-class UploadIdle extends UploadState {}
-
-class UploadPicking extends UploadState {}
-
-class UploadReady extends UploadState {
-  final UploadFile file;
-  UploadReady(this.file);
+sealed class UploadState {
+  const UploadState();
 }
 
-class UploadUploading extends UploadState {
-  final double progress;
-  UploadUploading(this.progress);
+class UploadIdle extends UploadState {
+  const UploadIdle();
 }
 
-class UploadSuccess extends UploadState {}
+class UploadLoading extends UploadState {
+  const UploadLoading();
+}
+
+class UploadSuccess extends UploadState {
+  final File file;
+
+  const UploadSuccess(this.file);
+}
 
 class UploadFailure extends UploadState {
   final String message;
-  UploadFailure(this.message);
+
+  const UploadFailure(this.message);
 }

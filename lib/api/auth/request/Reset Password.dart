@@ -5,12 +5,12 @@ part "Reset Password.g.dart";
 class Reset_Password {
   @JsonKey(name: "email")
   final String? email;
-  @JsonKey(name: "newPassword")
-  final String? newPassword;
+  @JsonKey(name: "password")
+  final String? password;
 
   Reset_Password ({
     this.email,
-    this.newPassword,
+    this.password,
   });
 
   factory Reset_Password.fromJson(Map<String, dynamic> json) {

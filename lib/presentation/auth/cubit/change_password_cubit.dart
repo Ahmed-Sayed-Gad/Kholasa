@@ -8,9 +8,9 @@ import 'change_password_state.dart';
 
 @injectable
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
-  final ChangePasswordUseCase useCase;
+  final ChangePasswordUseCase _useCase;
 
-  ChangePasswordCubit(this.useCase)
+  ChangePasswordCubit(this._useCase)
       : super(ChangePasswordInitial());
 
   Future<void> changePassword({
@@ -19,7 +19,6 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
     required String newPassword,
     required String confirmPassword,
   }) async {
-
     emit(ChangePasswordLoading());
 
     final request = ChangePasswordRequest(
@@ -28,16 +27,14 @@ class ChangePasswordCubit extends Cubit<ChangePasswordState> {
       rePassword: confirmPassword,
     );
 
-    final result = await useCase.execute(token, request);
+    final result = await _useCase(token, request);
 
     result.fold(
-      onSuccess: (_) {
+      onSuccess: (response) {
         emit(ChangePasswordSuccess());
       },
       onFailure: (failure) {
-        emit(ChangePasswordError(
-          failure.userFriendlyMessage,
-        ));
+        emit(ChangePasswordError(failure.userFriendlyMessage));
       },
     );
   }

@@ -8,15 +8,14 @@ import 'forget_password_state.dart';
 
 @injectable
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
-  final ForgotPasswordUseCase useCase;
+  final ForgotPasswordUseCase _useCase;
 
-  ForgetPasswordCubit(this.useCase)
-      : super(ForgetPasswordInitial());
+  ForgetPasswordCubit(this._useCase) : super(ForgetPasswordInitial());
 
   Future<void> sendCode(String email) async {
     emit(ForgetPasswordLoading());
 
-    final result = await useCase.forgotPasswordSendCode(
+    final result = await _useCase(
       ForgotPasswordRequest(email: email),
     );
 
@@ -24,8 +23,8 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       onSuccess: (_) {
         emit(ForgetPasswordSuccess());
       },
-      onFailure: (f) {
-        emit(ForgetPasswordError(f.userFriendlyMessage));
+      onFailure: (failure) {
+        emit(ForgetPasswordError(failure.userFriendlyMessage));
       },
     );
   }

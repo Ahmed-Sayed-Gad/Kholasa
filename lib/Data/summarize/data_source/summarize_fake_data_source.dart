@@ -1,15 +1,17 @@
 import 'dart:io';
 
-import '../../../domain/summarize/entities/summary_result.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class SummarizeFakeDataSource {
-  Future<SummaryResult> summarize(File file) async {
+  Future<String> summarize(File file) async {
     await Future.delayed(const Duration(seconds: 2));
 
-    return SummaryResult(
-      summary: 'This is a fake summary',
-      pages: 3,
-      language: 'en',
-    );
+    return '''
+📄 File: ${file.path.split('/').last}
+
+🧠 This is a fake AI-generated summary
+for testing purposes only.
+''';
   }
 }

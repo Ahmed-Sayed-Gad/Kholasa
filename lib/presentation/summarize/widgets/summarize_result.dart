@@ -1,146 +1,132 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/color_manager.dart';
-import '../../../domain/summarize/entities/summary_result.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../domain/export/export_type.dart';
+import '../../../../core/services/file_share_service.dart';
+import '../../export/cubit/export_cubit.dart';
+import '../../export/cubit/export_state.dart';
+import '../../widget/export_dialog.dart';
 
 class SummarizeResult extends StatelessWidget {
-  final SummaryResult result;
+
+  final String summary;
 
   const SummarizeResult({
     super.key,
-    required this.result,
+    required this.summary,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: ColorManager.secondaryDark,
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _Header(),
-            const SizedBox(height: 12),
-            _SummaryText(text: result.summary),
-            const SizedBox(height: 16),
-            _MetaInfo(
-              pages: result.pages,
-              language: result.language,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
-/* ================= HEADER ================= */
+    return BlocListener<ExportCubit, ExportState>(
 
-class _Header extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(
-          Icons.auto_awesome,
-          color: ColorManager.yellow,
-          size: 22,
-        ),
-        const SizedBox(width: 8),
-        Text(
-          'AI Summary',
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: ColorManager.white,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
-    );
-  }
-}
+      listener: (context, state) {
 
-/* ================= SUMMARY TEXT ================= */
+        if (state is ExportSuccess) {
 
-class _SummaryText extends StatelessWidget {
-  final String text;
+          showModalBottomSheet(
+            context: context,
+            builder: (_) {
 
-  const _SummaryText({required this.text});
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-        height: 1.6,
-        color: ColorManager.textColorSecondary,
-      ),
-    );
-  }
-}
+                  ListTile(
+                    leading: const Icon(Icons.open_in_new),
+                    title: const Text("Open file"),
+                    onTap: () async {
 
-/* ================= META INFO ================= */
+                      await FileShareService()
+                          .openFile(state.file.path);
 
-class _MetaInfo extends StatelessWidget {
-  final int pages;
-  final String language;
+                    },
+                  ),
 
-  const _MetaInfo({
-    required this.pages,
-    required this.language,
-  });
+                  ListTile(
+                    leading: const Icon(Icons.share),
+                    title: const Text("Share file"),
+                    onTap: () async {
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _MetaChip(
-          icon: Icons.description_outlined,
-          label: '$pages pages',
-        ),
-        const SizedBox(width: 12),
-        _MetaChip(
-          icon: Icons.language,
-          label: language.toUpperCase(),
-        ),
-      ],
-    );
-  }
-}
+                      await FileShareService()
+                          .shareFile(state.file.path);
 
-class _MetaChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
+                    },
+                  ),
 
-  const _MetaChip({
-    required this.icon,
-    required this.label,
-  });
+                ],
+              );
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: ColorManager.primaryDark,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: ColorManager.containerGray.withOpacity(0.2),
-        ),
-      ),
-      child: Row(
+            },
+          );
+
+        }
+
+        if (state is ExportError) {
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+
+        }
+
+      },
+
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 14, color: ColorManager.grey),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: ColorManager.grey,
-            ),
+
+          Text(summary),
+
+          const SizedBox(height: 20),
+
+          Row(
+            children: [
+
+              ElevatedButton.icon(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+
+                      return ExportDialog(
+
+                        onExport: (type, name, directory) {
+
+                          context.read<ExportCubit>().exportSummary(
+                            summary: summary,
+                            type: type,
+                            fileName: name,
+                            directory: directory,
+                          );
+
+                        },
+
+                      );
+
+                    },
+                  );
+
+                },
+                icon: const Icon(Icons.picture_as_pdf),
+                label: const Text("Export PDF"),
+              ),
+
+              const SizedBox(width: 10),
+
+              ElevatedButton.icon(
+                onPressed: () {
+
+
+                },
+                icon: const Icon(Icons.text_snippet),
+                label: const Text("Export TXT"),
+              ),
+
+            ],
           ),
+
         ],
       ),
     );

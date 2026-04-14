@@ -1,7 +1,10 @@
-import '../../../core/errors/result/results.dart';
-import '../../upload/entities/upload_file.dart';
+import 'dart:io';
 import '../entities/summary_result.dart';
 
 abstract class SummarizeRepository {
-  Future<Result<SummaryResult>> summarize(UploadFile file);
+  Future<SummaryResult> generateSummary({
+    required File file,
+    required String length,
+    required List<String> focusAreas,
+  });
 }

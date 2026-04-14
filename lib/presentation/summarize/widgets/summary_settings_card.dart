@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/color_manager.dart';
+import 'summary_header.dart';
 import 'summary_length_slider.dart';
 import 'focus_area_chips.dart';
 import 'generate_summary_button.dart';
@@ -14,23 +15,20 @@ class SummarySettingsCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: ColorManager.secondaryDark,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         border: Border.all(color: ColorManager.primary),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Summary Settings',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+        children: const [
+          SummaryHeader(),
           SizedBox(height: 16),
           SummaryLengthSlider(),
-          SizedBox(height: 16),
+          SizedBox(height: 20),
           FocusAreaChips(),
           SizedBox(height: 24),
           GenerateSummaryButton(),
-          SizedBox(height: 12),
+          SizedBox(height: 8),
           SummaryWarningText(),
         ],
       ),

@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
+import '../../../core/theme/color_manager.dart';
 
 class SummaryHeader extends StatelessWidget {
-  final int pages;
-  final String language;
-
-  const SummaryHeader({
-    super.key,
-    required this.pages,
-    required this.language,
-  });
+  const SummaryHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.auto_awesome, color: Colors.deepPurple),
-        const SizedBox(width: 8),
-        const Text(
-          'AI Summary',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const Spacer(),
         Text(
-          '$pages pages • ${language.toUpperCase()}',
-          style: const TextStyle(color: Colors.grey),
+          'Summary Settings',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 4),
+        Text(
+          'Customize how your document is summarized',
+          style: TextStyle(
+            color: ColorManager.textColorSecondary,
+            fontSize: 13,
+          ),
         ),
       ],
     );
