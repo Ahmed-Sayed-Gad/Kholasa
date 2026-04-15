@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_one_c3_team/presentation/App_pages/tabs/saved_tab_page.dart';
 import 'tabs/home_tab_page.dart';
-import 'tabs/upload_tab_page.dart';
-import 'tabs/billing_tab_page.dart';
-import 'tabs/pdf_tab_page.dart';
-import 'tabs/settings_tab_page.dart';
+import 'tabs/history_tab_page.dart';
+import 'tabs/profile_tab_page.dart';
 
 class HomeShellPage extends StatefulWidget {
   const HomeShellPage({super.key});
@@ -17,10 +16,9 @@ class _HomeShellPageState extends State<HomeShellPage> {
 
   final pages = const [
     HomeTabPage(),
-    UploadTabPage(),
-    BillingTabPage(),
-    PdfTabPage(),
-    SettingsTabPage(),
+    HistoryTabPage(),
+    SavedTabPage(),
+    ProfileTabPage(),
   ];
 
   @override
@@ -36,10 +34,9 @@ class _HomeShellPageState extends State<HomeShellPage> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.upload), label: "Upload"),
-          BottomNavigationBarItem(icon: Icon(Icons.payment), label: "Billing"),
-          BottomNavigationBarItem(icon: Icon(Icons.picture_as_pdf), label: "PDF"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Settings"),
+          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
+          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "Saved"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),
     );

@@ -17,7 +17,16 @@ class UploadCubit extends Cubit<UploadState> {
 
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['pdf'],
+        allowMultiple: false,
+        allowedExtensions: [
+          'pdf',
+          'doc',
+          'docx',
+          'txt',
+          'jpg',
+          'jpeg',
+          'png',
+        ],
       );
 
       if (result == null) {
@@ -27,13 +36,11 @@ class UploadCubit extends Cubit<UploadState> {
 
       final file = File(result.files.single.path!);
 
-      // ⬅️ هنا بنقول: الملف اتاخد خلاص
       emit(UploadSuccess(file));
     } catch (e) {
       emit(const UploadFailure('Failed to pick file'));
     }
   }
-
   void reset() {
     emit(const UploadIdle());
   } }

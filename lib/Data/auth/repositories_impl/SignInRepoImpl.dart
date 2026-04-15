@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import '../../../api/auth/request/sign_in_request.dart';
 import '../../../core/errors/result/results.dart';
 import '../../../domain/auth/entities/user_entity.dart';
-import '../../../domain/auth/repositories/sign_in_reposetories.dart';
+import '../../../domain/auth/repositories/sign_in_repository.dart';
 import '../data_source/SignInRemoteDataSource.dart';
 
 @Injectable(as: SignInRepositories)

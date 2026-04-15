@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
-import '../../../domain/home/UsaCase/get_home_banners_use_case.dart';
-import '../../../domain/home/UsaCase/get_recent_items_use_case.dart';
+import '../../../domain/home/UseCase/get_home_banners_use_case.dart';
+import '../../../domain/home/UseCase/get_recent_items_use_case.dart';
 import '../../mappers/home_ui_mapper.dart';
 import 'home_cubit_state.dart';
 
@@ -39,8 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
             emit(HomeError(f.userFriendlyMessage));
           },
           onSuccess: (itemsDomain) {
-            final bannersUi =
-            bannersDomain.map(HomeUiMapper.mapBanner).toList();
+
 
             final itemsUi =
             itemsDomain.map(HomeUiMapper.mapRecentItem).toList();
@@ -50,7 +49,6 @@ class HomeCubit extends Cubit<HomeState> {
             } else {
               emit(
                 HomeSuccess(
-                  banners: bannersUi,
                   items: itemsUi,
                   allItems: itemsUi,
                 ),
@@ -81,7 +79,6 @@ class HomeCubit extends Cubit<HomeState> {
     if (query.isEmpty) {
       emit(
         HomeSuccess(
-          banners: current.banners,
           items: current.allItems,
           allItems: current.allItems,
         ),
@@ -99,7 +96,6 @@ class HomeCubit extends Cubit<HomeState> {
     } else {
       emit(
         HomeSuccess(
-          banners: current.banners,
           items: filtered,
           allItems: current.allItems,
         ),

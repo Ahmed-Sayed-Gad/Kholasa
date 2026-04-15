@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/Routs/App_Routs_names.dart';
+import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
 import '../cubit/verify_reset_code_cubit.dart';
 import '../cubit/verify_reset_code_state.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../ui_models/recent_item_ui_model.dart';
-import '../../../core/theme/color_manager.dart';
 
 class RecentItemCard extends StatelessWidget {
   final RecentItemUiModel item;
@@ -13,18 +12,32 @@ class RecentItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin:
+      const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: ColorManager.secondaryDark,
-        borderRadius: BorderRadius.circular(14),
+        color: Theme.of(context).cardColor,
+        borderRadius:
+        BorderRadius.circular(14),
       ),
       child: Row(
         children: [
-          _PriorityIndicator(color: item.priorityColor),
+          _PriorityIndicator(
+            color: item.priorityColor,
+          ),
           const SizedBox(width: 12),
-          Expanded(child: _ItemInfo(item: item)),
-          _DueDate(text: item.dueText, isUrgent: item.isUrgent),
+          Expanded(
+            child: _ItemInfo(
+              item: item,
+            ),
+          ),
+          _DueDate(
+            text: item.dueText,
+            isUrgent: item.isUrgent,
+          ),
         ],
       ),
     );
@@ -34,26 +47,36 @@ class RecentItemCard extends StatelessWidget {
 class _ItemInfo extends StatelessWidget {
   final RecentItemUiModel item;
 
-  const _ItemInfo({required this.item});
+  const _ItemInfo({
+    required this.item,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+      CrossAxisAlignment.start,
       children: [
         Text(
           item.title,
-          style: const TextStyle(
-            color: ColorManager.textColor,
+          style: TextStyle(
+            color: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .color,
             fontSize: 16,
-            fontWeight: FontWeight.w600,
+            fontWeight:
+            FontWeight.w600,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           item.category,
-          style: const TextStyle(
-            color: ColorManager.textColorSecondary,
+          style: TextStyle(
+            color: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .color,
             fontSize: 12,
           ),
         ),
@@ -62,10 +85,13 @@ class _ItemInfo extends StatelessWidget {
   }
 }
 
-class _PriorityIndicator extends StatelessWidget {
+class _PriorityIndicator
+    extends StatelessWidget {
   final Color color;
 
-  const _PriorityIndicator({required this.color});
+  const _PriorityIndicator({
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +100,8 @@ class _PriorityIndicator extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(4),
+        borderRadius:
+        BorderRadius.circular(4),
       ),
     );
   }
@@ -92,26 +119,35 @@ class _DueDate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment:
+      CrossAxisAlignment.end,
       children: [
-        const Icon(
+        Icon(
           Icons.schedule,
           size: 16,
-          color: ColorManager.textColorSecondary,
+          color: Theme.of(context)
+              .textTheme
+              .bodyMedium!
+              .color,
         ),
         const SizedBox(height: 4),
         Text(
           text,
           style: TextStyle(
             color: isUrgent
-                ? ColorManager.highPriorityPdf
-                : ColorManager.textColorSecondary,
+                ? Theme.of(context)
+                .colorScheme
+                .error
+                : Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .color,
             fontSize: 12,
-            fontWeight: FontWeight.w500,
+            fontWeight:
+            FontWeight.w500,
           ),
         ),
       ],
     );
   }
 }
-

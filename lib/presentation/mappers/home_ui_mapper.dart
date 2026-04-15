@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../domain/home/entities/home_banner.dart';
 import '../../domain/home/entities/recent_Items.dart';
-import '../ui_models/banner_ui_model.dart';
 import '../ui_models/recent_item_ui_model.dart';
 
 class HomeUiMapper {
@@ -9,19 +8,7 @@ class HomeUiMapper {
   // =====================
   // Banner Mapper
   // =====================
-  static HomeBannerUiModel mapBanner(HomeBanner banner) {
-    return HomeBannerUiModel(
-      title: banner.title,
-      subtitle: banner.subtitle,
-      badge: 'Active', // UI concern
-      icon: Icons.calendar_today,
-      gradient: const [
-        Color(0xFF6D5DF6),
-        Color(0xFF8E4AE8),
-      ],
-      buttonText: 'View Tasks',
-    );
-  }
+
 
   // =====================
   // Recent Item Mapper

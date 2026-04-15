@@ -7,7 +7,7 @@ import '../../presentation/auth/views/change_password_page.dart';
 import '../../presentation/auth/views/forget_password_view.dart';
 import '../../presentation/auth/views/reset_password_screen.dart';
 import '../../presentation/auth/views/verify_reset_code.dart';
-import 'App_Routs_names.dart';
+import 'app_routes_names.dart';
 
 interface class AppRoutsPage {
   static Route route(RouteSettings settings) {

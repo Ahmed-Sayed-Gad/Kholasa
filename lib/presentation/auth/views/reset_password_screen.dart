@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../../core/Routs/App_Routs_names.dart';
+import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
 import '../cubit/reset_password_cubit.dart';
 import '../cubit/reset_password_state.dart';

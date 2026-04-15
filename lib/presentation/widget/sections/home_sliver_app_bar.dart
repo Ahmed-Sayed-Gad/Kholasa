@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/color_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../theme/theme_cubit.dart';
+import '../../theme/theme_state.dart';
 
 class HomeSliverAppBar extends StatelessWidget {
   const HomeSliverAppBar({super.key});
@@ -8,64 +11,81 @@ class HomeSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: true,
-      backgroundColor: ColorManager.primaryDark,
+      backgroundColor:
+      Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,
 
-      leading: Padding(
-        padding: const EdgeInsets.all(7),
+      leading: const Padding(
+        padding: EdgeInsets.all(7),
         child: CircleAvatar(
-          backgroundImage: AssetImage('assets/images/LogoLight.jpg'),
+          backgroundImage: AssetImage(
+            'assets/images/LogoLight.jpg',
+          ),
         ),
       ),
 
       actions: [
+        BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            final isDark =
+                state.mode == ThemeMode.dark;
+
+            return Container(
+              margin:
+              const EdgeInsets.only(
+                right: 8,
+              ),
+              decoration: BoxDecoration(
+                color:
+                Theme.of(context)
+                    .cardColor,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: () {
+                  context
+                      .read<ThemeCubit>()
+                      .toggleTheme();
+                },
+                icon: Icon(
+                  isDark
+                      ? Icons
+                      .light_mode_outlined
+                      : Icons
+                      .dark_mode_outlined,
+                  color:
+                  Theme.of(context)
+                      .iconTheme
+                      .color,
+                ),
+              ),
+            );
+          },
+        ),
+
         Container(
-          margin: const EdgeInsets.only(right: 8),
+          margin:
+          const EdgeInsets.only(
+            right: 8,
+          ),
           decoration: BoxDecoration(
-            color: ColorManager.white,
+            color:
+            Theme.of(context)
+                .cardColor,
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            icon: Icon(Icons.notifications_none,
-                color: ColorManager.primaryDark),
+            icon: Icon(
+              Icons.notifications_none,
+              color:
+              Theme.of(context)
+                  .iconTheme
+                  .color,
+            ),
             onPressed: () {},
           ),
         ),
-        const SizedBox(width: 8),
-        Padding(
-          padding: const EdgeInsets.only(right: 16),
-          child: CircleAvatar(
-            backgroundColor: ColorManager.secondaryDark,
-            child: Icon(Icons.person, color: ColorManager.textColor),
-          ),
-        ),
       ],
-    );
-  }
-}
-
-class _ActionIcon extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const _ActionIcon({
-    required this.icon,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(20),
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: ColorManager.white,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, color: ColorManager.primaryDark),
-      ),
     );
   }
 }

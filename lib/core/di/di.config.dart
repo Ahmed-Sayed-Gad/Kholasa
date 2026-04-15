@@ -45,6 +45,8 @@ import '../../Data/auth/repositories_impl/SignInRepoImpl.dart' as _i681;
 import '../../Data/auth/repositories_impl/SignUpRepoImpl.dart' as _i7;
 import '../../Data/auth/repositories_impl/VerifyResetCodeRepoImpl.dart'
     as _i654;
+import '../../Data/chat/datasource/chat_fake_remote_data_source.dart' as _i389;
+import '../../Data/chat/repository/chat_repository_impl.dart' as _i231;
 import '../../Data/home/repositries_Imp/home_repository_impl.dart' as _i850;
 import '../../Data/summarize/data_source/summarize_fake_data_source.dart'
     as _i269;
@@ -58,21 +60,23 @@ import '../../domain/auth/repositories/forgot_password_reposetories.dart'
 import '../../domain/auth/repositories/remember_me_repository.dart' as _i308;
 import '../../domain/auth/repositories/Reset_password_reposetories.dart'
     as _i670;
-import '../../domain/auth/repositories/sign_in_reposetories.dart' as _i218;
+import '../../domain/auth/repositories/sign_in_repository.dart' as _i626;
 import '../../domain/auth/repositories/SignUp_reposetries.dart' as _i147;
 import '../../domain/auth/repositories/verify_reset_code.dart' as _i223;
 import '../../domain/auth/use_case/change_password_use_case.dart' as _i1;
 import '../../domain/auth/use_case/ForgotPasswordUseCase.dart' as _i468;
 import '../../domain/auth/use_case/ResetPasswordUseCase.dart' as _i681;
+import '../../domain/auth/use_case/sign_up_use_case.dart' as _i790;
 import '../../domain/auth/use_case/SignInUseCase.dart' as _i236;
-import '../../domain/auth/use_case/SignUp_UsaCase.dart' as _i346;
 import '../../domain/auth/use_case/VerifyResetCodeUseCase.dart' as _i342;
+import '../../domain/chat/repository/chat_repository.dart' as _i272;
+import '../../domain/chat/usecases/send_message_use_case.dart' as _i128;
 import '../../domain/export/repositories/export_repository.dart' as _i205;
 import '../../domain/export/use_case/export_summary_use_case.dart' as _i155;
 import '../../domain/home/repositories/home_repository.dart' as _i536;
-import '../../domain/home/UsaCase/get_home_banners_use_case.dart' as _i676;
-import '../../domain/home/UsaCase/get_recent_items_use_case.dart' as _i865;
-import '../../domain/home/UsaCase/remember_me_usecase.dart' as _i1017;
+import '../../domain/home/UseCase/get_home_banners_use_case.dart' as _i200;
+import '../../domain/home/UseCase/get_recent_items_use_case.dart' as _i913;
+import '../../domain/home/UseCase/remember_me_usecase.dart' as _i444;
 import '../../domain/models/use_cases_imp/remember_me_use_case_imp.dart'
     as _i656;
 import '../../domain/summarize/repositories/summarize_repository.dart' as _i704;
@@ -87,8 +91,11 @@ import '../../presentation/auth/cubit/reset_password_cubit.dart' as _i578;
 import '../../presentation/auth/cubit/signin_cubit.dart' as _i906;
 import '../../presentation/auth/cubit/signup_cubit.dart' as _i548;
 import '../../presentation/auth/cubit/verify_reset_code_cubit.dart' as _i1071;
+import '../../presentation/chat/cubit/chat_cubit.dart' as _i207;
 import '../../presentation/export/cubit/export_cubit.dart' as _i457;
 import '../../presentation/home/cubit/home_cubit.dart' as _i288;
+import '../../presentation/link/cubit/link_cubit.dart' as _i1061;
+import '../../presentation/scan/cubit/scan_cubit.dart' as _i492;
 import '../../presentation/session/cubit/upload_session_cubit.dart' as _i787;
 import '../../presentation/summarize/cubit/summarize_cubit.dart' as _i98;
 import '../../presentation/upload/cubit/upload_cubit.dart' as _i727;
@@ -111,6 +118,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i295.HomeErrorHandler>(() => _i295.HomeErrorHandler());
     gh.factory<_i637.ErrorHandler>(() => _i637.ErrorHandler());
     gh.factory<_i727.UploadCubit>(() => _i727.UploadCubit());
+    gh.factory<_i1061.LinkCubit>(() => _i1061.LinkCubit());
+    gh.factory<_i492.ScanCubit>(() => _i492.ScanCubit());
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i558.FlutterSecureStorage>(() => appModule.secureStorage);
     gh.lazySingleton<_i1060.FilePickerDataSource>(
@@ -124,6 +133,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i787.UploadSessionCubit>(
       () => _i787.UploadSessionCubit(),
+    );
+    gh.lazySingleton<_i389.ChatFakeRemoteDataSource>(
+      () => _i389.ChatFakeRemoteDataSource(),
     );
     gh.factory<_i98.SummarizeCubit>(
       () => _i98.SummarizeCubit(gh<_i218.GenerateSummaryUseCase>()),
@@ -190,8 +202,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i52.AuthErrorHandler>(),
       ),
     );
-    gh.factory<_i218.SignInRepositories>(
-      () => _i681.SignInRepoImpl(gh<_i753.SignInRemoteDataSource>()),
+    gh.lazySingleton<_i272.ChatRepository>(
+      () => _i231.ChatRepositoryImpl(gh<_i389.ChatFakeRemoteDataSource>()),
     );
     gh.factory<_i329.SignUpDataSource>(
       () => _i112.SidnUp_Data_Source_Imp(
@@ -209,7 +221,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i866.ResetPasswordRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i1017.RememberMeUseCase>(
+    gh.lazySingleton<_i444.RememberMeUseCase>(
       () => _i656.RememberMeUseCaseImpl(gh<_i308.RememberMeRepository>()),
     );
     gh.factory<_i118.ChangePasswordRepository>(
@@ -220,35 +232,35 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i457.ExportCubit>(
       () => _i457.ExportCubit(gh<_i155.ExportSummaryUseCase>()),
     );
-    gh.factory<_i676.GetHomeBannersUseCase>(
-      () => _i676.GetHomeBannersUseCase(gh<_i536.HomeRepository>()),
+    gh.factory<_i200.GetHomeBannersUseCase>(
+      () => _i200.GetHomeBannersUseCase(gh<_i536.HomeRepository>()),
     );
-    gh.factory<_i865.GetRecentItemsUseCase>(
-      () => _i865.GetRecentItemsUseCase(gh<_i536.HomeRepository>()),
+    gh.factory<_i913.GetRecentItemsUseCase>(
+      () => _i913.GetRecentItemsUseCase(gh<_i536.HomeRepository>()),
+    );
+    gh.factory<_i288.HomeCubit>(
+      () => _i288.HomeCubit(
+        gh<_i200.GetHomeBannersUseCase>(),
+        gh<_i913.GetRecentItemsUseCase>(),
+      ),
     );
     gh.factory<_i147.SignUpRepository>(
       () => _i7.SignUpRepositoryImpl(gh<_i329.SignUpDataSource>()),
     );
-    gh.factory<_i346.SignUpUseCase>(
-      () => _i346.SignUpUseCase(gh<_i147.SignUpRepository>()),
+    gh.factory<_i626.SignInRepositories>(
+      () => _i681.SignInRepoImpl(gh<_i753.SignInRemoteDataSource>()),
     );
-    gh.factory<_i548.SignUpCubit>(
-      () => _i548.SignUpCubit(gh<_i346.SignUpUseCase>()),
+    gh.factory<_i128.SendMessageUseCase>(
+      () => _i128.SendMessageUseCase(gh<_i272.ChatRepository>()),
     );
-    gh.factory<_i236.SignInUseCase>(
-      () => _i236.SignInUseCase(gh<_i218.SignInRepositories>()),
+    gh.factory<_i790.SignUpUseCase>(
+      () => _i790.SignUpUseCase(gh<_i147.SignUpRepository>()),
     );
     gh.factory<_i1.ChangePasswordUseCase>(
       () => _i1.ChangePasswordUseCase(gh<_i118.ChangePasswordRepository>()),
     );
-    gh.factory<_i906.SignInCubit>(
-      () => _i906.SignInCubit(gh<_i236.SignInUseCase>()),
-    );
-    gh.factory<_i288.HomeCubit>(
-      () => _i288.HomeCubit(
-        gh<_i676.GetHomeBannersUseCase>(),
-        gh<_i865.GetRecentItemsUseCase>(),
-      ),
+    gh.factory<_i236.SignInUseCase>(
+      () => _i236.SignInUseCase(gh<_i626.SignInRepositories>()),
     );
     gh.factory<_i468.ForgotPasswordUseCase>(
       () =>
@@ -256,6 +268,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i681.ResetPasswordUseCase>(
       () => _i681.ResetPasswordUseCase(gh<_i670.ResetPasswordRepositories>()),
+    );
+    gh.factory<_i207.ChatCubit>(
+      () => _i207.ChatCubit(gh<_i128.SendMessageUseCase>()),
     );
     gh.factory<_i578.ResetPasswordCubit>(
       () => _i578.ResetPasswordCubit(gh<_i681.ResetPasswordUseCase>()),
@@ -265,6 +280,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i63.ChangePasswordCubit>(
       () => _i63.ChangePasswordCubit(gh<_i1.ChangePasswordUseCase>()),
+    );
+    gh.factory<_i548.SignUpCubit>(
+      () => _i548.SignUpCubit(gh<_i790.SignUpUseCase>()),
+    );
+    gh.factory<_i906.SignInCubit>(
+      () => _i906.SignInCubit(gh<_i236.SignInUseCase>()),
     );
     return this;
   }

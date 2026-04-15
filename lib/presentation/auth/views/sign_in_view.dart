@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/Routs/App_Routs_names.dart';
+import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
-import '../../../core/theme/color_manager.dart';
 import '../../../api/auth/request/sign_in_request.dart';
 
 import '../../widget/custom_form_field.dart';
@@ -19,7 +18,9 @@ class SignInView extends StatefulWidget {
 
 class _SignInViewState extends State<SignInView> {
   final _formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
   void _onSignInPressed(BuildContext context) {
@@ -40,23 +41,23 @@ class _SignInViewState extends State<SignInView> {
       child: BlocConsumer<SignInCubit, SignInState>(
         listener: (context, state) {
           if (state is SignInSuccess) {
-            Navigator.pushReplacementNamed(
-              context,
-              App_Routs_names.HomeView,
-            );
+            Navigator.pushReplacementNamed(context, App_Routs_names.HomeView);
           }
 
           if (state is SignInError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
             );
           }
         },
         builder: (context, state) {
-          final bool isLoading = state is SignInLoading;
+          final isLoading = state is SignInLoading;
 
           return Scaffold(
-            backgroundColor: ColorManager.primaryDark,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Center(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -68,12 +69,10 @@ class _SignInViewState extends State<SignInView> {
                       child: Image.asset("assets/images/Logo.jpg"),
                     ),
 
-                    const SizedBox(),
-
-                    const Text(
+                    Text(
                       "Welcome back",
                       style: TextStyle(
-                        color: ColorManager.textColor,
+                        color: Theme.of(context).textTheme.bodyLarge!.color,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -81,11 +80,11 @@ class _SignInViewState extends State<SignInView> {
 
                     const SizedBox(height: 8),
 
-                    const Text(
+                    Text(
                       "Sign in to your account to continue",
                       style: TextStyle(
                         fontSize: 16,
-                        color: ColorManager.textColorSecondary,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -93,14 +92,14 @@ class _SignInViewState extends State<SignInView> {
                     const SizedBox(height: 40),
 
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
+                      width: MediaQuery.of(context).size.width * .9,
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: ColorManager.secondaryDark,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.08),
+                            color: Colors.black.withOpacity(.08),
                             blurRadius: 25,
                             offset: const Offset(0, 10),
                           ),
@@ -111,23 +110,26 @@ class _SignInViewState extends State<SignInView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-
-                            const Text(
+                            Text(
                               "Sign In",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: ColorManager.textColor,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge!.color,
                               ),
                             ),
 
                             const SizedBox(height: 6),
 
-                            const Text(
+                            Text(
                               "Enter your credentials to access your account",
                               style: TextStyle(
                                 fontSize: 14,
-                                color: ColorManager.textColorSecondary,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyMedium!.color,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -143,12 +145,6 @@ class _SignInViewState extends State<SignInView> {
                                 if (val == null || val.isEmpty) {
                                   return "Required";
                                 }
-                                final emailRegex = RegExp(
-                                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-                                );
-                                if (!emailRegex.hasMatch(val)) {
-                                  return "Invalid email";
-                                }
                                 return null;
                               },
                             ),
@@ -160,13 +156,10 @@ class _SignInViewState extends State<SignInView> {
                               labelText: "Password",
                               hintText: "********",
                               isPassword: true,
-                              validator: (val) =>
-                              val == null || val.isEmpty
+                              validator: (val) => val == null || val.isEmpty
                                   ? "Required"
                                   : null,
                             ),
-
-                            const SizedBox(height: 4),
 
                             Align(
                               alignment: Alignment.centerRight,
@@ -177,18 +170,17 @@ class _SignInViewState extends State<SignInView> {
                                     App_Routs_names.forgetPasswordScreen,
                                   );
                                 },
-                                child: const Text(
+                                child: Text(
                                   "Forgot password?",
                                   style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xff22D3EE),
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
                             ),
-
-                            const SizedBox(height: 24),
 
                             Container(
                               height: 52,
@@ -199,8 +191,6 @@ class _SignInViewState extends State<SignInView> {
                                     Color(0xFF22D3EE),
                                     Color(0xFF38BDF8),
                                   ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
                                 ),
                               ),
                               child: ElevatedButton(
@@ -210,61 +200,20 @@ class _SignInViewState extends State<SignInView> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.transparent,
                                   shadowColor: Colors.transparent,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
                                 ),
                                 child: isLoading
-                                    ? const SizedBox(
-                                  height: 22,
-                                  width: 22,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                )
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.white,
+                                      )
                                     : Text(
-                                  "Sign In",
-                                  style: TextStyle(
-                                    color: ColorManager.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                                        "Sign In",
+                                        style: TextStyle(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onPrimary,
+                                        ),
+                                      ),
                               ),
-                            ),
-
-                            const SizedBox(height: 20),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "Don't have an account?",
-                                  style: TextStyle(
-                                    color:
-                                    ColorManager.textColorSecondary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      App_Routs_names.signUpScreen,
-                                    );
-                                  },
-                                  child: const Text(
-                                    "Sign up",
-                                    style: TextStyle(
-                                      color: Color(0xff22D3EE),
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
                         ),

@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../auth/repositories/remember_me_repository.dart';
-import '../../home/UsaCase/remember_me_usecase.dart';
+import '../../home/UseCase/remember_me_usecase.dart';
 import '../remember_me_result.dart';
 
 
