@@ -13,4 +13,13 @@ class ThemeCubit extends Cubit<ThemeState> {
       emit(const ThemeState(ThemeMode.dark));
     }
   }
-}
+
+  void setTheme(
+      ThemeMode mode,
+      ) {
+    emit(
+      ThemeState(mode),
+    );
+  }
+  }
+

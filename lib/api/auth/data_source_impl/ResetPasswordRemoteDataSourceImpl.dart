@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 import '../../../Data/auth/data_source/ResetPasswordRemoteDataSource.dart';
 import '../../../core/errors/handlers/auth_error_handler.dart';
 import '../../../core/errors/result/results.dart';
-import '../../Api_Client.dart';
-import '../request/Reset Password.dart';
+import '../../api_client.dart';
+import '../request/reset_password.dart';
 @Injectable(as: ResetPasswordRemoteDataSource)
 class ResetPasswordRemoteDataSourceImpl implements ResetPasswordRemoteDataSource {
   ApiClient apiClient;

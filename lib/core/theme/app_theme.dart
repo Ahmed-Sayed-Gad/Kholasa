@@ -1,95 +1,50 @@
-// lib/core/theme/app_theme.dart
-
 import 'package:flutter/material.dart';
 import 'color_manager.dart';
 
 class AppTheme {
+  // ================= DARK =================
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-
     scaffoldBackgroundColor: ColorManager.primaryDark,
-
     primaryColor: ColorManager.primary,
 
     appBarTheme: AppBarTheme(
       backgroundColor: ColorManager.primaryDark,
       elevation: 0,
       centerTitle: false,
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: ColorManager.textColor,
       ),
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: ColorManager.textColor,
         fontSize: 20,
         fontWeight: FontWeight.w700,
       ),
     ),
 
-    colorScheme: ColorScheme.dark(
-      primary: ColorManager.primary,
-      secondary: ColorManager.primaryBlue,
-      surface: ColorManager.secondaryDark,
-      error: ColorManager.error,
-    ),
-
     cardColor: ColorManager.secondaryDark,
-
     dividerColor: ColorManager.borderLight,
 
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: ColorManager.textColor,
     ),
 
-    textTheme: TextTheme(
-      headlineLarge: TextStyle(
-        color: ColorManager.textColor,
-        fontWeight: FontWeight.bold,
-      ),
-      headlineMedium: TextStyle(
-        color: ColorManager.textColor,
-        fontWeight: FontWeight.w700,
-      ),
-      titleLarge: TextStyle(
-        color: ColorManager.textColor,
-        fontWeight: FontWeight.w600,
-      ),
-      bodyLarge: TextStyle(
-        color: ColorManager.textColor,
-      ),
-      bodyMedium: TextStyle(
-        color: ColorManager.textColorSecondary,
-      ),
-      bodySmall: TextStyle(
-        color: ColorManager.hintTextColor,
-      ),
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(color: ColorManager.textColor),
+      bodyMedium: TextStyle(color: ColorManager.textColorSecondary),
+      bodySmall: TextStyle(color: ColorManager.hintTextColor),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: ColorManager.surfaceDark,
-      hintStyle: TextStyle(
+      hintStyle: const TextStyle(
         color: ColorManager.hintTextColor,
-      ),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 14,
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           color: ColorManager.borderLight,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(
-          color: ColorManager.borderLight,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(
-          color: ColorManager.primary,
         ),
       ),
     ),
@@ -98,55 +53,76 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorManager.primary,
         foregroundColor: ColorManager.black,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 18,
-          vertical: 14,
-        ),
-        textStyle: const TextStyle(
-          fontWeight: FontWeight.w700,
-          fontSize: 15,
-        ),
       ),
-    ),
-
-    floatingActionButtonTheme:
-    FloatingActionButtonThemeData(
-      backgroundColor: ColorManager.primary,
-      foregroundColor: ColorManager.white,
-      elevation: 8,
     ),
 
     bottomNavigationBarTheme:
-    BottomNavigationBarThemeData(
+    const BottomNavigationBarThemeData(
       backgroundColor: ColorManager.surfaceDark,
       selectedItemColor: ColorManager.primary,
-      unselectedItemColor:
-      ColorManager.disabledText,
-      selectedLabelStyle: const TextStyle(
-        fontWeight: FontWeight.w600,
-      ),
-      unselectedLabelStyle: const TextStyle(
-        fontWeight: FontWeight.w500,
-      ),
-      type: BottomNavigationBarType.fixed,
-      elevation: 0,
-    ),
-
-    snackBarTheme: SnackBarThemeData(
-      backgroundColor: ColorManager.secondaryDark,
-      contentTextStyle: TextStyle(
-        color: ColorManager.textColor,
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
-      behavior: SnackBarBehavior.floating,
+      unselectedItemColor: ColorManager.disabledText,
     ),
   );
 
-  static ThemeData lightTheme = darkTheme;
+  // ================= LIGHT =================
+  static ThemeData lightTheme = ThemeData(
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: const Color(0xFFF8FAFC),
+    primaryColor: ColorManager.primary,
+
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFFF8FAFC),
+      elevation: 0,
+      centerTitle: false,
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+
+    cardColor: Colors.white,
+    dividerColor: Color(0xFFE2E8F0),
+
+    iconTheme: const IconThemeData(
+      color: Colors.black,
+    ),
+
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(color: Colors.black),
+      bodyMedium: TextStyle(color: Color(0xFF334155)),
+      bodySmall: TextStyle(color: Color(0xFF64748B)),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: Colors.white,
+      hintStyle: const TextStyle(
+        color: Color(0xFF64748B),
+      ),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(
+          color: Color(0xFFE2E8F0),
+        ),
+      ),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: ColorManager.primary,
+        foregroundColor: Colors.black,
+      ),
+    ),
+
+    bottomNavigationBarTheme:
+    const BottomNavigationBarThemeData(
+      backgroundColor: Colors.white,
+      selectedItemColor: ColorManager.primary,
+      unselectedItemColor: Color(0xFF94A3B8),
+    ),
+  );
 }

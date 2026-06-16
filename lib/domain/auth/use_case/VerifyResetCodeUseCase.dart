@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 
+import '../../../api/auth/request/verify_reset_password.dart';
 import '../../../core/errors/result/results.dart';
 import '../repositories/verify_reset_code.dart';
-import '../../../api/auth/request/Verify_Reset_password.dart';
 
 @injectable
 class VerifyResetCodeUseCase {
@@ -10,7 +10,7 @@ class VerifyResetCodeUseCase {
 
   VerifyResetCodeUseCase(this.repository);
 
-  Future<Result<void>> call(Verify_reset_password request) {
+  Future<Result<void>> call(VerifyResetPassword request) {
     return repository.verifyResetCode(request);
   }
 }

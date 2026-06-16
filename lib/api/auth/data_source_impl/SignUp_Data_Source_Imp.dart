@@ -3,8 +3,8 @@ import 'package:injectable/injectable.dart';
 import '../../../Data/auth/data_source/SignUp_Data_Source.dart';
 import '../../../core/errors/handlers/auth_error_handler.dart';
 import '../../../core/errors/result/results.dart';
-import '../../Api_Client.dart';
-import '../request/SignUpRequest.dart';
+import '../../api_client.dart';
+import '../request/sign_up_request.dart';
 
 @Injectable(as: SignUpDataSource)
 class SidnUp_Data_Source_Imp implements SignUpDataSource {

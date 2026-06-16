@@ -1,4 +1,4 @@
-import '../../../api/auth/request/Reset Password.dart';
+import '../../../api/auth/request/reset_password.dart';
 import '../../../core/errors/result/results.dart';
 
 abstract class ResetPasswordRepositories {

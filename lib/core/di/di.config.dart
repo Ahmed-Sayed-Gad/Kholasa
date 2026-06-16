@@ -12,287 +12,456 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:hive_ce_flutter/hive_flutter.dart' as _i919;
 import 'package:injectable/injectable.dart' as _i526;
-
-import '../../api/Api_Client.dart' as _i559;
-import '../../api/auth/data_source_impl/ForgotPasswordRemoteDataSourceImpl.dart'
-    as _i358;
-import '../../api/auth/data_source_impl/ResetPasswordRemoteDataSourceImpl.dart'
+import 'package:project_one_c3_team/api/api_client.dart' as _i777;
+import 'package:project_one_c3_team/api/auth/data_source_impl/change_password_data_source_impl.dart'
+    as _i763;
+import 'package:project_one_c3_team/api/auth/data_source_impl/ForgotPasswordRemoteDataSourceImpl.dart'
+    as _i876;
+import 'package:project_one_c3_team/api/auth/data_source_impl/ResetPasswordRemoteDataSourceImpl.dart'
+    as _i112;
+import 'package:project_one_c3_team/api/auth/data_source_impl/SignInRemoteDataSourceImpl.dart'
+    as _i12;
+import 'package:project_one_c3_team/api/auth/data_source_impl/SignUp_Data_Source_Imp.dart'
+    as _i875;
+import 'package:project_one_c3_team/api/auth/data_source_impl/VerifyResetCodeDataSourceImpl.dart'
     as _i811;
-import '../../api/auth/data_source_impl/SignInRemoteDataSourceImpl.dart'
-    as _i1040;
-import '../../api/auth/data_source_impl/SignUp_Data_Source_Imp.dart' as _i112;
-import '../../api/auth/data_source_impl/VerifyResetCodeDataSourceImpl.dart'
-    as _i79;
-import '../../api/home/Data_Source_Imp/change_password_data_source_impl.dart'
-    as _i396;
-import '../../Data/auth/data_source/change_password_data_source.dart' as _i431;
-import '../../Data/auth/data_source/ForgotPasswordRemoteDataSource.dart'
-    as _i961;
-import '../../Data/auth/data_source/ResetPasswordRemoteDataSource.dart'
-    as _i866;
-import '../../Data/auth/data_source/SignInRemoteDataSource.dart' as _i753;
-import '../../Data/auth/data_source/SignUp_Data_Source.dart' as _i329;
-import '../../Data/auth/data_source/verifyResetCodeDataSource.dart' as _i84;
-import '../../Data/auth/repositories_impl/change_password_repository_impl.dart'
-    as _i819;
-import '../../Data/auth/repositories_impl/ForgotPasswordRepoImpl.dar.dart'
-    as _i911;
-import '../../Data/auth/repositories_impl/remember_me_repository_impl.dart'
-    as _i906;
-import '../../Data/auth/repositories_impl/ResetPasswordRepoImpl.dart' as _i251;
-import '../../Data/auth/repositories_impl/SignInRepoImpl.dart' as _i681;
-import '../../Data/auth/repositories_impl/SignUpRepoImpl.dart' as _i7;
-import '../../Data/auth/repositories_impl/VerifyResetCodeRepoImpl.dart'
-    as _i654;
-import '../../Data/chat/datasource/chat_fake_remote_data_source.dart' as _i389;
-import '../../Data/chat/repository/chat_repository_impl.dart' as _i231;
-import '../../Data/home/repositries_Imp/home_repository_impl.dart' as _i850;
-import '../../Data/summarize/data_source/summarize_fake_data_source.dart'
-    as _i269;
-import '../../Data/summarize/repositories_impl/summarize_repository_impl.dart'
-    as _i835;
-import '../../Data/upload/data_sources/file_picker_data_source.dart' as _i1060;
-import '../../domain/auth/repositories/change_password_repository.dart'
-    as _i118;
-import '../../domain/auth/repositories/forgot_password_reposetories.dart'
-    as _i1056;
-import '../../domain/auth/repositories/remember_me_repository.dart' as _i308;
-import '../../domain/auth/repositories/Reset_password_reposetories.dart'
-    as _i670;
-import '../../domain/auth/repositories/sign_in_repository.dart' as _i626;
-import '../../domain/auth/repositories/SignUp_reposetries.dart' as _i147;
-import '../../domain/auth/repositories/verify_reset_code.dart' as _i223;
-import '../../domain/auth/use_case/change_password_use_case.dart' as _i1;
-import '../../domain/auth/use_case/ForgotPasswordUseCase.dart' as _i468;
-import '../../domain/auth/use_case/ResetPasswordUseCase.dart' as _i681;
-import '../../domain/auth/use_case/sign_up_use_case.dart' as _i790;
-import '../../domain/auth/use_case/SignInUseCase.dart' as _i236;
-import '../../domain/auth/use_case/VerifyResetCodeUseCase.dart' as _i342;
-import '../../domain/chat/repository/chat_repository.dart' as _i272;
-import '../../domain/chat/usecases/send_message_use_case.dart' as _i128;
-import '../../domain/export/repositories/export_repository.dart' as _i205;
-import '../../domain/export/use_case/export_summary_use_case.dart' as _i155;
-import '../../domain/home/repositories/home_repository.dart' as _i536;
-import '../../domain/home/UseCase/get_home_banners_use_case.dart' as _i200;
-import '../../domain/home/UseCase/get_recent_items_use_case.dart' as _i913;
-import '../../domain/home/UseCase/remember_me_usecase.dart' as _i444;
-import '../../domain/models/use_cases_imp/remember_me_use_case_imp.dart'
-    as _i656;
-import '../../domain/summarize/repositories/summarize_repository.dart' as _i704;
-import '../../domain/summarize/use_case/generate_summary_use_case.dart'
+import 'package:project_one_c3_team/core/di/app_module.dart' as _i961;
+import 'package:project_one_c3_team/core/di/shared_prefs_module.dart' as _i823;
+import 'package:project_one_c3_team/core/errors/handlers/auth_error_handler.dart'
+    as _i1070;
+import 'package:project_one_c3_team/core/errors/handlers/home_error_handler.dart'
+    as _i564;
+import 'package:project_one_c3_team/core/errors/utils/error_handler.dart'
+    as _i345;
+import 'package:project_one_c3_team/Data/auth/data_source/change_password_data_source.dart'
+    as _i827;
+import 'package:project_one_c3_team/Data/auth/data_source/ForgotPasswordRemoteDataSource.dart'
+    as _i939;
+import 'package:project_one_c3_team/Data/auth/data_source/ResetPasswordRemoteDataSource.dart'
+    as _i928;
+import 'package:project_one_c3_team/Data/auth/data_source/SignInRemoteDataSource.dart'
+    as _i732;
+import 'package:project_one_c3_team/Data/auth/data_source/SignUp_Data_Source.dart'
+    as _i946;
+import 'package:project_one_c3_team/Data/auth/data_source/verifyResetCodeDataSource.dart'
+    as _i347;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/change_password_repository_impl.dart'
+    as _i921;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/ForgotPasswordRepoImpl.dar.dart'
+    as _i448;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/remember_me_repository_impl.dart'
+    as _i563;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/ResetPasswordRepoImpl.dart'
+    as _i127;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/SignInRepoImpl.dart'
+    as _i210;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/SignUpRepoImpl.dart'
+    as _i679;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/VerifyResetCodeRepoImpl.dart'
+    as _i586;
+import 'package:project_one_c3_team/Data/chat/datasource/chat_fake_remote_data_source.dart'
+    as _i499;
+import 'package:project_one_c3_team/Data/chat/repository/chat_repository_impl.dart'
+    as _i914;
+import 'package:project_one_c3_team/Data/history/models/history_model.dart'
+    as _i1007;
+import 'package:project_one_c3_team/Data/home/repositries_Imp/home_repository_impl.dart'
+    as _i990;
+import 'package:project_one_c3_team/Data/scan/data_source/scan_mlkit_data_source.dart'
+    as _i469;
+import 'package:project_one_c3_team/Data/scan/repositories_impl/scan_repository_impl.dart'
+    as _i1048;
+import 'package:project_one_c3_team/Data/settings/data_source/settings_local_data_source.dart'
+    as _i387;
+import 'package:project_one_c3_team/Data/settings/repositories_impl/settings_repository_impl.dart'
+    as _i788;
+import 'package:project_one_c3_team/Data/summarize/data_source/summarize_fake_data_source.dart'
+    as _i875;
+import 'package:project_one_c3_team/Data/summarize/repositories_impl/summarize_repository_impl.dart'
+    as _i1066;
+import 'package:project_one_c3_team/Data/upload/data_sources/file_picker_data_source.dart'
+    as _i827;
+import 'package:project_one_c3_team/domain/auth/repositories/change_password_repository.dart'
+    as _i847;
+import 'package:project_one_c3_team/domain/auth/repositories/forgot_password_reposetories.dart'
+    as _i140;
+import 'package:project_one_c3_team/domain/auth/repositories/remember_me_repository.dart'
+    as _i861;
+import 'package:project_one_c3_team/domain/auth/repositories/Reset_password_reposetories.dart'
+    as _i1046;
+import 'package:project_one_c3_team/domain/auth/repositories/sign_in_repository.dart'
+    as _i433;
+import 'package:project_one_c3_team/domain/auth/repositories/SignUp_reposetries.dart'
+    as _i776;
+import 'package:project_one_c3_team/domain/auth/repositories/verify_reset_code.dart'
+    as _i978;
+import 'package:project_one_c3_team/domain/auth/use_case/change_password_use_case.dart'
+    as _i1060;
+import 'package:project_one_c3_team/domain/auth/use_case/ForgotPasswordUseCase.dart'
+    as _i94;
+import 'package:project_one_c3_team/domain/auth/use_case/ResetPasswordUseCase.dart'
+    as _i1021;
+import 'package:project_one_c3_team/domain/auth/use_case/sign_up_use_case.dart'
+    as _i769;
+import 'package:project_one_c3_team/domain/auth/use_case/SignInUseCase.dart'
+    as _i951;
+import 'package:project_one_c3_team/domain/auth/use_case/VerifyResetCodeUseCase.dart'
+    as _i615;
+import 'package:project_one_c3_team/domain/chat/repository/chat_repository.dart'
+    as _i601;
+import 'package:project_one_c3_team/domain/chat/usecases/send_message_use_case.dart'
+    as _i1026;
+import 'package:project_one_c3_team/domain/export/repositories/export_repository.dart'
+    as _i994;
+import 'package:project_one_c3_team/domain/export/use_case/export_summary_use_case.dart'
+    as _i1023;
+import 'package:project_one_c3_team/domain/history/repositories/history_repository.dart'
+    as _i662;
+import 'package:project_one_c3_team/domain/history/use_cases/get_history_use_case.dart'
+    as _i590;
+import 'package:project_one_c3_team/domain/history/use_cases/toggle_saved_use_case.dart'
+    as _i215;
+import 'package:project_one_c3_team/domain/home/repositories/home_repository.dart'
+    as _i520;
+import 'package:project_one_c3_team/domain/home/UseCase/get_home_banners_use_case.dart'
+    as _i529;
+import 'package:project_one_c3_team/domain/home/UseCase/get_recent_items_use_case.dart'
+    as _i307;
+import 'package:project_one_c3_team/domain/home/UseCase/remember_me_usecase.dart'
+    as _i811;
+import 'package:project_one_c3_team/domain/models/use_cases_imp/remember_me_use_case_imp.dart'
+    as _i851;
+import 'package:project_one_c3_team/domain/scan/repositories/scan_repository.dart'
+    as _i1068;
+import 'package:project_one_c3_team/domain/scan/use_case/extract_text_use_case.dart'
+    as _i1055;
+import 'package:project_one_c3_team/domain/settings/repositories/settings_repository.dart'
+    as _i398;
+import 'package:project_one_c3_team/domain/settings/use_case/get_settings_use_case.dart'
+    as _i534;
+import 'package:project_one_c3_team/domain/settings/use_case/save_settings_use_case.dart'
+    as _i81;
+import 'package:project_one_c3_team/domain/settings/use_case/update_auto_save_use_case.dart'
+    as _i415;
+import 'package:project_one_c3_team/domain/settings/use_case/update_language_use_case.dart'
+    as _i300;
+import 'package:project_one_c3_team/domain/settings/use_case/update_notifications_use_case.dart'
+    as _i522;
+import 'package:project_one_c3_team/domain/settings/use_case/update_theme_use_case.dart'
+    as _i959;
+import 'package:project_one_c3_team/domain/summarize/repositories/summarize_repository.dart'
+    as _i543;
+import 'package:project_one_c3_team/domain/summarize/use_case/generate_summary_use_case.dart'
+    as _i793;
+import 'package:project_one_c3_team/domain/upload/repositories/upload_repository.dart'
+    as _i1010;
+import 'package:project_one_c3_team/domain/upload/usecases/pick_and_validate_file_usecase.dart'
+    as _i302;
+import 'package:project_one_c3_team/presentation/auth/cubit/change_password_cubit.dart'
+    as _i658;
+import 'package:project_one_c3_team/presentation/auth/cubit/forget_password_cubit.dart'
+    as _i297;
+import 'package:project_one_c3_team/presentation/auth/cubit/reset_password_cubit.dart'
     as _i218;
-import '../../domain/upload/repositories/upload_repository.dart' as _i881;
-import '../../domain/upload/usecases/pick_and_validate_file_usecase.dart'
-    as _i742;
-import '../../presentation/auth/cubit/change_password_cubit.dart' as _i63;
-import '../../presentation/auth/cubit/forget_password_cubit.dart' as _i848;
-import '../../presentation/auth/cubit/reset_password_cubit.dart' as _i578;
-import '../../presentation/auth/cubit/signin_cubit.dart' as _i906;
-import '../../presentation/auth/cubit/signup_cubit.dart' as _i548;
-import '../../presentation/auth/cubit/verify_reset_code_cubit.dart' as _i1071;
-import '../../presentation/chat/cubit/chat_cubit.dart' as _i207;
-import '../../presentation/export/cubit/export_cubit.dart' as _i457;
-import '../../presentation/home/cubit/home_cubit.dart' as _i288;
-import '../../presentation/link/cubit/link_cubit.dart' as _i1061;
-import '../../presentation/scan/cubit/scan_cubit.dart' as _i492;
-import '../../presentation/session/cubit/upload_session_cubit.dart' as _i787;
-import '../../presentation/summarize/cubit/summarize_cubit.dart' as _i98;
-import '../../presentation/upload/cubit/upload_cubit.dart' as _i727;
-import '../errors/handlers/auth_error_handler.dart' as _i52;
-import '../errors/handlers/home_error_handler.dart' as _i295;
-import '../errors/utils/error_handler.dart' as _i637;
-import 'app_module.dart' as _i460;
+import 'package:project_one_c3_team/presentation/auth/cubit/signin_cubit.dart'
+    as _i78;
+import 'package:project_one_c3_team/presentation/auth/cubit/signup_cubit.dart'
+    as _i576;
+import 'package:project_one_c3_team/presentation/auth/cubit/verify_reset_code_cubit.dart'
+    as _i735;
+import 'package:project_one_c3_team/presentation/chat/cubit/chat_cubit.dart'
+    as _i819;
+import 'package:project_one_c3_team/presentation/export/cubit/export_cubit.dart'
+    as _i575;
+import 'package:project_one_c3_team/presentation/history/cubit/history_cubit.dart'
+    as _i584;
+import 'package:project_one_c3_team/presentation/home/cubit/home_cubit.dart'
+    as _i138;
+import 'package:project_one_c3_team/presentation/link/cubit/link_cubit.dart'
+    as _i1059;
+import 'package:project_one_c3_team/presentation/scan/cubit/scan_cubit.dart'
+    as _i931;
+import 'package:project_one_c3_team/presentation/session/cubit/upload_session_cubit.dart'
+    as _i681;
+import 'package:project_one_c3_team/presentation/settings/cubit/settings_cubit.dart'
+    as _i805;
+import 'package:project_one_c3_team/presentation/summarize/cubit/summarize_cubit.dart'
+    as _i622;
+import 'package:project_one_c3_team/presentation/upload/cubit/upload_cubit.dart'
+    as _i11;
+import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt init({
+  Future<_i174.GetIt> init({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
-  }) {
+  }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final historyModule = _$HistoryModule();
+    final sharedPrefsModule = _$SharedPrefsModule();
     final appModule = _$AppModule();
     final uploadModule = _$UploadModule();
     final exportModule = _$ExportModule();
-    gh.factory<_i52.AuthErrorHandler>(() => _i52.AuthErrorHandler());
-    gh.factory<_i295.HomeErrorHandler>(() => _i295.HomeErrorHandler());
-    gh.factory<_i637.ErrorHandler>(() => _i637.ErrorHandler());
-    gh.factory<_i727.UploadCubit>(() => _i727.UploadCubit());
-    gh.factory<_i1061.LinkCubit>(() => _i1061.LinkCubit());
-    gh.factory<_i492.ScanCubit>(() => _i492.ScanCubit());
+    await gh.factoryAsync<_i919.Box<_i1007.HistoryModel>>(
+      () => historyModule.historyBox(),
+      preResolve: true,
+    );
+    await gh.factoryAsync<_i460.SharedPreferences>(
+      () => sharedPrefsModule.prefs,
+      preResolve: true,
+    );
+    gh.factory<_i1070.AuthErrorHandler>(() => _i1070.AuthErrorHandler());
+    gh.factory<_i564.HomeErrorHandler>(() => _i564.HomeErrorHandler());
+    gh.factory<_i345.ErrorHandler>(() => _i345.ErrorHandler());
+    gh.factory<_i1059.LinkCubit>(() => _i1059.LinkCubit());
+    gh.factory<_i11.UploadCubit>(() => _i11.UploadCubit());
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i558.FlutterSecureStorage>(() => appModule.secureStorage);
-    gh.lazySingleton<_i1060.FilePickerDataSource>(
+    gh.lazySingleton<_i827.FilePickerDataSource>(
       () => uploadModule.filePickerDataSource(),
     );
-    gh.lazySingleton<_i205.ExportRepository>(
+    gh.lazySingleton<_i994.ExportRepository>(
       () => exportModule.exportRepository(),
     );
-    gh.lazySingleton<_i269.SummarizeFakeDataSource>(
-      () => _i269.SummarizeFakeDataSource(),
+    gh.lazySingleton<_i499.ChatFakeRemoteDataSource>(
+      () => _i499.ChatFakeRemoteDataSource(),
     );
-    gh.lazySingleton<_i787.UploadSessionCubit>(
-      () => _i787.UploadSessionCubit(),
+    gh.lazySingleton<_i469.ScanMlKitDataSource>(
+      () => _i469.ScanMlKitDataSource(),
     );
-    gh.lazySingleton<_i389.ChatFakeRemoteDataSource>(
-      () => _i389.ChatFakeRemoteDataSource(),
+    gh.lazySingleton<_i875.SummarizeFakeDataSource>(
+      () => _i875.SummarizeFakeDataSource(),
     );
-    gh.factory<_i98.SummarizeCubit>(
-      () => _i98.SummarizeCubit(gh<_i218.GenerateSummaryUseCase>()),
+    gh.lazySingleton<_i681.UploadSessionCubit>(
+      () => _i681.UploadSessionCubit(),
     );
-    gh.lazySingleton<_i704.SummarizeRepository>(
-      () => _i835.SummarizeRepositoryImpl(gh<_i269.SummarizeFakeDataSource>()),
+    gh.lazySingleton<_i543.SummarizeRepository>(
+      () => _i1066.SummarizeRepositoryImpl(gh<_i875.SummarizeFakeDataSource>()),
     );
-    gh.lazySingleton<_i559.ApiClient>(
+    gh.lazySingleton<_i777.ApiClient>(
       () => appModule.provideApiClient(gh<_i361.Dio>()),
     );
-    gh.factory<_i431.ChangePasswordDataSource>(
-      () => _i396.ChangePasswordDataSourceImpl(
-        gh<_i559.ApiClient>(),
-        gh<_i295.HomeErrorHandler>(),
+    gh.factory<_i827.ChangePasswordDataSource>(
+      () => _i763.ChangePasswordDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i564.HomeErrorHandler>(),
       ),
     );
-    gh.lazySingleton<_i536.HomeRepository>(() => _i850.HomeRepositoryImpl());
-    gh.factory<_i866.ResetPasswordRemoteDataSource>(
-      () => _i811.ResetPasswordRemoteDataSourceImpl(
-        gh<_i559.ApiClient>(),
-        gh<_i52.AuthErrorHandler>(),
+    gh.lazySingleton<_i387.SettingsLocalDataSource>(
+      () => _i387.SettingsLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    );
+    gh.lazySingleton<_i520.HomeRepository>(() => _i990.HomeRepositoryImpl());
+    gh.lazySingleton<_i1010.UploadRepository>(
+      () => uploadModule.uploadRepository(gh<_i827.FilePickerDataSource>()),
+    );
+    gh.factory<_i302.PickAndValidateFileUseCase>(
+      () => uploadModule.pickAndValidateFileUseCase(
+        gh<_i1010.UploadRepository>(),
       ),
     );
-    gh.factory<_i961.ForgotPasswordRemoteDataSource>(
-      () => _i358.ForgotPasswordRemoteDataSourceImpl(
-        gh<_i559.ApiClient>(),
-        gh<_i52.AuthErrorHandler>(),
+    gh.lazySingleton<_i398.SettingsRepository>(
+      () => _i788.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()),
+    );
+    gh.factory<_i732.SignInRemoteDataSource>(
+      () => _i12.Signinremotedatasourceimpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
-    gh.lazySingleton<_i881.UploadRepository>(
-      () => uploadModule.uploadRepository(gh<_i1060.FilePickerDataSource>()),
-    );
-    gh.factory<_i742.PickAndValidateFileUseCase>(
+    gh.lazySingleton<_i662.HistoryRepository>(
       () =>
-          uploadModule.pickAndValidateFileUseCase(gh<_i881.UploadRepository>()),
+          historyModule.historyRepository(gh<_i919.Box<_i1007.HistoryModel>>()),
     );
-    gh.factory<_i84.VerifyResetCodeRemoteDataSource>(
-      () => _i79.VerifyResetCodeRemoteDataSourceImpl(
-        gh<_i559.ApiClient>(),
-        gh<_i52.AuthErrorHandler>(),
+    gh.factory<_i946.SignUpDataSource>(
+      () => _i875.SidnUp_Data_Source_Imp(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
-    gh.factory<_i223.VerifyResetCodeRepositories>(
-      () => _i654.VerifyResetCodeRepoImpl(
-        gh<_i84.VerifyResetCodeRemoteDataSource>(),
+    gh.factory<_i347.VerifyResetCodeRemoteDataSource>(
+      () => _i811.VerifyResetCodeRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
-    gh.factory<_i155.ExportSummaryUseCase>(
-      () => exportModule.exportSummaryUseCase(gh<_i205.ExportRepository>()),
+    gh.factory<_i978.VerifyResetCodeRepositories>(
+      () => _i586.VerifyResetCodeRepoImpl(
+        gh<_i347.VerifyResetCodeRemoteDataSource>(),
+      ),
     );
-    gh.factory<_i342.VerifyResetCodeUseCase>(
+    gh.lazySingleton<_i1068.ScanRepository>(
+      () => _i1048.ScanRepositoryImpl(gh<_i469.ScanMlKitDataSource>()),
+    );
+    gh.factory<_i1023.ExportSummaryUseCase>(
+      () => exportModule.exportSummaryUseCase(gh<_i994.ExportRepository>()),
+    );
+    gh.factory<_i615.VerifyResetCodeUseCase>(
       () =>
-          _i342.VerifyResetCodeUseCase(gh<_i223.VerifyResetCodeRepositories>()),
+          _i615.VerifyResetCodeUseCase(gh<_i978.VerifyResetCodeRepositories>()),
     );
-    gh.lazySingleton<_i308.RememberMeRepository>(
-      () => _i906.RememberMeRepositoryImpl(gh<_i558.FlutterSecureStorage>()),
+    gh.factory<_i1055.ExtractTextUseCase>(
+      () => _i1055.ExtractTextUseCase(gh<_i1068.ScanRepository>()),
     );
-    gh.factory<_i1071.VerifyResetCodeCubit>(
-      () => _i1071.VerifyResetCodeCubit(gh<_i342.VerifyResetCodeUseCase>()),
+    gh.factory<_i590.GetHistoryUseCase>(
+      () => historyModule.getHistoryUseCase(gh<_i662.HistoryRepository>()),
     );
-    gh.factory<_i753.SignInRemoteDataSource>(
-      () => _i1040.Signinremotedatasourceimpl(
-        gh<_i559.ApiClient>(),
-        gh<_i52.AuthErrorHandler>(),
+    gh.factory<_i215.ToggleSavedUseCase>(
+      () => historyModule.toggleSavedUseCase(gh<_i662.HistoryRepository>()),
+    );
+    gh.factory<_i928.ResetPasswordRemoteDataSource>(
+      () => _i112.ResetPasswordRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
-    gh.lazySingleton<_i272.ChatRepository>(
-      () => _i231.ChatRepositoryImpl(gh<_i389.ChatFakeRemoteDataSource>()),
+    gh.lazySingleton<_i861.RememberMeRepository>(
+      () => _i563.RememberMeRepositoryImpl(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.factory<_i329.SignUpDataSource>(
-      () => _i112.SidnUp_Data_Source_Imp(
-        gh<_i559.ApiClient>(),
-        gh<_i52.AuthErrorHandler>(),
+    gh.factory<_i735.VerifyResetCodeCubit>(
+      () => _i735.VerifyResetCodeCubit(gh<_i615.VerifyResetCodeUseCase>()),
+    );
+    gh.factory<_i939.ForgotPasswordRemoteDataSource>(
+      () => _i876.ForgotPasswordRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
-    gh.factory<_i1056.ForgotPasswordRepositories>(
-      () => _i911.ForgotPasswordRepoImpl(
-        gh<_i961.ForgotPasswordRemoteDataSource>(),
+    gh.lazySingleton<_i601.ChatRepository>(
+      () => _i914.ChatRepositoryImpl(gh<_i499.ChatFakeRemoteDataSource>()),
+    );
+    gh.factory<_i793.GenerateSummaryUseCase>(
+      () => _i793.GenerateSummaryUseCase(
+        gh<_i543.SummarizeRepository>(),
+        gh<_i662.HistoryRepository>(),
       ),
     );
-    gh.factory<_i670.ResetPasswordRepositories>(
-      () => _i251.ResetPasswordRepoImpl(
-        gh<_i866.ResetPasswordRemoteDataSource>(),
+    gh.factory<_i140.ForgotPasswordRepositories>(
+      () => _i448.ForgotPasswordRepoImpl(
+        gh<_i939.ForgotPasswordRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i444.RememberMeUseCase>(
-      () => _i656.RememberMeUseCaseImpl(gh<_i308.RememberMeRepository>()),
-    );
-    gh.factory<_i118.ChangePasswordRepository>(
-      () => _i819.ChangePasswordRepositoryImpl(
-        gh<_i431.ChangePasswordDataSource>(),
+    gh.factory<_i1046.ResetPasswordRepositories>(
+      () => _i127.ResetPasswordRepoImpl(
+        gh<_i928.ResetPasswordRemoteDataSource>(),
       ),
     );
-    gh.factory<_i457.ExportCubit>(
-      () => _i457.ExportCubit(gh<_i155.ExportSummaryUseCase>()),
+    gh.factory<_i622.SummarizeCubit>(
+      () => _i622.SummarizeCubit(gh<_i793.GenerateSummaryUseCase>()),
     );
-    gh.factory<_i200.GetHomeBannersUseCase>(
-      () => _i200.GetHomeBannersUseCase(gh<_i536.HomeRepository>()),
+    gh.lazySingleton<_i811.RememberMeUseCase>(
+      () => _i851.RememberMeUseCaseImpl(gh<_i861.RememberMeRepository>()),
     );
-    gh.factory<_i913.GetRecentItemsUseCase>(
-      () => _i913.GetRecentItemsUseCase(gh<_i536.HomeRepository>()),
-    );
-    gh.factory<_i288.HomeCubit>(
-      () => _i288.HomeCubit(
-        gh<_i200.GetHomeBannersUseCase>(),
-        gh<_i913.GetRecentItemsUseCase>(),
+    gh.factory<_i847.ChangePasswordRepository>(
+      () => _i921.ChangePasswordRepositoryImpl(
+        gh<_i827.ChangePasswordDataSource>(),
       ),
     );
-    gh.factory<_i147.SignUpRepository>(
-      () => _i7.SignUpRepositoryImpl(gh<_i329.SignUpDataSource>()),
+    gh.factory<_i534.GetSettingsUseCase>(
+      () => _i534.GetSettingsUseCase(gh<_i398.SettingsRepository>()),
     );
-    gh.factory<_i626.SignInRepositories>(
-      () => _i681.SignInRepoImpl(gh<_i753.SignInRemoteDataSource>()),
+    gh.factory<_i81.SaveSettingsUseCase>(
+      () => _i81.SaveSettingsUseCase(gh<_i398.SettingsRepository>()),
     );
-    gh.factory<_i128.SendMessageUseCase>(
-      () => _i128.SendMessageUseCase(gh<_i272.ChatRepository>()),
+    gh.factory<_i415.UpdateAutoSaveUseCase>(
+      () => _i415.UpdateAutoSaveUseCase(gh<_i398.SettingsRepository>()),
     );
-    gh.factory<_i790.SignUpUseCase>(
-      () => _i790.SignUpUseCase(gh<_i147.SignUpRepository>()),
+    gh.factory<_i300.UpdateLanguageUseCase>(
+      () => _i300.UpdateLanguageUseCase(gh<_i398.SettingsRepository>()),
     );
-    gh.factory<_i1.ChangePasswordUseCase>(
-      () => _i1.ChangePasswordUseCase(gh<_i118.ChangePasswordRepository>()),
+    gh.factory<_i522.UpdateNotificationsUseCase>(
+      () => _i522.UpdateNotificationsUseCase(gh<_i398.SettingsRepository>()),
     );
-    gh.factory<_i236.SignInUseCase>(
-      () => _i236.SignInUseCase(gh<_i626.SignInRepositories>()),
+    gh.factory<_i959.UpdateThemeUseCase>(
+      () => _i959.UpdateThemeUseCase(gh<_i398.SettingsRepository>()),
     );
-    gh.factory<_i468.ForgotPasswordUseCase>(
-      () =>
-          _i468.ForgotPasswordUseCase(gh<_i1056.ForgotPasswordRepositories>()),
+    gh.factory<_i575.ExportCubit>(
+      () => _i575.ExportCubit(gh<_i1023.ExportSummaryUseCase>()),
     );
-    gh.factory<_i681.ResetPasswordUseCase>(
-      () => _i681.ResetPasswordUseCase(gh<_i670.ResetPasswordRepositories>()),
+    gh.factory<_i529.GetHomeBannersUseCase>(
+      () => _i529.GetHomeBannersUseCase(gh<_i520.HomeRepository>()),
     );
-    gh.factory<_i207.ChatCubit>(
-      () => _i207.ChatCubit(gh<_i128.SendMessageUseCase>()),
+    gh.factory<_i307.GetRecentItemsUseCase>(
+      () => _i307.GetRecentItemsUseCase(gh<_i520.HomeRepository>()),
     );
-    gh.factory<_i578.ResetPasswordCubit>(
-      () => _i578.ResetPasswordCubit(gh<_i681.ResetPasswordUseCase>()),
+    gh.factory<_i138.HomeCubit>(
+      () => _i138.HomeCubit(
+        gh<_i529.GetHomeBannersUseCase>(),
+        gh<_i307.GetRecentItemsUseCase>(),
+      ),
     );
-    gh.factory<_i848.ForgetPasswordCubit>(
-      () => _i848.ForgetPasswordCubit(gh<_i468.ForgotPasswordUseCase>()),
+    gh.factory<_i776.SignUpRepository>(
+      () => _i679.SignUpRepositoryImpl(gh<_i946.SignUpDataSource>()),
     );
-    gh.factory<_i63.ChangePasswordCubit>(
-      () => _i63.ChangePasswordCubit(gh<_i1.ChangePasswordUseCase>()),
+    gh.factory<_i433.SignInRepositories>(
+      () => _i210.SignInRepoImpl(gh<_i732.SignInRemoteDataSource>()),
     );
-    gh.factory<_i548.SignUpCubit>(
-      () => _i548.SignUpCubit(gh<_i790.SignUpUseCase>()),
+    gh.factory<_i1026.SendMessageUseCase>(
+      () => _i1026.SendMessageUseCase(gh<_i601.ChatRepository>()),
     );
-    gh.factory<_i906.SignInCubit>(
-      () => _i906.SignInCubit(gh<_i236.SignInUseCase>()),
+    gh.factory<_i769.SignUpUseCase>(
+      () => _i769.SignUpUseCase(gh<_i776.SignUpRepository>()),
+    );
+    gh.factory<_i584.HistoryCubit>(
+      () => historyModule.historyCubit(
+        gh<_i590.GetHistoryUseCase>(),
+        gh<_i215.ToggleSavedUseCase>(),
+      ),
+    );
+    gh.factory<_i931.ScanCubit>(
+      () => _i931.ScanCubit(gh<_i1055.ExtractTextUseCase>()),
+    );
+    gh.factory<_i1060.ChangePasswordUseCase>(
+      () => _i1060.ChangePasswordUseCase(gh<_i847.ChangePasswordRepository>()),
+    );
+    gh.factory<_i951.SignInUseCase>(
+      () => _i951.SignInUseCase(gh<_i433.SignInRepositories>()),
+    );
+    gh.factory<_i94.ForgotPasswordUseCase>(
+      () => _i94.ForgotPasswordUseCase(gh<_i140.ForgotPasswordRepositories>()),
+    );
+    gh.factory<_i1021.ResetPasswordUseCase>(
+      () => _i1021.ResetPasswordUseCase(gh<_i1046.ResetPasswordRepositories>()),
+    );
+    gh.factory<_i819.ChatCubit>(
+      () => _i819.ChatCubit(gh<_i1026.SendMessageUseCase>()),
+    );
+    gh.factory<_i805.SettingsCubit>(
+      () => _i805.SettingsCubit(
+        gh<_i534.GetSettingsUseCase>(),
+        gh<_i959.UpdateThemeUseCase>(),
+        gh<_i522.UpdateNotificationsUseCase>(),
+        gh<_i300.UpdateLanguageUseCase>(),
+        gh<_i415.UpdateAutoSaveUseCase>(),
+      ),
+    );
+    gh.factory<_i218.ResetPasswordCubit>(
+      () => _i218.ResetPasswordCubit(gh<_i1021.ResetPasswordUseCase>()),
+    );
+    gh.factory<_i297.ForgetPasswordCubit>(
+      () => _i297.ForgetPasswordCubit(gh<_i94.ForgotPasswordUseCase>()),
+    );
+    gh.factory<_i658.ChangePasswordCubit>(
+      () => _i658.ChangePasswordCubit(gh<_i1060.ChangePasswordUseCase>()),
+    );
+    gh.factory<_i576.SignUpCubit>(
+      () => _i576.SignUpCubit(gh<_i769.SignUpUseCase>()),
+    );
+    gh.factory<_i78.SignInCubit>(
+      () => _i78.SignInCubit(gh<_i951.SignInUseCase>()),
     );
     return this;
   }
 }
 
-class _$AppModule extends _i460.AppModule {}
+class _$HistoryModule extends _i961.HistoryModule {}
 
-class _$UploadModule extends _i460.UploadModule {}
+class _$SharedPrefsModule extends _i823.SharedPrefsModule {}
 
-class _$ExportModule extends _i460.ExportModule {}
+class _$AppModule extends _i961.AppModule {}
+
+class _$UploadModule extends _i961.UploadModule {}
+
+class _$ExportModule extends _i961.ExportModule {}

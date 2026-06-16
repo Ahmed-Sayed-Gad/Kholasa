@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../core/errors/result/results.dart';
 import '../repositories/SignUp_reposetries.dart';
-import '../../../api/auth/request/SignUpRequest.dart';
+import '../../../api/auth/request/sign_up_request.dart';
 
 @injectable
 class SignUpUseCase {

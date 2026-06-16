@@ -1,20 +1,49 @@
-// lib/presentation/scan/cubit/scan_cubit.dart
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../domain/scan/use_case/extract_text_use_case.dart';
 import 'scan_state.dart';
 
 @injectable
 class ScanCubit extends Cubit<ScanState> {
-  ScanCubit() : super(ScanInitial());
+  final ExtractTextUseCase extractTextUseCase;
+
+  ScanCubit(this.extractTextUseCase)
+      : super(ScanInitial());
+
+  final picker = ImagePicker();
 
   Future<void> scanImage() async {
-    emit(ScanLoading());
+    try {
+      final picked = await picker.pickImage(
+        source: ImageSource.gallery,
+      );
 
-    await Future.delayed(const Duration(seconds: 2));
+      if (picked == null) return;
 
-    emit(ScanSuccess());
+      emit(ScanLoading());
+
+      final file = File(picked.path);
+
+      final text =
+      await extractTextUseCase(file);
+
+      emit(
+        ScanSuccess(
+          image: file,
+          text: text,
+        ),
+      );
+    } catch (e) {
+      emit(
+        ScanFailure(
+          'Failed to scan image',
+        ),
+      );
+    }
   }
 
   void reset() {

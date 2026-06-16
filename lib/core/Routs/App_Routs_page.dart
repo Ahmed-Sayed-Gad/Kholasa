@@ -17,9 +17,7 @@ interface class AppRoutsPage {
       case App_Routs_names.signInScreen:
         return MaterialPageRoute(builder: (context) => SignInView());
       case App_Routs_names.HomeView:
-        return MaterialPageRoute(
-          builder: (_) => const HomeShellPage(),
-        );
+        return MaterialPageRoute(builder: (_) => HomeShellPage());
       case App_Routs_names.resetPasswordScreen:
         return MaterialPageRoute(builder: (context) => ResetPasswordView());
       case App_Routs_names.forgetPasswordScreen:

@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
-import '../../../api/auth/request/Verify_Reset_password.dart';
+import '../../../api/auth/request/verify_reset_password.dart';
 import '../../../domain/auth/use_case/VerifyResetCodeUseCase.dart';
 import 'verify_reset_code_state.dart';
 
@@ -16,7 +16,7 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
     emit(VerifyResetCodeLoading());
 
     final result = await _useCase(
-      Verify_reset_password(resetCode: code),
+      VerifyResetPassword(resetCode: code),
     );
 
     result.fold(

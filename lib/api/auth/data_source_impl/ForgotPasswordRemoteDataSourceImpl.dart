@@ -4,8 +4,8 @@ import 'package:injectable/injectable.dart';
 import '../../../Data/auth/data_source/ForgotPasswordRemoteDataSource.dart';
 import '../../../core/errors/handlers/auth_error_handler.dart';
 import '../../../core/errors/result/results.dart';
-import '../../Api_Client.dart';
-import '../request/Forgot_Password_Request.dart';
+import '../../api_client.dart';
+import '../request/forgot_password_request.dart';
 @Injectable(as: ForgotPasswordRemoteDataSource)
 class ForgotPasswordRemoteDataSourceImpl implements ForgotPasswordRemoteDataSource {
   ApiClient apiClient;

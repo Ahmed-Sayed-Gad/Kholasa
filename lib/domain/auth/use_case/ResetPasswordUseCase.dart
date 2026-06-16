@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 
+import '../../../api/auth/request/reset_password.dart';
 import '../../../core/errors/result/results.dart';
 import '../repositories/Reset_password_reposetories.dart';
-import '../../../api/auth/request/Reset Password.dart';
 
 @injectable
 class ResetPasswordUseCase {

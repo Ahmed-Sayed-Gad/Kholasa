@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
-import '../../../api/home/request/change_password_request.dart';
+import '../../../api/auth/request/change_password_request.dart';
 import '../../../domain/auth/use_case/change_password_use_case.dart';
 import 'change_password_state.dart';
 

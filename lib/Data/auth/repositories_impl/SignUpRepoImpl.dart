@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../api/auth/request/SignUpRequest.dart';
+import '../../../api/auth/request/sign_up_request.dart';
 import '../../../core/errors/result/results.dart';
 import '../../../domain/auth/repositories/SignUp_reposetries.dart';
 import '../data_source/SignUp_Data_Source.dart';

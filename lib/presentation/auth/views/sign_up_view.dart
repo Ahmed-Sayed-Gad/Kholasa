@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../api/auth/request/SignUpRequest.dart';
+import '../../../api/auth/request/sign_up_request.dart';
 import '../../../core/di/di.dart';
 import '../../../core/Routs/app_routes_names.dart';
 

@@ -1,4 +1,7 @@
+import '../entities/app_settings.dart';
+
 abstract class SettingsRepository {
-  Future<void> saveSummaryLength(String length);
-  Future<String> getSummaryLength();
+  Future<AppSettings> getSettings();
+
+  Future<void> saveSettings(AppSettings settings);
 }

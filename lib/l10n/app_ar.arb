@@ -1,0 +1,20 @@
+{
+  "settings": "الإعدادات",
+  "managePreferences": "إدارة التفضيلات",
+  "account": "الحساب",
+  "preferences": "التفضيلات",
+  "languagePreference": "اللغة",
+  "autoSave": "الحفظ التلقائي",
+  "autoSaveDesc": "احفظ كل الملخصات تلقائياً",
+  "notifications": "الإشعارات",
+  "notificationsDesc": "استقبل إشعار عند انتهاء التلخيص",
+  "darkMode": "الوضع الليلي",
+  "darkModeDesc": "استخدم المظهر الداكن",
+  "subscription": "الاشتراك",
+  "subscriptionBilling": "الاشتراك والفواتير",
+  "freePlan": "الخطة المجانية",
+  "privacySecurity": "الخصوصية والأمان",
+  "privacyPolicy": "سياسة الخصوصية",
+  "terms": "الشروط والأحكام",
+  "logout": "تسجيل الخروج"
+}

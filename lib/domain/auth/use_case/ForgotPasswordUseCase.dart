@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../core/errors/result/results.dart';
 import '../repositories/forgot_password_reposetories.dart';
-import '../../../api/auth/request/Forgot_Password_Request.dart';
+import '../../../api/auth/request/forgot_password_request.dart';
 
 @injectable
 class ForgotPasswordUseCase {

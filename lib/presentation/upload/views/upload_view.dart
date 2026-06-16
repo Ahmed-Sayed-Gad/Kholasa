@@ -91,33 +91,21 @@ class UploadView extends StatelessWidget {
               const SizedBox(
                   height: 28),
 
-              BlocConsumer<
-                  UploadCubit,
-                  UploadState>(
-                listener:
-                    (context,
-                    state) {
-                  if (state
-                  is UploadSuccess) {
+              BlocConsumer<UploadCubit, UploadState>(
+                listener: (context, state) {
+                  if (state is UploadSuccess) {
+                    final file = state.file;
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) =>
-                            SummarizeView(
-                              file:
-                              state.file,
-                            ),
+                        builder: (_) => SummarizeView(file: file),
                       ),
                     );
                   }
                 },
-                builder:
-                    (context,
-                    state) {
-                  return UploadCard(
-                    state:
-                    state,
-                  );
+                builder: (context, state) {
+                  return UploadCard(state: state);
                 },
               ),
             ],

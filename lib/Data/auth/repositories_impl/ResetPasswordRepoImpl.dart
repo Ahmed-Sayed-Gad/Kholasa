@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../api/auth/request/Reset Password.dart';
+import '../../../api/auth/request/reset_password.dart';
 import '../../../core/errors/result/results.dart';
 import '../../../domain/auth/repositories/Reset_password_reposetories.dart';
 import '../data_source/ResetPasswordRemoteDataSource.dart';

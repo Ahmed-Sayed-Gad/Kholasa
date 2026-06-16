@@ -1,4 +1,4 @@
-import '../../../api/auth/request/SignUpRequest.dart';
+import '../../../api/auth/request/sign_up_request.dart';
 import '../../../core/errors/result/results.dart';
 
 abstract class SignUpRepository {

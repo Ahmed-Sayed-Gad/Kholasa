@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
-import '../../../api/auth/request/SignUpRequest.dart';
+import '../../../api/auth/request/sign_up_request.dart';
 import '../../../domain/auth/use_case/sign_up_use_case.dart';
 import 'signup_state.dart';
 

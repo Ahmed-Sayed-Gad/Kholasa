@@ -1,0 +1,20 @@
+{
+  "settings": "Settings",
+  "managePreferences": "Manage your preferences",
+  "account": "ACCOUNT",
+  "preferences": "PREFERENCES",
+  "languagePreference": "Language Preference",
+  "autoSave": "Auto-save Summaries",
+  "autoSaveDesc": "Automatically save all summaries",
+  "notifications": "Push Notifications",
+  "notificationsDesc": "Get notified when summaries are ready",
+  "darkMode": "Dark Mode",
+  "darkModeDesc": "Use dark theme",
+  "subscription": "SUBSCRIPTION",
+  "subscriptionBilling": "Subscription & Billing",
+  "freePlan": "Free Plan",
+  "privacySecurity": "PRIVACY & SECURITY",
+  "privacyPolicy": "Privacy Policy",
+  "terms": "Terms of Service",
+  "logout": "Sign Out"
+}
