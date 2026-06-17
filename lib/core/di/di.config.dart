@@ -19,12 +19,12 @@ import 'package:project_one_c3_team/api/auth/data_source_impl/change_password_da
     as _i763;
 import 'package:project_one_c3_team/api/auth/data_source_impl/ForgotPasswordRemoteDataSourceImpl.dart'
     as _i876;
+import 'package:project_one_c3_team/api/auth/data_source_impl/login_remote_data_source_impl.dart'
+    as _i597;
+import 'package:project_one_c3_team/api/auth/data_source_impl/register_Data_Source_Imp.dart'
+    as _i615;
 import 'package:project_one_c3_team/api/auth/data_source_impl/ResetPasswordRemoteDataSourceImpl.dart'
     as _i112;
-import 'package:project_one_c3_team/api/auth/data_source_impl/SignInRemoteDataSourceImpl.dart'
-    as _i12;
-import 'package:project_one_c3_team/api/auth/data_source_impl/SignUp_Data_Source_Imp.dart'
-    as _i875;
 import 'package:project_one_c3_team/api/auth/data_source_impl/VerifyResetCodeDataSourceImpl.dart'
     as _i811;
 import 'package:project_one_c3_team/core/di/app_module.dart' as _i961;
@@ -39,26 +39,26 @@ import 'package:project_one_c3_team/Data/auth/data_source/change_password_data_s
     as _i827;
 import 'package:project_one_c3_team/Data/auth/data_source/ForgotPasswordRemoteDataSource.dart'
     as _i939;
+import 'package:project_one_c3_team/Data/auth/data_source/login_remote_data_source.dart'
+    as _i754;
+import 'package:project_one_c3_team/Data/auth/data_source/register_Data_Source.dart'
+    as _i233;
 import 'package:project_one_c3_team/Data/auth/data_source/ResetPasswordRemoteDataSource.dart'
     as _i928;
-import 'package:project_one_c3_team/Data/auth/data_source/SignInRemoteDataSource.dart'
-    as _i732;
-import 'package:project_one_c3_team/Data/auth/data_source/SignUp_Data_Source.dart'
-    as _i946;
 import 'package:project_one_c3_team/Data/auth/data_source/verifyResetCodeDataSource.dart'
     as _i347;
 import 'package:project_one_c3_team/Data/auth/repositories_impl/change_password_repository_impl.dart'
     as _i921;
 import 'package:project_one_c3_team/Data/auth/repositories_impl/ForgotPasswordRepoImpl.dar.dart'
     as _i448;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/login_repo_Impl.dart'
+    as _i734;
+import 'package:project_one_c3_team/Data/auth/repositories_impl/register_repo_impl.dart'
+    as _i336;
 import 'package:project_one_c3_team/Data/auth/repositories_impl/remember_me_repository_impl.dart'
     as _i563;
 import 'package:project_one_c3_team/Data/auth/repositories_impl/ResetPasswordRepoImpl.dart'
     as _i127;
-import 'package:project_one_c3_team/Data/auth/repositories_impl/SignInRepoImpl.dart'
-    as _i210;
-import 'package:project_one_c3_team/Data/auth/repositories_impl/SignUpRepoImpl.dart'
-    as _i679;
 import 'package:project_one_c3_team/Data/auth/repositories_impl/VerifyResetCodeRepoImpl.dart'
     as _i586;
 import 'package:project_one_c3_team/Data/chat/datasource/chat_fake_remote_data_source.dart'
@@ -69,6 +69,10 @@ import 'package:project_one_c3_team/Data/history/models/history_model.dart'
     as _i1007;
 import 'package:project_one_c3_team/Data/home/repositries_Imp/home_repository_impl.dart'
     as _i990;
+import 'package:project_one_c3_team/Data/profile/data_source/profile_local_data_source.dart'
+    as _i874;
+import 'package:project_one_c3_team/Data/profile/repositories_impl/profile_repository_impl.dart'
+    as _i256;
 import 'package:project_one_c3_team/Data/scan/data_source/scan_mlkit_data_source.dart'
     as _i469;
 import 'package:project_one_c3_team/Data/scan/repositories_impl/scan_repository_impl.dart'
@@ -87,26 +91,26 @@ import 'package:project_one_c3_team/domain/auth/repositories/change_password_rep
     as _i847;
 import 'package:project_one_c3_team/domain/auth/repositories/forgot_password_reposetories.dart'
     as _i140;
+import 'package:project_one_c3_team/domain/auth/repositories/login_repository.dart'
+    as _i478;
+import 'package:project_one_c3_team/domain/auth/repositories/register_repositories.dart'
+    as _i97;
 import 'package:project_one_c3_team/domain/auth/repositories/remember_me_repository.dart'
     as _i861;
 import 'package:project_one_c3_team/domain/auth/repositories/Reset_password_reposetories.dart'
     as _i1046;
-import 'package:project_one_c3_team/domain/auth/repositories/sign_in_repository.dart'
-    as _i433;
-import 'package:project_one_c3_team/domain/auth/repositories/SignUp_reposetries.dart'
-    as _i776;
 import 'package:project_one_c3_team/domain/auth/repositories/verify_reset_code.dart'
     as _i978;
 import 'package:project_one_c3_team/domain/auth/use_case/change_password_use_case.dart'
     as _i1060;
 import 'package:project_one_c3_team/domain/auth/use_case/ForgotPasswordUseCase.dart'
     as _i94;
+import 'package:project_one_c3_team/domain/auth/use_case/login_usecase.dart'
+    as _i317;
+import 'package:project_one_c3_team/domain/auth/use_case/register_use_case.dart'
+    as _i742;
 import 'package:project_one_c3_team/domain/auth/use_case/ResetPasswordUseCase.dart'
     as _i1021;
-import 'package:project_one_c3_team/domain/auth/use_case/sign_up_use_case.dart'
-    as _i769;
-import 'package:project_one_c3_team/domain/auth/use_case/SignInUseCase.dart'
-    as _i951;
 import 'package:project_one_c3_team/domain/auth/use_case/VerifyResetCodeUseCase.dart'
     as _i615;
 import 'package:project_one_c3_team/domain/chat/repository/chat_repository.dart'
@@ -133,6 +137,10 @@ import 'package:project_one_c3_team/domain/home/UseCase/remember_me_usecase.dart
     as _i811;
 import 'package:project_one_c3_team/domain/models/use_cases_imp/remember_me_use_case_imp.dart'
     as _i851;
+import 'package:project_one_c3_team/domain/profile/repositories/profile_repository.dart'
+    as _i22;
+import 'package:project_one_c3_team/domain/profile/use_case/get_profile_use_case.dart'
+    as _i791;
 import 'package:project_one_c3_team/domain/scan/repositories/scan_repository.dart'
     as _i1068;
 import 'package:project_one_c3_team/domain/scan/use_case/extract_text_use_case.dart'
@@ -163,12 +171,12 @@ import 'package:project_one_c3_team/presentation/auth/cubit/change_password_cubi
     as _i658;
 import 'package:project_one_c3_team/presentation/auth/cubit/forget_password_cubit.dart'
     as _i297;
+import 'package:project_one_c3_team/presentation/auth/cubit/login_cubit.dart'
+    as _i461;
+import 'package:project_one_c3_team/presentation/auth/cubit/register_cubit.dart'
+    as _i823;
 import 'package:project_one_c3_team/presentation/auth/cubit/reset_password_cubit.dart'
     as _i218;
-import 'package:project_one_c3_team/presentation/auth/cubit/signin_cubit.dart'
-    as _i78;
-import 'package:project_one_c3_team/presentation/auth/cubit/signup_cubit.dart'
-    as _i576;
 import 'package:project_one_c3_team/presentation/auth/cubit/verify_reset_code_cubit.dart'
     as _i735;
 import 'package:project_one_c3_team/presentation/chat/cubit/chat_cubit.dart'
@@ -181,6 +189,8 @@ import 'package:project_one_c3_team/presentation/home/cubit/home_cubit.dart'
     as _i138;
 import 'package:project_one_c3_team/presentation/link/cubit/link_cubit.dart'
     as _i1059;
+import 'package:project_one_c3_team/presentation/profile/cubit/profile_cubit.dart'
+    as _i799;
 import 'package:project_one_c3_team/presentation/scan/cubit/scan_cubit.dart'
     as _i931;
 import 'package:project_one_c3_team/presentation/session/cubit/upload_session_cubit.dart'
@@ -216,6 +226,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1070.AuthErrorHandler>(() => _i1070.AuthErrorHandler());
     gh.factory<_i564.HomeErrorHandler>(() => _i564.HomeErrorHandler());
     gh.factory<_i345.ErrorHandler>(() => _i345.ErrorHandler());
+    gh.factory<_i874.ProfileLocalDataSource>(
+      () => _i874.ProfileLocalDataSource(),
+    );
     gh.factory<_i1059.LinkCubit>(() => _i1059.LinkCubit());
     gh.factory<_i11.UploadCubit>(() => _i11.UploadCubit());
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
@@ -265,21 +278,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i398.SettingsRepository>(
       () => _i788.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()),
     );
-    gh.factory<_i732.SignInRemoteDataSource>(
-      () => _i12.Signinremotedatasourceimpl(
-        gh<_i777.ApiClient>(),
-        gh<_i1070.AuthErrorHandler>(),
-      ),
-    );
     gh.lazySingleton<_i662.HistoryRepository>(
       () =>
           historyModule.historyRepository(gh<_i919.Box<_i1007.HistoryModel>>()),
     );
-    gh.factory<_i946.SignUpDataSource>(
-      () => _i875.SidnUp_Data_Source_Imp(
-        gh<_i777.ApiClient>(),
-        gh<_i1070.AuthErrorHandler>(),
-      ),
+    gh.factory<_i22.ProfileRepository>(
+      () => _i256.ProfileRepositoryImpl(gh<_i874.ProfileLocalDataSource>()),
     );
     gh.factory<_i347.VerifyResetCodeRemoteDataSource>(
       () => _i811.VerifyResetCodeRemoteDataSourceImpl(
@@ -290,6 +294,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i978.VerifyResetCodeRepositories>(
       () => _i586.VerifyResetCodeRepoImpl(
         gh<_i347.VerifyResetCodeRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i233.RegisterDataSource>(
+      () => _i615.RegisterDataSourceImp(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
+      ),
+    );
+    gh.factory<_i754.LoginRemoteDataSource>(
+      () => _i597.LoginRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
     gh.lazySingleton<_i1068.ScanRepository>(
@@ -377,6 +393,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i959.UpdateThemeUseCase>(
       () => _i959.UpdateThemeUseCase(gh<_i398.SettingsRepository>()),
     );
+    gh.factory<_i97.RegisterRepository>(
+      () => _i336.RegisterRepositoryImpl(gh<_i233.RegisterDataSource>()),
+    );
     gh.factory<_i575.ExportCubit>(
       () => _i575.ExportCubit(gh<_i1023.ExportSummaryUseCase>()),
     );
@@ -392,17 +411,14 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i307.GetRecentItemsUseCase>(),
       ),
     );
-    gh.factory<_i776.SignUpRepository>(
-      () => _i679.SignUpRepositoryImpl(gh<_i946.SignUpDataSource>()),
-    );
-    gh.factory<_i433.SignInRepositories>(
-      () => _i210.SignInRepoImpl(gh<_i732.SignInRemoteDataSource>()),
+    gh.factory<_i791.GetProfileUseCase>(
+      () => _i791.GetProfileUseCase(gh<_i22.ProfileRepository>()),
     );
     gh.factory<_i1026.SendMessageUseCase>(
       () => _i1026.SendMessageUseCase(gh<_i601.ChatRepository>()),
     );
-    gh.factory<_i769.SignUpUseCase>(
-      () => _i769.SignUpUseCase(gh<_i776.SignUpRepository>()),
+    gh.factory<_i478.LoginRepositories>(
+      () => _i734.LoginRepoImpl(gh<_i754.LoginRemoteDataSource>()),
     );
     gh.factory<_i584.HistoryCubit>(
       () => historyModule.historyCubit(
@@ -416,11 +432,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1060.ChangePasswordUseCase>(
       () => _i1060.ChangePasswordUseCase(gh<_i847.ChangePasswordRepository>()),
     );
-    gh.factory<_i951.SignInUseCase>(
-      () => _i951.SignInUseCase(gh<_i433.SignInRepositories>()),
-    );
     gh.factory<_i94.ForgotPasswordUseCase>(
       () => _i94.ForgotPasswordUseCase(gh<_i140.ForgotPasswordRepositories>()),
+    );
+    gh.factory<_i799.ProfileCubit>(
+      () => _i799.ProfileCubit(gh<_i791.GetProfileUseCase>()),
     );
     gh.factory<_i1021.ResetPasswordUseCase>(
       () => _i1021.ResetPasswordUseCase(gh<_i1046.ResetPasswordRepositories>()),
@@ -440,17 +456,23 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i218.ResetPasswordCubit>(
       () => _i218.ResetPasswordCubit(gh<_i1021.ResetPasswordUseCase>()),
     );
+    gh.factory<_i742.RegisterUseCase>(
+      () => _i742.RegisterUseCase(gh<_i97.RegisterRepository>()),
+    );
     gh.factory<_i297.ForgetPasswordCubit>(
       () => _i297.ForgetPasswordCubit(gh<_i94.ForgotPasswordUseCase>()),
+    );
+    gh.factory<_i317.LoginUseCase>(
+      () => _i317.LoginUseCase(gh<_i478.LoginRepositories>()),
     );
     gh.factory<_i658.ChangePasswordCubit>(
       () => _i658.ChangePasswordCubit(gh<_i1060.ChangePasswordUseCase>()),
     );
-    gh.factory<_i576.SignUpCubit>(
-      () => _i576.SignUpCubit(gh<_i769.SignUpUseCase>()),
+    gh.factory<_i461.LoginCubit>(
+      () => _i461.LoginCubit(gh<_i317.LoginUseCase>()),
     );
-    gh.factory<_i78.SignInCubit>(
-      () => _i78.SignInCubit(gh<_i951.SignInUseCase>()),
+    gh.factory<_i823.RegisterCubit>(
+      () => _i823.RegisterCubit(gh<_i742.RegisterUseCase>()),
     );
     return this;
   }

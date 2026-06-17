@@ -48,7 +48,7 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
           if (state is ResetPasswordSuccess) {
             Navigator.pushReplacementNamed(
               context,
-              App_Routs_names.signInScreen,
+              App_Routs_names.LoginScreen,
             );
           }
 

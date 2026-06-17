@@ -1,7 +1,7 @@
 class App_Routs_names{
-  static const String signUpScreen = "/signup";
-  static const String signInScreen = "/signin";
-  static const String HomeView = "/views";
+  static const String LoginScreen = "/login";
+  static const String RegisterScreen = "/register";
+  static const String HomeView = "/homeview";
   static const String resetPasswordScreen = "/resetpassword";
   static const String changePasswordPage = "/changepasswordpage"; // Updated name
   static const String forgetPasswordScreen = "/forgetpassword";

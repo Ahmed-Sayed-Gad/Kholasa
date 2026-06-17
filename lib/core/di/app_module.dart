@@ -15,8 +15,6 @@ import '../../domain/export/use_case/export_summary_use_case.dart';
 import '../../domain/history/repositories/history_repository.dart';
 import '../../domain/history/use_cases/get_history_use_case.dart';
 import '../../domain/history/use_cases/toggle_saved_use_case.dart';
-import '../../domain/summarize/repositories/summarize_repository.dart';
-import '../../domain/summarize/use_case/generate_summary_use_case.dart';
 import '../../domain/upload/repositories/upload_repository.dart';
 import '../../domain/upload/usecases/pick_and_validate_file_usecase.dart';
 import '../../presentation/history/cubit/history_cubit.dart';
@@ -24,12 +22,13 @@ import '../../presentation/history/cubit/history_cubit.dart';
 @module
 abstract class AppModule {
   @lazySingleton
+  @lazySingleton
   Dio get dio => Dio(
     BaseOptions(
-      baseUrl: "https://exam.elevateegy.com/api/",
+      baseUrl: "https://moahmmed24-001-site1.ctempurl.com/api/",
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        "Content-Type": "application/json",
+        "Accept": "*/*",
       },
     ),
   );
