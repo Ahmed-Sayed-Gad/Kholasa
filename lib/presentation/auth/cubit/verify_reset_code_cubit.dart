@@ -7,16 +7,31 @@ import '../../../domain/auth/use_case/VerifyResetCodeUseCase.dart';
 import 'verify_reset_code_state.dart';
 
 @injectable
-class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
+class VerifyResetCodeCubit
+    extends Cubit<VerifyResetCodeState> {
+
   final VerifyResetCodeUseCase _useCase;
 
-  VerifyResetCodeCubit(this._useCase) : super(VerifyResetCodeInitial());
+  VerifyResetCodeCubit(this._useCase)
+      : super(VerifyResetCodeInitial());
 
-  Future<void> verifyCode(String code) async {
+  Future<void> verifyCode({
+    required String email,
+    required String code,
+  }) async {
+
     emit(VerifyResetCodeLoading());
 
+    print("=================================");
+    print("EMAIL => $email");
+    print("CODE => $code");
+    print("=================================");
+
     final result = await _useCase(
-      VerifyResetPassword(resetCode: code),
+      VerifyResetPassword(
+        email: email,
+        token: code,
+      ),
     );
 
     result.fold(
@@ -24,8 +39,12 @@ class VerifyResetCodeCubit extends Cubit<VerifyResetCodeState> {
         emit(VerifyResetCodeSuccess());
       },
       onFailure: (failure) {
-        emit(VerifyResetCodeError(failure.userFriendlyMessage));
+        emit(
+          VerifyResetCodeError(
+            failure.userFriendlyMessage,
+          ),
+        );
       },
     );
   }
-}
+  }

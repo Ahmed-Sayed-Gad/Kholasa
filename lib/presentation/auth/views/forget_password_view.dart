@@ -34,9 +34,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
         listener: (context, state) {
           if (state is ForgetPasswordSuccess) {
+            print(
+              "FORGET PASSWORD EMAIL => ${emailController.text.trim()}",
+            );
             Navigator.pushReplacementNamed(
               context,
               App_Routs_names.verifyCodeScreen,
+              arguments: emailController.text.trim(),
             );
           }
 

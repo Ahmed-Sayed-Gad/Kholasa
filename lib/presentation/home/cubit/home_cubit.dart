@@ -44,16 +44,12 @@ class HomeCubit extends Cubit<HomeState> {
             final itemsUi =
             itemsDomain.map(HomeUiMapper.mapRecentItem).toList();
 
-            if (itemsUi.isEmpty) {
-              emit(HomeEmpty());
-            } else {
-              emit(
-                HomeSuccess(
-                  items: itemsUi,
-                  allItems: itemsUi,
-                ),
-              );
-            }
+            emit(
+              HomeSuccess(
+                items: itemsUi,
+                allItems: itemsUi,
+              ),
+            );
           },
         );
       },

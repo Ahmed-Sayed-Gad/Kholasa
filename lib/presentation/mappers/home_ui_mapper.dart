@@ -26,9 +26,24 @@ class HomeUiMapper {
   }
 
   static String _formatDueDate(DateTime date) {
-    final days = date.difference(DateTime.now()).inDays;
-    if (days <= 0) return 'Today';
-    if (days == 1) return 'Tomorrow';
-    return '$days days left';
+    final difference = DateTime.now().difference(date);
+
+    if (difference.inMinutes < 1) {
+      return 'Just now';
+    }
+
+    if (difference.inHours < 1) {
+      return '${difference.inMinutes} min ago';
+    }
+
+    if (difference.inDays < 1) {
+      return '${difference.inHours} hr ago';
+    }
+
+    if (difference.inDays == 1) {
+      return 'Yesterday';
+    }
+
+    return '${difference.inDays} days ago';
   }
 }

@@ -19,11 +19,17 @@ interface class AppRoutsPage {
       case App_Routs_names.HomeView:
         return MaterialPageRoute(builder: (_) => HomeShellPage());
       case App_Routs_names.resetPasswordScreen:
-        return MaterialPageRoute(builder: (context) => ResetPasswordView());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const ResetPasswordView(),
+        );
       case App_Routs_names.forgetPasswordScreen:
         return MaterialPageRoute(builder: (context) => ForgetPassword());
       case App_Routs_names.verifyCodeScreen:
-        return MaterialPageRoute(builder: (context) => VerifyCodeView());
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const VerifyCodeView(),
+        );
       case App_Routs_names.changePasswordPage:
         return MaterialPageRoute(builder: (context) => ChangePasswordPage());
       default:

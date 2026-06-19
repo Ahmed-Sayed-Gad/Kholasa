@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_one_c3_team/presentation/settings/views/privacy_policy_view.dart';
+import 'package:project_one_c3_team/presentation/settings/views/terms_of_use_view.dart';
 
 import '../../../core/di/di.dart';
+import '../../../core/services/auth_storage.dart';
+import '../../../core/services/user_storage.dart';
 import '../../../core/theme/color_manager.dart';
 
 import '../../../l10n/app_localizations.dart';
 
+import '../../auth/views/login_view.dart';
 import '../../language/cubit/language_cubit.dart';
 
 import '../../theme/theme_cubit.dart';
@@ -70,39 +75,57 @@ class _SettingsBody extends StatelessWidget {
               Text(locale.account),
               const SizedBox(height: 12),
 
-              _Card(
-                child: ListTile(
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  leading: CircleAvatar(
-                    radius: 24,
-                    backgroundColor: ColorManager.primary,
-                    child: const Text(
-                      "M",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+              FutureBuilder(
+                future: Future.wait([
+                  UserStorage.getName(),
+                  UserStorage.getEmail(),
+                ]),
+                builder: (context, snapshot) {
+                  final name = snapshot.hasData
+                      ? snapshot.data![0] ?? "User"
+                      : "User";
+
+                  final email = snapshot.hasData ? snapshot.data![1] ?? "" : "";
+
+                  return _Card(
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+
+                      leading: CircleAvatar(
+                        radius: 24,
+                        backgroundColor: ColorManager.primary,
+                        child: Text(
+                          name.isNotEmpty ? name[0].toUpperCase() : "U",
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+
+                      title: Text(
+                        name,
+                        style: const TextStyle(
+                          color: ColorManager.textPrimary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+
+                      subtitle: Text(
+                        email,
+                        style: const TextStyle(color: ColorManager.textHint),
+                      ),
+
+                      trailing: Icon(
+                        Icons.chevron_right,
+                        color: ColorManager.textHint,
                       ),
                     ),
-                  ),
-                  title: Text(
-                    "Mohammed",
-                    style: TextStyle(
-                      color: ColorManager.textPrimary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  subtitle: Text(
-                    "mohammed@example.com",
-                    style: TextStyle(color: ColorManager.textHint),
-                  ),
-                  trailing: Icon(
-                    Icons.chevron_right,
-                    color: ColorManager.textHint,
-                  ),
-                ),
+                  );
+                },
               ),
 
               const SizedBox(height: 24),
@@ -191,63 +214,37 @@ class _SettingsBody extends StatelessWidget {
 
                     Divider(color: ColorManager.dividerColor, height: 1),
 
-          SwitchListTile(
-          secondary: Icon(
-          Icons.dark_mode,
-          color: ColorManager.primary,
-          ),
-          title: Text(
-          locale.darkMode,
-          style: TextStyle(
-          color: ColorManager.textPrimary,
-          ),
-          ),
-          subtitle: Text(
-          "Use dark theme",
-          style: TextStyle(
-          color: ColorManager.textHint,
-          ),
-          ),
-          activeColor: ColorManager.primary,
+                    SwitchListTile(
+                      secondary: Icon(
+                        Icons.dark_mode,
+                        color: ColorManager.primary,
+                      ),
+                      title: Text(
+                        locale.darkMode,
+                        style: TextStyle(color: ColorManager.textPrimary),
+                      ),
+                      subtitle: Text(
+                        "Use dark theme",
+                        style: TextStyle(color: ColorManager.textHint),
+                      ),
+                      activeColor: ColorManager.primary,
 
-          value: context.watch<ThemeCubit>().state.mode == ThemeMode.dark,
+                      value:
+                          context.watch<ThemeCubit>().state.mode ==
+                          ThemeMode.dark,
 
-          onChanged: (value) {
-          context.read<ThemeCubit>().setTheme(
-          value ? ThemeMode.dark : ThemeMode.light,
-          );
+                      onChanged: (value) {
+                        context.read<ThemeCubit>().setTheme(
+                          value ? ThemeMode.dark : ThemeMode.light,
+                        );
 
-          context.read<SettingsCubit>().toggleTheme(
-          context,
-          value,
-          );
-          },
-          ),
+                        context.read<SettingsCubit>().toggleTheme(
+                          context,
+                          value,
+                        );
+                      },
+                    ),
                   ],
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              /// SUBSCRIPTION
-              _SectionTitle("SUBSCRIPTION"),
-              const SizedBox(height: 12),
-
-              _Card(
-                child: ListTile(
-                  leading: Icon(Icons.credit_card, color: ColorManager.primary),
-                  title: Text(
-                    "Subscription & Billing",
-                    style: TextStyle(color: ColorManager.textPrimary),
-                  ),
-                  subtitle: Text(
-                    "Free Plan",
-                    style: TextStyle(color: ColorManager.textHint),
-                  ),
-                  trailing: Icon(
-                    Icons.chevron_right,
-                    color: ColorManager.textHint,
-                  ),
                 ),
               ),
 
@@ -270,6 +267,14 @@ class _SettingsBody extends StatelessWidget {
                         Icons.chevron_right,
                         color: ColorManager.textHint,
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const PrivacyPolicyView(),
+                          ),
+                        );
+                      },
                     ),
 
                     Divider(color: ColorManager.dividerColor, height: 1),
@@ -284,6 +289,14 @@ class _SettingsBody extends StatelessWidget {
                         Icons.chevron_right,
                         color: ColorManager.textHint,
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const TermsOfUseView(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -302,6 +315,44 @@ class _SettingsBody extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
+                  onTap: () async {
+                    final result = await showDialog<bool>(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: const Text("Sign Out"),
+                        content: const Text(
+                          "Are you sure you want to sign out?",
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                            child: const Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context, true);
+                            },
+                            child: const Text("Sign Out"),
+                          ),
+                        ],
+                      ),
+                    );
+
+                    if (result != true) return;
+
+                    await UserStorage.clear();
+                    await AuthStorage.logout();
+
+                    if (!context.mounted) return;
+
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoginView()),
+                      (route) => false,
+                    );
+                  },
                 ),
               ),
 

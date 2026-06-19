@@ -18,7 +18,6 @@ class ExportCubit extends Cubit<ExportState> {
     required String summary,
     required ExportType type,
     required String fileName,
-    required String directory,
   }) async {
 
     emit(ExportLoading());
@@ -26,8 +25,7 @@ class ExportCubit extends Cubit<ExportState> {
     final result = await exportSummaryUseCase(
       summary: summary,
       type: type,
-      fileName: fileName,
-      directoryPath: directory,
+      fileName: fileName
     );
 
     result.fold(

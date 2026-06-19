@@ -14,14 +14,17 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
 
   Future<void> resetPassword({
     required String email,
+    required String token,
     required String password,
   }) async {
+
     emit(ResetPasswordLoading());
 
     final result = await _useCase(
       Reset_Password(
         email: email,
-        password: password,
+        token: token,
+        newPassword: password,
       ),
     );
 
@@ -30,7 +33,11 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         emit(ResetPasswordSuccess());
       },
       onFailure: (failure) {
-        emit(ResetPasswordError(failure.userFriendlyMessage));
+        emit(
+          ResetPasswordError(
+            failure.userFriendlyMessage,
+          ),
+        );
       },
     );
   }

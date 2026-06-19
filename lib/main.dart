@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
                     scaffoldMessengerKey: SnackbarService.messengerKey,
                     debugShowCheckedModeBanner: false,
 
-                    initialRoute: App_Routs_names.LoginScreen,
+                    initialRoute: App_Routs_names.HomeView,
 
                     onGenerateRoute: AppRoutsPage.route,
 

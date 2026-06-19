@@ -1,44 +1,50 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/color_manager.dart';
+import '../../../domain/profile/entities/profile_entity.dart';
 
-class ActivitySummaryCard
-    extends StatelessWidget {
+class ActivitySummaryCard extends StatelessWidget {
+  final ProfileEntity profile;
+
   const ActivitySummaryCard({
     super.key,
+    required this.profile,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color:
-        Theme.of(context).cardColor,
-        borderRadius:
-        BorderRadius.circular(20),
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
-        children: const [
+        children: [
           ActivityRow(
             title: "Today",
-            value: "5 summaries",
+            value: "${profile.todayCount} summaries",
           ),
-          Divider(),
+
+          const Divider(),
+
           ActivityRow(
             title: "Yesterday",
-            value: "8 summaries",
+            value: "${profile.yesterdayCount} summaries",
           ),
-          Divider(),
+
+          const Divider(),
+
           ActivityRow(
             title: "This Week",
-            value: "12 summaries",
+            value: "${profile.weekCount} summaries",
           ),
-          Divider(),
+
+          const Divider(),
+
           ActivityRow(
             title: "This Month",
-            value: "47 summaries",
+            value: "${profile.monthCount} summaries",
           ),
         ],
       ),
@@ -59,20 +65,20 @@ class ActivityRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-      const EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 12,
       ),
       child: Row(
         children: [
           Text(title),
+
           const Spacer(),
+
           Text(
             value,
             style: const TextStyle(
               color: ColorManager.primary,
-              fontWeight:
-              FontWeight.bold,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],

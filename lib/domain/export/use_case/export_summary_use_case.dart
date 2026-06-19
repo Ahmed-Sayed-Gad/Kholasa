@@ -13,14 +13,12 @@ class ExportSummaryUseCase {
     required String summary,
     required ExportType type,
     required String fileName,
-    required String directoryPath,
   }) {
 
     return repository.export(
       summary: summary,
       type: type,
       fileName: fileName,
-      directoryPath: directoryPath,
     );
 
   }

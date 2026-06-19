@@ -1,24 +1,25 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'verify_reset_password.g.dart';
 
 @JsonSerializable()
-class VerifyResetPassword
-{
-  @JsonKey(name: "resetCode")
-  final String? resetCode;
+class VerifyResetPassword {
+  @JsonKey(name: "email")
+  final String email;
 
-  VerifyResetPassword
-  ({
-    this.resetCode,
+  @JsonKey(name: "token")
+  final String token;
+
+  VerifyResetPassword({
+    required this.email,
+    required this.token,
   });
 
-  factory VerifyResetPassword.fromJson(Map<String, dynamic> json) {
-    return _$VerifyResetPasswordFromJson(json);
-  }
+  factory VerifyResetPassword.fromJson(
+      Map<String, dynamic> json,
+      ) =>
+      _$VerifyResetPasswordFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    return _$VerifyResetPasswordToJson(this);
-  }
+  Map<String, dynamic> toJson() =>
+      _$VerifyResetPasswordToJson(this);
 }
-
-

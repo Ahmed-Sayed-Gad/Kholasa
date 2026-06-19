@@ -7,8 +7,11 @@ part of 'verify_reset_password.dart';
 // **************************************************************************
 
 VerifyResetPassword _$VerifyResetPasswordFromJson(Map<String, dynamic> json) =>
-    VerifyResetPassword(resetCode: json['resetCode'] as String?);
+    VerifyResetPassword(
+      email: json['email'] as String,
+      token: json['token'] as String,
+    );
 
 Map<String, dynamic> _$VerifyResetPasswordToJson(
   VerifyResetPassword instance,
-) => <String, dynamic>{'resetCode': instance.resetCode};
+) => <String, dynamic>{'email': instance.email, 'token': instance.token};

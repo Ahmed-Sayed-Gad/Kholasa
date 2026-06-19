@@ -6,6 +6,7 @@ import '../cubit/summarize_state.dart';
 import '../widgets/summarize_loading.dart';
 import '../widgets/summarize_error.dart';
 import '../widgets/summarize_result.dart';
+import '../widgets/summary_language_selector.dart';
 import '../widgets/summary_warning_text.dart';
 import '../widgets/summary_length_slider.dart';
 import '../widgets/focus_area_chips.dart';
@@ -37,10 +38,21 @@ class SummarizeBody extends StatelessWidget {
             children: const [
               SummaryLengthSlider(),
               SizedBox(height: 16),
-              FocusAreaChips(),
+
+              SizedBox(height: 16),
+
+              SummaryLanguageSelector(),
+
+              SizedBox(height: 16),
+
+              // FocusAreaChips(),
+
               SizedBox(height: 24),
-              GenerateSummaryButton(),
+
+              Center(child: GenerateSummaryButton()),
+
               SizedBox(height: 12),
+
               SummaryWarningText(),
             ],
           ),

@@ -78,7 +78,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'v1/views/forgotPassword',
+            'Auth/forgot-password',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -98,7 +98,7 @@ class _ApiClient implements ApiClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'v1/views/verifyResetCode',
+            'Auth/verify-otp',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -147,16 +147,98 @@ class _ApiClient implements ApiClient {
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
     final _options = _setStreamType<void>(
-      Options(method: 'PUT', headers: _headers, extra: _extra)
+      Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'v1/views/resetPassword',
+            'Auth/reset-password',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     await _dio.fetch<void>(_options);
+  }
+
+  @override
+  Future<SummarizeUrlResponse> summarizeUrl(
+    String url,
+    String language,
+    String format,
+    String length,
+    String sessionId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('url', url));
+    _data.fields.add(MapEntry('language', language));
+    _data.fields.add(MapEntry('format', format));
+    _data.fields.add(MapEntry('length', length));
+    _data.fields.add(MapEntry('session_id', sessionId));
+    final _options = _setStreamType<SummarizeUrlResponse>(
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            'Documents/summarize-url',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SummarizeUrlResponse _value;
+    try {
+      _value = SummarizeUrlResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ChatResponse> chat(
+    String sessionId,
+    String sessionId2,
+    String message,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.fields.add(MapEntry('sessionId', sessionId));
+    _data.fields.add(MapEntry('session_id', sessionId2));
+    _data.fields.add(MapEntry('message', message));
+    final _options = _setStreamType<ChatResponse>(
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            'Documents/chat',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ChatResponse _value;
+    try {
+      _value = ChatResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   @override
@@ -184,6 +266,49 @@ class _ApiClient implements ApiClient {
     late ChangeProfilePasswordResponse _value;
     try {
       _value = ChangeProfilePasswordResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<SummarizeResponse> summarizeDocument(
+    MultipartFile file,
+    String language,
+    String format,
+    String length,
+    String sessionId,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = FormData();
+    _data.files.add(MapEntry('file', file));
+    _data.fields.add(MapEntry('language', language));
+    _data.fields.add(MapEntry('format', format));
+    _data.fields.add(MapEntry('length', length));
+    _data.fields.add(MapEntry('session_id', sessionId));
+    final _options = _setStreamType<SummarizeResponse>(
+      Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            contentType: 'multipart/form-data',
+          )
+          .compose(
+            _dio.options,
+            'Documents/summarize',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SummarizeResponse _value;
+    try {
+      _value = SummarizeResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/color_manager.dart';
 import '../../../domain/profile/entities/profile_entity.dart';
+import '../../settings/views/settings_view.dart';
 
 class ProfileHeader extends StatelessWidget {
   final ProfileEntity profile;
@@ -67,7 +68,14 @@ class ProfileHeader extends StatelessWidget {
         ),
 
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const SettingsView(),
+              ),
+            );
+          },
           icon: const Icon(Icons.settings),
         ),
       ],

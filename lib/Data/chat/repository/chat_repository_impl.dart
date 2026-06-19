@@ -1,18 +1,20 @@
 import 'package:injectable/injectable.dart';
 
-import '../../../domain/chat/entities/chat_message_entity.dart';
+import '../../../core/errors/result/results.dart';
 import '../../../domain/chat/repository/chat_repository.dart';
-
-import '../datasource/chat_fake_remote_data_source.dart';
+import '../datasource/chat_remote_data_source.dart';
 
 @LazySingleton(as: ChatRepository)
-class ChatRepositoryImpl implements ChatRepository {
-  final ChatFakeRemoteDataSource remoteDataSource;
+class ChatRepositoryImpl
+    implements ChatRepository {
+  final ChatRemoteDataSource remote;
 
-  ChatRepositoryImpl(this.remoteDataSource);
+  ChatRepositoryImpl(this.remote);
 
   @override
-  Future<ChatMessageEntity> sendMessage(String message) async {
-    return await remoteDataSource.sendMessage(message);
+  Future<Result<String>> sendMessage(
+      String message,
+      ) {
+    return remote.sendMessage(message);
   }
 }

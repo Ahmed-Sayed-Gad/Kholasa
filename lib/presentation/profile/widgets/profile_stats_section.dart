@@ -1,33 +1,39 @@
 import 'package:flutter/material.dart';
+import '../../../domain/profile/entities/profile_entity.dart';
 
-class ProfileStatsSection
-    extends StatelessWidget {
+class ProfileStatsSection extends StatelessWidget {
+  final ProfileEntity profile;
+
   const ProfileStatsSection({
     super.key,
+    required this.profile,
   });
 
   @override
   Widget build(BuildContext context) {
+    final estimatedHours =
+    (profile.totalSummaries * 5 / 60).ceil();
+
     return Row(
-      children: const [
+      children: [
         Expanded(
           child: StatCard(
             title: "Summaries",
-            value: "0",
+            value: profile.totalSummaries.toString(),
           ),
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(
           child: StatCard(
             title: "Saved",
-            value: "0",
+            value: profile.savedSummaries.toString(),
           ),
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(
           child: StatCard(
             title: "Hours",
-            value: "0",
+            value: estimatedHours.toString(),
           ),
         ),
       ],
@@ -48,13 +54,10 @@ class StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color:
-        Theme.of(context).cardColor,
-        borderRadius:
-        BorderRadius.circular(18),
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         children: [
@@ -62,8 +65,7 @@ class StatCard extends StatelessWidget {
             value,
             style: const TextStyle(
               fontSize: 24,
-              fontWeight:
-              FontWeight.bold,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 6),

@@ -27,6 +27,12 @@ import 'package:project_one_c3_team/api/auth/data_source_impl/ResetPasswordRemot
     as _i112;
 import 'package:project_one_c3_team/api/auth/data_source_impl/VerifyResetCodeDataSourceImpl.dart'
     as _i811;
+import 'package:project_one_c3_team/api/chat/data_source_impl/chat_remote_data_source_impl.dart'
+    as _i701;
+import 'package:project_one_c3_team/api/home/link/data_source_impl/summarize_url_remote_data_source_impl.dart'
+    as _i116;
+import 'package:project_one_c3_team/api/summarize/data_source_impl/summarize_remote_data_source_impl.dart'
+    as _i318;
 import 'package:project_one_c3_team/core/di/app_module.dart' as _i961;
 import 'package:project_one_c3_team/core/di/shared_prefs_module.dart' as _i823;
 import 'package:project_one_c3_team/core/errors/handlers/auth_error_handler.dart'
@@ -61,14 +67,18 @@ import 'package:project_one_c3_team/Data/auth/repositories_impl/ResetPasswordRep
     as _i127;
 import 'package:project_one_c3_team/Data/auth/repositories_impl/VerifyResetCodeRepoImpl.dart'
     as _i586;
-import 'package:project_one_c3_team/Data/chat/datasource/chat_fake_remote_data_source.dart'
-    as _i499;
+import 'package:project_one_c3_team/Data/chat/datasource/chat_remote_data_source.dart'
+    as _i281;
 import 'package:project_one_c3_team/Data/chat/repository/chat_repository_impl.dart'
     as _i914;
 import 'package:project_one_c3_team/Data/history/models/history_model.dart'
     as _i1007;
 import 'package:project_one_c3_team/Data/home/repositries_Imp/home_repository_impl.dart'
     as _i990;
+import 'package:project_one_c3_team/Data/link/data_source/summarize_url_remote_data_source.dart'
+    as _i655;
+import 'package:project_one_c3_team/Data/link/repositories_impl/summarize_url_remote_data_source_impl.dart'
+    as _i1045;
 import 'package:project_one_c3_team/Data/profile/data_source/profile_local_data_source.dart'
     as _i874;
 import 'package:project_one_c3_team/Data/profile/repositories_impl/profile_repository_impl.dart'
@@ -81,8 +91,8 @@ import 'package:project_one_c3_team/Data/settings/data_source/settings_local_dat
     as _i387;
 import 'package:project_one_c3_team/Data/settings/repositories_impl/settings_repository_impl.dart'
     as _i788;
-import 'package:project_one_c3_team/Data/summarize/data_source/summarize_fake_data_source.dart'
-    as _i875;
+import 'package:project_one_c3_team/Data/summarize/data_source/summarize_remote_data_source.dart'
+    as _i39;
 import 'package:project_one_c3_team/Data/summarize/repositories_impl/summarize_repository_impl.dart'
     as _i1066;
 import 'package:project_one_c3_team/Data/upload/data_sources/file_picker_data_source.dart'
@@ -135,6 +145,10 @@ import 'package:project_one_c3_team/domain/home/UseCase/get_recent_items_use_cas
     as _i307;
 import 'package:project_one_c3_team/domain/home/UseCase/remember_me_usecase.dart'
     as _i811;
+import 'package:project_one_c3_team/domain/link/repositories/summarize_url_repository.dart'
+    as _i205;
+import 'package:project_one_c3_team/domain/link/use_case/summarize_url_use_case.dart'
+    as _i56;
 import 'package:project_one_c3_team/domain/models/use_cases_imp/remember_me_use_case_imp.dart'
     as _i851;
 import 'package:project_one_c3_team/domain/profile/repositories/profile_repository.dart'
@@ -229,7 +243,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i874.ProfileLocalDataSource>(
       () => _i874.ProfileLocalDataSource(),
     );
-    gh.factory<_i1059.LinkCubit>(() => _i1059.LinkCubit());
     gh.factory<_i11.UploadCubit>(() => _i11.UploadCubit());
     gh.lazySingleton<_i361.Dio>(() => appModule.dio);
     gh.lazySingleton<_i558.FlutterSecureStorage>(() => appModule.secureStorage);
@@ -239,20 +252,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i994.ExportRepository>(
       () => exportModule.exportRepository(),
     );
-    gh.lazySingleton<_i499.ChatFakeRemoteDataSource>(
-      () => _i499.ChatFakeRemoteDataSource(),
-    );
     gh.lazySingleton<_i469.ScanMlKitDataSource>(
       () => _i469.ScanMlKitDataSource(),
     );
-    gh.lazySingleton<_i875.SummarizeFakeDataSource>(
-      () => _i875.SummarizeFakeDataSource(),
-    );
     gh.lazySingleton<_i681.UploadSessionCubit>(
       () => _i681.UploadSessionCubit(),
-    );
-    gh.lazySingleton<_i543.SummarizeRepository>(
-      () => _i1066.SummarizeRepositoryImpl(gh<_i875.SummarizeFakeDataSource>()),
     );
     gh.lazySingleton<_i777.ApiClient>(
       () => appModule.provideApiClient(gh<_i361.Dio>()),
@@ -266,7 +270,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i387.SettingsLocalDataSource>(
       () => _i387.SettingsLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
-    gh.lazySingleton<_i520.HomeRepository>(() => _i990.HomeRepositoryImpl());
     gh.lazySingleton<_i1010.UploadRepository>(
       () => uploadModule.uploadRepository(gh<_i827.FilePickerDataSource>()),
     );
@@ -275,15 +278,18 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1010.UploadRepository>(),
       ),
     );
+    gh.factory<_i281.ChatRemoteDataSource>(
+      () => _i701.ChatRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
+      ),
+    );
     gh.lazySingleton<_i398.SettingsRepository>(
       () => _i788.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()),
     );
     gh.lazySingleton<_i662.HistoryRepository>(
       () =>
           historyModule.historyRepository(gh<_i919.Box<_i1007.HistoryModel>>()),
-    );
-    gh.factory<_i22.ProfileRepository>(
-      () => _i256.ProfileRepositoryImpl(gh<_i874.ProfileLocalDataSource>()),
     );
     gh.factory<_i347.VerifyResetCodeRemoteDataSource>(
       () => _i811.VerifyResetCodeRemoteDataSourceImpl(
@@ -313,6 +319,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1023.ExportSummaryUseCase>(
       () => exportModule.exportSummaryUseCase(gh<_i994.ExportRepository>()),
+    );
+    gh.factory<_i655.SummarizeUrlRemoteDataSource>(
+      () => _i116.SummarizeUrlRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
+      ),
     );
     gh.factory<_i615.VerifyResetCodeUseCase>(
       () =>
@@ -346,12 +358,15 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.lazySingleton<_i601.ChatRepository>(
-      () => _i914.ChatRepositoryImpl(gh<_i499.ChatFakeRemoteDataSource>()),
+      () => _i914.ChatRepositoryImpl(gh<_i281.ChatRemoteDataSource>()),
     );
-    gh.factory<_i793.GenerateSummaryUseCase>(
-      () => _i793.GenerateSummaryUseCase(
-        gh<_i543.SummarizeRepository>(),
-        gh<_i662.HistoryRepository>(),
+    gh.lazySingleton<_i520.HomeRepository>(
+      () => _i990.HomeRepositoryImpl(gh<_i662.HistoryRepository>()),
+    );
+    gh.factory<_i39.SummarizeRemoteDataSource>(
+      () => _i318.SummarizeRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
       ),
     );
     gh.factory<_i140.ForgotPasswordRepositories>(
@@ -363,9 +378,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i127.ResetPasswordRepoImpl(
         gh<_i928.ResetPasswordRemoteDataSource>(),
       ),
-    );
-    gh.factory<_i622.SummarizeCubit>(
-      () => _i622.SummarizeCubit(gh<_i793.GenerateSummaryUseCase>()),
     );
     gh.lazySingleton<_i811.RememberMeUseCase>(
       () => _i851.RememberMeUseCaseImpl(gh<_i861.RememberMeRepository>()),
@@ -411,6 +423,16 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i307.GetRecentItemsUseCase>(),
       ),
     );
+    gh.lazySingleton<_i543.SummarizeRepository>(
+      () =>
+          _i1066.SummarizeRepositoryImpl(gh<_i39.SummarizeRemoteDataSource>()),
+    );
+    gh.factory<_i22.ProfileRepository>(
+      () => _i256.ProfileRepositoryImpl(
+        gh<_i874.ProfileLocalDataSource>(),
+        gh<_i662.HistoryRepository>(),
+      ),
+    );
     gh.factory<_i791.GetProfileUseCase>(
       () => _i791.GetProfileUseCase(gh<_i22.ProfileRepository>()),
     );
@@ -419,6 +441,18 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i478.LoginRepositories>(
       () => _i734.LoginRepoImpl(gh<_i754.LoginRemoteDataSource>()),
+    );
+    gh.factory<_i793.GenerateSummaryUseCase>(
+      () => _i793.GenerateSummaryUseCase(
+        gh<_i543.SummarizeRepository>(),
+        gh<_i662.HistoryRepository>(),
+        gh<_i398.SettingsRepository>(),
+      ),
+    );
+    gh.factory<_i205.SummarizeUrlRepository>(
+      () => _i1045.SummarizeUrlRepositoryImpl(
+        gh<_i655.SummarizeUrlRemoteDataSource>(),
+      ),
     );
     gh.factory<_i584.HistoryCubit>(
       () => historyModule.historyCubit(
@@ -431,6 +465,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1060.ChangePasswordUseCase>(
       () => _i1060.ChangePasswordUseCase(gh<_i847.ChangePasswordRepository>()),
+    );
+    gh.factory<_i56.SummarizeUrlUseCase>(
+      () => _i56.SummarizeUrlUseCase(gh<_i205.SummarizeUrlRepository>()),
     );
     gh.factory<_i94.ForgotPasswordUseCase>(
       () => _i94.ForgotPasswordUseCase(gh<_i140.ForgotPasswordRepositories>()),
@@ -467,6 +504,15 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i658.ChangePasswordCubit>(
       () => _i658.ChangePasswordCubit(gh<_i1060.ChangePasswordUseCase>()),
+    );
+    gh.factory<_i1059.LinkCubit>(
+      () => _i1059.LinkCubit(gh<_i56.SummarizeUrlUseCase>()),
+    );
+    gh.factory<_i622.SummarizeCubit>(
+      () => _i622.SummarizeCubit(
+        gh<_i793.GenerateSummaryUseCase>(),
+        gh<_i398.SettingsRepository>(),
+      ),
     );
     gh.factory<_i461.LoginCubit>(
       () => _i461.LoginCubit(gh<_i317.LoginUseCase>()),

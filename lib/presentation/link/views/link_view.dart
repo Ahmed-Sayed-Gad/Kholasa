@@ -37,57 +37,39 @@ class _LinkViewState extends State<LinkView> {
     }
 
     if (state is LinkSuccess) {
-      return Column(
-        children: [
-          Icon(
-            Icons.check_circle,
-            color:
-            Theme.of(context).colorScheme.primary,
-            size: 52,
-          ),
-          const SizedBox(height: 16),
-
-          Text(
-            'Link Added Successfully',
-            style: TextStyle(
-              color: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .color,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            const Icon(
+              Icons.summarize,
+              size: 50,
             ),
-          ),
 
-          const SizedBox(height: 10),
+            const SizedBox(height: 16),
 
-          Text(
-            state.url,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .color,
+            Text(
+              state.summary,
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
-          ElevatedButton(
-            onPressed: () {
-              context
-                  .read<LinkCubit>()
-                  .reset();
-            },
-            child: const Text(
-              'Add Another',
+            ElevatedButton(
+              onPressed: () {
+                context
+                    .read<LinkCubit>()
+                    .reset();
+              },
+              child: const Text(
+                "Summarize Another URL",
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
-
     return LinkIdleView(
       controller: controller,
     );

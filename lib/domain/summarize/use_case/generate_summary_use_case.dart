@@ -3,26 +3,32 @@ import 'package:injectable/injectable.dart';
 
 import '../../history/entities/history_item.dart';
 import '../../history/repositories/history_repository.dart';
+import '../../settings/repositories/settings_repository.dart';
 import '../repositories/summarize_repository.dart';
 
+@injectable
 @injectable
 class GenerateSummaryUseCase {
   final SummarizeRepository summarizeRepository;
   final HistoryRepository historyRepository;
+  final SettingsRepository settingsRepository;
 
   GenerateSummaryUseCase(
       this.summarizeRepository,
       this.historyRepository,
+      this.settingsRepository,
       );
 
   Future<String> call({
     required File file,
     required String length,
+    required String language,
     required List<String> focusAreas,
   }) async {
     final result = await summarizeRepository.generateSummary(
       file: file,
       length: length,
+      language: language,
       focusAreas: focusAreas,
     );
 
@@ -38,8 +44,8 @@ class GenerateSummaryUseCase {
 
     // 🔥 LANGUAGE
     final isArabic = RegExp(r'[\u0600-\u06FF]').hasMatch(result.summary);
-    final language = isArabic ? "ar" : "en";
 
+    final detectedLanguage = isArabic ? "ar" : "en";
     // 🔥 SAVE
     await historyRepository.saveItem(
       HistoryItem(
@@ -49,7 +55,7 @@ class GenerateSummaryUseCase {
         createdAt: DateTime.now(),
         isSaved: false,
         type: type,
-        language: language,
+        language: detectedLanguage,
       ),
     );
 

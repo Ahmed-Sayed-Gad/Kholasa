@@ -6,7 +6,6 @@ class ExportDialog extends StatefulWidget {
   final Function(
       ExportType type,
       String fileName,
-      String directory,
       ) onExport;
 
   const ExportDialog({super.key, required this.onExport});
@@ -85,7 +84,7 @@ class _ExportDialogState extends State<ExportDialog> {
             widget.onExport(
               type,
               nameController.text,
-              directory,
+              // directory,
             );
 
             Navigator.pop(context);

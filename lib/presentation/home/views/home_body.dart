@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/di/di.dart';
 import '../../chat/cubit/chat_cubit.dart';
 import '../../chat/views/chat_view.dart';
+import '../../ui_models/recent_item_ui_model.dart';
 import '../../widget/sections/home_upload_actions_section.dart';
 import '../cubit/home_cubit.dart';
 import '../../widget/search_bar/home_search_bar..dart';
@@ -24,18 +25,14 @@ class HomeBody extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context)
-                  .colorScheme
-                  .primary
-                  .withOpacity(.35),
+              color: Theme.of(context).colorScheme.primary.withOpacity(.35),
               blurRadius: 18,
               spreadRadius: 2,
             ),
           ],
         ),
         child: FloatingActionButton(
-          backgroundColor:
-          Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           onPressed: () {
             Navigator.push(
               context,
@@ -52,63 +49,52 @@ class HomeBody extends StatelessWidget {
       ),
       body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
-          if (state is HomeLoading ||
-              state is HomeInitial) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+          if (state is HomeLoading || state is HomeInitial) {
+            return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is HomeEmpty) {
-            return const HomeEmptyState();
-          }
 
           if (state is HomeError) {
             return HomeErrorState(
               message: state.message,
               onRetry: () {
-                context
-                    .read<HomeCubit>()
-                    .loadHome();
+                context.read<HomeCubit>().loadHome();
               },
             );
           }
 
-          if (state is HomeSuccess) {
+          if (state is HomeSuccess || state is HomeEmpty) {
+
+            final items =
+            state is HomeSuccess
+                ? state.items
+                : <RecentItemUiModel>[];
+
             return Container(
-              color: Theme.of(context)
-                  .scaffoldBackgroundColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: CustomScrollView(
                 slivers: [
                   const HomeSliverAppBar(),
 
                   SliverToBoxAdapter(
                     child: Padding(
-                      padding:
-                      const EdgeInsets.only(
-                          top: 16),
+                      padding: const EdgeInsets.only(top: 16),
                       child: HomeSearchBar(
                         onChanged: (q) {
-                          context
-                              .read<HomeCubit>()
-                              .search(q);
+                          context.read<HomeCubit>().search(q);
                         },
                       ),
                     ),
                   ),
 
                   const SliverToBoxAdapter(
-                    child:
-                    UploadActionsSection(),
+                    child: UploadActionsSection(),
                   ),
 
                   SliverPadding(
-                    padding:
-                    const EdgeInsets.only(
-                        top: 24),
-                    sliver:
-                    HomeRecentSection(
-                      items: state.items,
+                    padding: const EdgeInsets.only(top: 24),
+                    sliver: HomeRecentSection(
+                      items: items,
                     ),
                   ),
                 ],

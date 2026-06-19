@@ -47,29 +47,24 @@ class ProfileView extends StatelessWidget {
 
                   const SizedBox(height: 24),
 
-                  const PremiumCard(),
+                  // const PremiumCard(),
 
                   const SizedBox(height: 24),
 
-                  const ProfileStatsSection(),
-
+                  ProfileStatsSection(
+                    profile: profile,
+                  ),
                   const SizedBox(height: 24),
 
-                  Text(
-                    "Activity Summary",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  ActivitySummaryCard(
+                    profile: profile,
                   ),
 
                   const SizedBox(height: 12),
 
-                  const ActivitySummaryCard(),
-
+                  ActivitySummaryCard(
+                    profile: profile,
+                  ),
                   const SizedBox(height: 24),
 
                   Text(

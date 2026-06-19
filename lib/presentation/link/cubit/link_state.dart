@@ -1,18 +1,16 @@
-// lib/presentation/link/cubit/link_state.dart
-
 sealed class LinkState {}
 
-final class LinkInitial extends LinkState {}
+class LinkInitial extends LinkState {}
 
-final class LinkLoading extends LinkState {}
+class LinkLoading extends LinkState {}
 
-final class LinkSuccess extends LinkState {
-  final String url;
+class LinkSuccess extends LinkState {
+  final String summary;
 
-  LinkSuccess(this.url);
+  LinkSuccess(this.summary);
 }
 
-final class LinkFailure extends LinkState {
+class LinkFailure extends LinkState {
   final String message;
 
   LinkFailure(this.message);

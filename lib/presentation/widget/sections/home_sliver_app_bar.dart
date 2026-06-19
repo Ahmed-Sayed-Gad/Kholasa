@@ -19,7 +19,7 @@ class HomeSliverAppBar extends StatelessWidget {
         padding: EdgeInsets.all(7),
         child: CircleAvatar(
           backgroundImage: AssetImage(
-            'assets/images/LogoLight.jpg',
+            'assets/images/Logo.jpg',
           ),
         ),
       ),

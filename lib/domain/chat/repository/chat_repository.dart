@@ -1,5 +1,7 @@
-import '../entities/chat_message_entity.dart';
+import '../../../core/errors/result/results.dart';
 
 abstract class ChatRepository {
-  Future<ChatMessageEntity> sendMessage(String message);
+  Future<Result<String>> sendMessage(
+      String message,
+      );
 }

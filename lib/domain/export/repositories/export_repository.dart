@@ -8,7 +8,6 @@ abstract class ExportRepository {
     required String summary,
     required ExportType type,
     required String fileName,
-    required String directoryPath,
   });
 
 }
