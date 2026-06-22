@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class SummarizeErrorView extends StatelessWidget {
   final String message;
@@ -22,7 +23,7 @@ class SummarizeErrorView extends StatelessWidget {
           const SizedBox(height: 12),
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Go back'),
+            child: Text(AppLocalizations.of(context)!.goBack),
           ),
         ],
       ),

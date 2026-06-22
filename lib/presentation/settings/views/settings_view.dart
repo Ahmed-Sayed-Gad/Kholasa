@@ -13,6 +13,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../auth/views/login_view.dart';
 import '../../language/cubit/language_cubit.dart';
 
+import '../../widget/reduced_font_theme.dart';
 import '../../theme/theme_cubit.dart';
 import '../cubit/settings_cubit.dart';
 import '../cubit/settings_state.dart';
@@ -37,37 +38,38 @@ class _SettingsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final locale = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: false,
-        title: Text(
-          locale.settings,
-          style: TextStyle(
-            color: ColorManager.textPrimary,
-            fontWeight: FontWeight.bold,
-            fontSize: 28,
+    return ReducedFontTheme(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+  
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: false,
+          title: Text(
+            locale.settings,
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodyLarge?.color,
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+            ),
           ),
         ),
-      ),
-
-      body: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, state) {
-          if (state.status == SettingsStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final data = state.settings;
-
-          return ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              Text(
-                "Manage your preferences",
-                style: TextStyle(color: ColorManager.textHint, fontSize: 14),
-              ),
+  
+        body: BlocBuilder<SettingsCubit, SettingsState>(
+          builder: (context, state) {
+            if (state.status == SettingsStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+  
+            final data = state.settings;
+  
+            return ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                Text(
+                  locale.managePreferences,
+                  style: TextStyle(color: Theme.of(context).hintColor, fontSize: 12),
+                ),
 
               const SizedBox(height: 24),
 
@@ -96,7 +98,7 @@ class _SettingsBody extends StatelessWidget {
 
                       leading: CircleAvatar(
                         radius: 24,
-                        backgroundColor: ColorManager.primary,
+                        backgroundColor: Theme.of(context).primaryColor,
                         child: Text(
                           name.isNotEmpty ? name[0].toUpperCase() : "U",
                           style: const TextStyle(
@@ -108,20 +110,20 @@ class _SettingsBody extends StatelessWidget {
 
                       title: Text(
                         name,
-                        style: const TextStyle(
-                          color: ColorManager.textPrimary,
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
 
                       subtitle: Text(
                         email,
-                        style: const TextStyle(color: ColorManager.textHint),
+                        style: TextStyle(color: Theme.of(context).hintColor),
                       ),
 
                       trailing: Icon(
                         Icons.chevron_right,
-                        color: ColorManager.textHint,
+                        color: Theme.of(context).hintColor,
                       ),
                     ),
                   );
@@ -140,24 +142,24 @@ class _SettingsBody extends StatelessWidget {
                     ListTile(
                       leading: Icon(
                         Icons.language,
-                        color: ColorManager.primary,
+                        color: Theme.of(context).primaryColor,
                       ),
                       title: Text(
-                        "Language Preference",
-                        style: TextStyle(color: ColorManager.textPrimary),
+                        locale.languagePreference,
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                       ),
                       subtitle: Text(
                         data.language.toUpperCase(),
-                        style: TextStyle(color: ColorManager.textHint),
+                        style: TextStyle(color: Theme.of(context).hintColor),
                       ),
                       trailing: DropdownButton<String>(
-                        dropdownColor: ColorManager.cardBackground,
+                        dropdownColor: Theme.of(context).cardColor,
                         value: data.language,
                         underline: const SizedBox(),
-                        style: TextStyle(color: ColorManager.textPrimary),
-                        items: const [
-                          DropdownMenuItem(value: "en", child: Text("EN")),
-                          DropdownMenuItem(value: "ar", child: Text("AR")),
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+                        items: [
+                          DropdownMenuItem(value: "en", child: Text(locale.english)),
+                          DropdownMenuItem(value: "ar", child: Text(locale.arabic)),
                         ],
                         onChanged: (value) {
                           if (value != null) {
@@ -169,41 +171,41 @@ class _SettingsBody extends StatelessWidget {
                       ),
                     ),
 
-                    Divider(color: ColorManager.dividerColor, height: 1),
+                    Divider(color: Theme.of(context).dividerColor, height: 1),
 
                     SwitchListTile(
-                      secondary: Icon(Icons.save, color: ColorManager.primary),
+                      secondary: Icon(Icons.save, color: Theme.of(context).primaryColor),
                       title: Text(
-                        "Auto-save Summaries",
-                        style: TextStyle(color: ColorManager.textPrimary),
+                        locale.autoSave,
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                       ),
                       subtitle: Text(
-                        "Automatically save all summaries",
-                        style: TextStyle(color: ColorManager.textHint),
+                        locale.autoSaveDesc,
+                        style: TextStyle(color: Theme.of(context).hintColor),
                       ),
-                      activeColor: ColorManager.primary,
+                      activeThumbColor: Theme.of(context).primaryColor,
                       value: data.autoSaveEnabled,
                       onChanged: (value) {
                         context.read<SettingsCubit>().toggleAutoSave(value);
                       },
                     ),
 
-                    Divider(color: ColorManager.dividerColor, height: 1),
+                    Divider(color: Theme.of(context).dividerColor, height: 1),
 
                     SwitchListTile(
                       secondary: Icon(
                         Icons.notifications,
-                        color: ColorManager.primary,
+                        color: Theme.of(context).primaryColor,
                       ),
                       title: Text(
-                        "Push Notifications",
-                        style: TextStyle(color: ColorManager.textPrimary),
+                        locale.notifications,
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                       ),
                       subtitle: Text(
-                        "Get notified when summaries are ready",
-                        style: TextStyle(color: ColorManager.textHint),
+                        locale.notificationsDesc,
+                        style: TextStyle(color: Theme.of(context).hintColor),
                       ),
-                      activeColor: ColorManager.primary,
+                      activeThumbColor: Theme.of(context).primaryColor,
                       value: data.notificationsEnabled,
                       onChanged: (value) {
                         context.read<SettingsCubit>().toggleNotifications(
@@ -212,22 +214,22 @@ class _SettingsBody extends StatelessWidget {
                       },
                     ),
 
-                    Divider(color: ColorManager.dividerColor, height: 1),
+                    Divider(color: Theme.of(context).dividerColor, height: 1),
 
                     SwitchListTile(
                       secondary: Icon(
                         Icons.dark_mode,
-                        color: ColorManager.primary,
+                        color: Theme.of(context).primaryColor,
                       ),
                       title: Text(
                         locale.darkMode,
-                        style: TextStyle(color: ColorManager.textPrimary),
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                       ),
                       subtitle: Text(
-                        "Use dark theme",
-                        style: TextStyle(color: ColorManager.textHint),
+                        locale.darkModeDesc,
+                        style: TextStyle(color: Theme.of(context).hintColor),
                       ),
-                      activeColor: ColorManager.primary,
+                      activeThumbColor: Theme.of(context).primaryColor,
 
                       value:
                           context.watch<ThemeCubit>().state.mode ==
@@ -251,21 +253,21 @@ class _SettingsBody extends StatelessWidget {
               const SizedBox(height: 24),
 
               /// PRIVACY
-              _SectionTitle("PRIVACY & SECURITY"),
+              _SectionTitle(locale.privacySecurity),
               const SizedBox(height: 12),
 
               _Card(
                 child: Column(
                   children: [
                     ListTile(
-                      leading: Icon(Icons.shield, color: ColorManager.success),
+                      leading: const Icon(Icons.shield, color: ColorManager.success),
                       title: Text(
-                        "Privacy Policy",
-                        style: TextStyle(color: ColorManager.textPrimary),
+                        locale.privacyPolicy,
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                       ),
                       trailing: Icon(
                         Icons.chevron_right,
-                        color: ColorManager.textHint,
+                        color: Theme.of(context).hintColor,
                       ),
                       onTap: () {
                         Navigator.push(
@@ -277,17 +279,17 @@ class _SettingsBody extends StatelessWidget {
                       },
                     ),
 
-                    Divider(color: ColorManager.dividerColor, height: 1),
+                    Divider(color: Theme.of(context).dividerColor, height: 1),
 
                     ListTile(
-                      leading: Icon(Icons.gavel, color: ColorManager.success),
+                      leading: const Icon(Icons.gavel, color: ColorManager.success),
                       title: Text(
-                        "Terms of Service",
-                        style: TextStyle(color: ColorManager.textPrimary),
+                        locale.terms,
+                        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
                       ),
                       trailing: Icon(
                         Icons.chevron_right,
-                        color: ColorManager.textHint,
+                        color: Theme.of(context).hintColor,
                       ),
                       onTap: () {
                         Navigator.push(
@@ -307,11 +309,11 @@ class _SettingsBody extends StatelessWidget {
               /// SIGN OUT
               _Card(
                 child: ListTile(
-                  leading: Icon(Icons.logout, color: ColorManager.error),
+                  leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
                   title: Text(
-                    "Sign Out",
+                    locale.logout,
                     style: TextStyle(
-                      color: ColorManager.error,
+                      color: Theme.of(context).colorScheme.error,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -319,7 +321,7 @@ class _SettingsBody extends StatelessWidget {
                     final result = await showDialog<bool>(
                       context: context,
                       builder: (_) => AlertDialog(
-                        title: const Text("Sign Out"),
+                        title: Text(locale.logout),
                         content: const Text(
                           "Are you sure you want to sign out?",
                         ),
@@ -328,13 +330,13 @@ class _SettingsBody extends StatelessWidget {
                             onPressed: () {
                               Navigator.pop(context, false);
                             },
-                            child: const Text("Cancel"),
+                            child: Text(locale.cancel),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context, true);
                             },
-                            child: const Text("Sign Out"),
+                            child: Text(locale.logout),
                           ),
                         ],
                       ),
@@ -363,7 +365,7 @@ class _SettingsBody extends StatelessWidget {
           );
         },
       ),
-    );
+    ),);
   }
 }
 
@@ -377,8 +379,8 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       title,
       style: TextStyle(
-        color: ColorManager.textHint,
-        fontSize: 12,
+        color: Theme.of(context).hintColor,
+        fontSize: 10,
         fontWeight: FontWeight.bold,
         letterSpacing: 1,
       ),
@@ -397,7 +399,7 @@ class _Card extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: ColorManager.dividerColor),
+        border: Border.all(color: Theme.of(context).dividerColor),
       ),
       child: child,
     );

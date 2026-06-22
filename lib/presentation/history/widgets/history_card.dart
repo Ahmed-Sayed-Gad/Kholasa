@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../../../domain/history/entities/history_item.dart';
 import '../cubit/history_cubit.dart';
 
@@ -16,7 +15,7 @@ class HistoryCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: ColorManager.secondaryDark,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -24,11 +23,11 @@ class HistoryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: ColorManager.primary.withValues(alpha: 0.2),
+              color: Theme.of(context).primaryColor.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.description,
-                color: ColorManager.primary),
+            child: Icon(Icons.description,
+                color: Theme.of(context).primaryColor),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -37,8 +36,8 @@ class HistoryCard extends StatelessWidget {
               children: [
                 Text(
                   item.title,
-                  style: const TextStyle(
-                    color: ColorManager.textColor,
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -47,9 +46,9 @@ class HistoryCard extends StatelessWidget {
                   item.summary,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: ColorManager.textSecondary,
-                    fontSize: 12,
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                    fontSize: 10,
                   ),
                 ),
               ],
@@ -61,7 +60,7 @@ class HistoryCard extends StatelessWidget {
               item.isSaved ? Icons.star : Icons.star_border,
               color: item.isSaved
                   ? Colors.amber
-                  : ColorManager.textSecondary,
+                  : Theme.of(context).textTheme.bodyMedium?.color,
             ),
             onPressed: () {
               context.read<HistoryCubit>().toggleSaved(item.id);

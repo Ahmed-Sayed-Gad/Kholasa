@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/color_manager.dart';
-
 class LinkLoadingView extends StatelessWidget {
   const LinkLoadingView({super.key});
 
@@ -12,13 +10,13 @@ class LinkLoadingView extends StatelessWidget {
     return Column(
       children: [
         CircularProgressIndicator(
-          color: ColorManager.primary,
+          color: Theme.of(context).primaryColor,
         ),
         const SizedBox(height: 16),
         Text(
           'Processing link...',
           style: TextStyle(
-            color: ColorManager.hintTextColor,
+            color: Theme.of(context).hintColor,
           ),
         ),
       ],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
-
 import '../cubit/chat_cubit.dart';
 import '../cubit/chat_state.dart';
 
@@ -49,7 +47,7 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.primaryDark,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 
       body: SafeArea(
         child: Column(
@@ -117,10 +115,10 @@ class _Header extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
       decoration: BoxDecoration(
-        color: ColorManager.secondaryDark,
+        color: Theme.of(context).cardColor,
         border: Border(
           bottom: BorderSide(
-            color: Colors.white.withOpacity(.05),
+            color: Theme.of(context).dividerColor,
           ),
         ),
       ),
@@ -133,35 +131,35 @@ class _Header extends StatelessWidget {
               height: 38,
               width: 38,
               decoration: BoxDecoration(
-                color: ColorManager.primaryDark,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.chevron_left,
-                color: Colors.white,
+                color: Theme.of(context).iconTheme.color,
               ),
             ),
           ),
 
           const SizedBox(width: 12),
 
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'AI Assistant',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                     fontSize: 21,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   'Online now',
                   style: TextStyle(
-                    color: Colors.white54,
+                    color: Theme.of(context).hintColor,
                     fontSize: 13,
                   ),
                 ),
@@ -202,11 +200,11 @@ class _MessageBubble extends StatelessWidget {
     isUser ? Alignment.centerRight : Alignment.centerLeft;
 
     final color = isUser
-        ? ColorManager.primary
-        : ColorManager.secondaryDark;
+        ? Theme.of(context).primaryColor
+        : Theme.of(context).cardColor;
 
     final textColor =
-    isUser ? Colors.black : Colors.white;
+    isUser ? Colors.black : Theme.of(context).textTheme.bodyLarge?.color;
 
     return Align(
       alignment: alignment,
@@ -217,6 +215,7 @@ class _MessageBubble extends StatelessWidget {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(18),
+          border: isUser ? null : Border.all(color: Theme.of(context).dividerColor),
         ),
         child: Text(
           text,
@@ -245,13 +244,14 @@ class _TypingBubble extends StatelessWidget {
           vertical: 14,
         ),
         decoration: BoxDecoration(
-          color: ColorManager.secondaryDark,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Theme.of(context).dividerColor),
         ),
-        child: const Text(
+        child: Text(
           'Typing...',
           style: TextStyle(
-            color: Colors.white70,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
           ),
         ),
       ),
@@ -272,22 +272,22 @@ class _InputBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(14, 10, 14, 16),
-      color: ColorManager.secondaryDark,
+      color: Theme.of(context).cardColor,
       child: Row(
         children: [
           Expanded(
             child: TextField(
               controller: controller,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodyLarge?.color,
               ),
               decoration: InputDecoration(
                 hintText: 'Type your message...',
-                hintStyle: const TextStyle(
-                  color: Colors.white54,
+                hintStyle: TextStyle(
+                  color: Theme.of(context).hintColor,
                 ),
                 filled: true,
-                fillColor: ColorManager.primaryDark,
+                fillColor: Theme.of(context).scaffoldBackgroundColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
                   borderSide: BorderSide.none,
@@ -310,7 +310,7 @@ class _InputBar extends StatelessWidget {
               height: 52,
               width: 52,
               decoration: BoxDecoration(
-                color: ColorManager.primary,
+                color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(16),
               ),
               child: const Icon(

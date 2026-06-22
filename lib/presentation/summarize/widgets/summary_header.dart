@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/color_manager.dart';
 
 class SummaryHeader extends StatelessWidget {
   const SummaryHeader({super.key});
@@ -17,7 +16,7 @@ class SummaryHeader extends StatelessWidget {
         Text(
           'Customize how your document is summarized',
           style: TextStyle(
-            color: ColorManager.textColorSecondary,
+            color: Theme.of(context).textTheme.bodyMedium?.color,
             fontSize: 13,
           ),
         ),

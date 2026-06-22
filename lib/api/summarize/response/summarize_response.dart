@@ -4,14 +4,23 @@ part 'summarize_response.g.dart';
 
 @JsonSerializable()
 class SummarizeResponse {
-  final bool success;
-  final String? message;
-  final SummarizeData data;
+
+  final String date;
+  final String filename;
+  final String format;
+  final String id;
+  final String language;
+  final String summary;
+  final bool saved;
 
   SummarizeResponse({
-    required this.success,
-    this.message,
-    required this.data,
+    required this.date,
+    required this.filename,
+    required this.format,
+    required this.id,
+    required this.language,
+    required this.summary,
+    required this.saved,
   });
 
   factory SummarizeResponse.fromJson(
@@ -21,21 +30,4 @@ class SummarizeResponse {
 
   Map<String, dynamic> toJson() =>
       _$SummarizeResponseToJson(this);
-}
-
-@JsonSerializable()
-class SummarizeData {
-  final String summary;
-
-  SummarizeData({
-    required this.summary,
-  });
-
-  factory SummarizeData.fromJson(
-      Map<String, dynamic> json,
-      ) =>
-      _$SummarizeDataFromJson(json);
-
-  Map<String, dynamic> toJson() =>
-      _$SummarizeDataToJson(this);
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class PrivacyPolicyView extends StatelessWidget {
   const PrivacyPolicyView({super.key});
@@ -7,7 +8,7 @@ class PrivacyPolicyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Privacy Policy"),
+        title: Text(AppLocalizations.of(context)!.privacyPolicy),
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -67,7 +68,7 @@ For questions regarding this Privacy Policy, please contact the Kholasa developm
 ''',
           style: TextStyle(
             height: 1.6,
-            fontSize: 15,
+            fontSize: 13,
           ),
         ),
       ),

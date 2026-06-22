@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/theme/color_manager.dart';
-
 class CustomFormField extends StatefulWidget {
   final String? labelText;
   final String? hintText;
@@ -64,7 +62,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
           widget.padding ??
           const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: TextFormField(
-        style: TextStyle(color: ColorManager.textColor),
+        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
         controller: widget.controller,
         keyboardType: widget.keyboardType,
         obscureText: widget.isPassword ? _isObscured : false,
@@ -80,10 +78,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
         },
         decoration: InputDecoration(
           labelText: widget.labelText,
-          labelStyle: TextStyle(color: ColorManager.textColor),
-
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: ColorManager.hintTextColor),
 
           prefixIcon: widget.prefixIcon != null
               ? Icon(widget.prefixIcon)
@@ -105,26 +100,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
                         onPressed: widget.onSuffixIconPressed,
                       )
                     : null),
-          enabledBorder:
-              widget.enabledBorder ??
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(color: Color(0xff1E293B), width: 2),
-              ),
-          focusedBorder:
-              widget.focusedBorder ??
-              OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
-                borderSide: BorderSide(color: Color(0xff1E293B), width: 2),
-              ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.red, width: 2),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.red, width: 2),
-          ),
+          enabledBorder: widget.enabledBorder,
+          focusedBorder: widget.focusedBorder,
           floatingLabelBehavior: widget.floatingLabelBehavior,
         ),
       ),

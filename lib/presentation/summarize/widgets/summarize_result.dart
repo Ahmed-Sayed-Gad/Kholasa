@@ -22,20 +22,20 @@ class SummarizeResult extends StatelessWidget {
         if (state is ExportSuccess) {
           showModalBottomSheet(
             context: context,
-            backgroundColor: ColorManager.secondaryDark,
+            backgroundColor: Theme.of(context).cardColor,
             builder: (_) {
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: const Icon(
+                    leading: Icon(
                       Icons.open_in_new,
-                      color: ColorManager.primary,
+                      color: Theme.of(context).primaryColor,
                     ),
-                    title: const Text(
+                    title: Text(
                       "Open file",
                       style: TextStyle(
-                        color: ColorManager.textColor,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     onTap: () async {
@@ -44,14 +44,14 @@ class SummarizeResult extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: const Icon(
+                    leading: Icon(
                       Icons.share,
-                      color: ColorManager.primary,
+                      color: Theme.of(context).primaryColor,
                     ),
-                    title: const Text(
+                    title: Text(
                       "Share file",
                       style: TextStyle(
-                        color: ColorManager.textColor,
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                     onTap: () async {
@@ -82,10 +82,10 @@ class SummarizeResult extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: ColorManager.secondaryDark,
+                  color: Theme.of(context).cardColor,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: ColorManager.primary.withOpacity(.15),
+                    color: Theme.of(context).primaryColor.withOpacity(.15),
                   ),
                 ),
                 child: Column(
@@ -98,21 +98,21 @@ class SummarizeResult extends StatelessWidget {
                           height: 56,
                           width: 56,
                           decoration: BoxDecoration(
-                            color: ColorManager.primary
+                            color: Theme.of(context).primaryColor
                                 .withOpacity(.10),
                             borderRadius:
                             BorderRadius.circular(16),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.description_outlined,
-                            color: ColorManager.primary,
+                            color: Theme.of(context).primaryColor,
                             size: 28,
                           ),
                         ),
 
                         const SizedBox(width: 14),
 
-                        const Expanded(
+                        Expanded(
                           child: Column(
                             crossAxisAlignment:
                             CrossAxisAlignment.start,
@@ -121,18 +121,17 @@ class SummarizeResult extends StatelessWidget {
                                 "AI Summary",
                                 style: TextStyle(
                                   color:
-                                  ColorManager.textColor,
+                                  Theme.of(context).textTheme.bodyLarge?.color,
                                   fontSize: 22,
                                   fontWeight:
                                   FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
                                 "Generated just now",
                                 style: TextStyle(
-                                  color: ColorManager
-                                      .hintTextColor,
+                                  color: Theme.of(context).hintColor,
                                 ),
                               ),
                             ],
@@ -146,12 +145,12 @@ class SummarizeResult extends StatelessWidget {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: ColorManager.primary
+                            color: Theme.of(context).primaryColor
                                 .withOpacity(.10),
                             borderRadius:
                             BorderRadius.circular(30),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize:
                             MainAxisSize.min,
                             children: [
@@ -159,14 +158,13 @@ class SummarizeResult extends StatelessWidget {
                                 Icons.language,
                                 size: 16,
                                 color:
-                                ColorManager.primary,
+                                Theme.of(context).primaryColor,
                               ),
                               SizedBox(width: 6),
                               Text(
                                 "English",
                                 style: TextStyle(
-                                  color: ColorManager
-                                      .primary,
+                                  color: Theme.of(context).primaryColor,
                                   fontWeight:
                                   FontWeight.w600,
                                 ),
@@ -181,8 +179,8 @@ class SummarizeResult extends StatelessWidget {
 
                     SelectableText(
                       summary,
-                      style: const TextStyle(
-                        color: ColorManager.textColor,
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodyLarge?.color,
                         fontSize: 17,
                         height: 1.9,
                         fontWeight: FontWeight.w400,
@@ -195,29 +193,28 @@ class SummarizeResult extends StatelessWidget {
                       padding:
                       const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: ColorManager.primary
+                        color: Theme.of(context).primaryColor
                             .withOpacity(.08),
                         borderRadius:
                         BorderRadius.circular(18),
                         border: Border.all(
-                          color: ColorManager.primary
+                          color: Theme.of(context).primaryColor
                               .withOpacity(.15),
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         children: [
                           Icon(
                             Icons.auto_awesome,
                             color:
-                            ColorManager.primary,
+                            Theme.of(context).primaryColor,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: Text(
                               "This summary was generated using AI. Please verify important information.",
                               style: TextStyle(
-                                color: ColorManager
-                                    .textColorSecondary,
+                                color: Theme.of(context).textTheme.bodyMedium?.color,
                               ),
                             ),
                           ),
@@ -239,8 +236,8 @@ class SummarizeResult extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       minimumSize:
                       const Size.fromHeight(56),
-                      side: const BorderSide(
-                        color: ColorManager.primaryBlue,
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius:

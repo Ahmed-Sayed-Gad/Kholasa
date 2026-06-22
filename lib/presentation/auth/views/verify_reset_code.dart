@@ -5,6 +5,7 @@ import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
 import '../cubit/verify_reset_code_cubit.dart';
 import '../cubit/verify_reset_code_state.dart';
+import '../../../l10n/app_localizations.dart';
 
 class VerifyCodeView extends StatefulWidget {
   const VerifyCodeView({super.key});
@@ -129,7 +130,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
           return Scaffold(
             appBar: AppBar(
               title:
-              const Text("Verification"),
+              Text(AppLocalizations.of(context)!.verification),
             ),
             body: Column(
               mainAxisAlignment:
@@ -166,8 +167,8 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                   onPressed:
                   _submit,
                   child:
-                  const Text(
-                    "Verify",
+                  Text(
+                    AppLocalizations.of(context)!.verify,
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/profile/entities/profile_entity.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ProfileStatsSection extends StatelessWidget {
   final ProfileEntity profile;
@@ -18,21 +19,21 @@ class ProfileStatsSection extends StatelessWidget {
       children: [
         Expanded(
           child: StatCard(
-            title: "Summaries",
+            title: AppLocalizations.of(context)!.summaryTitle,
             value: profile.totalSummaries.toString(),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: StatCard(
-            title: "Saved",
+            title: AppLocalizations.of(context)!.saved,
             value: profile.savedSummaries.toString(),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: StatCard(
-            title: "Hours",
+            title: AppLocalizations.of(context)!.hours,
             value: estimatedHours.toString(),
           ),
         ),
@@ -64,7 +65,7 @@ class StatCard extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              fontSize: 24,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
             ),
           ),

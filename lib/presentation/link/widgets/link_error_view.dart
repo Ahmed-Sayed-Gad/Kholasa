@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../cubit/link_cubit.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class LinkErrorView extends StatelessWidget {
   final String message;
@@ -20,7 +20,7 @@ class LinkErrorView extends StatelessWidget {
       children: [
         Icon(
           Icons.error_outline,
-          color: ColorManager.error,
+          color: Theme.of(context).colorScheme.error,
           size: 40,
         ),
         const SizedBox(height: 12),
@@ -28,7 +28,7 @@ class LinkErrorView extends StatelessWidget {
         Text(
           message,
           style: TextStyle(
-            color: ColorManager.error,
+            color: Theme.of(context).colorScheme.error,
           ),
         ),
 
@@ -38,7 +38,7 @@ class LinkErrorView extends StatelessWidget {
           onPressed: () {
             context.read<LinkCubit>().reset();
           },
-          child: const Text('Try Again'),
+          child: Text(AppLocalizations.of(context)!.retry),
         ),
       ],
     );

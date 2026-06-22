@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../cubit/summarize_cubit.dart';
 import '../cubit/summarize_state.dart';
@@ -12,18 +13,18 @@ class SummaryLengthSlider extends StatelessWidget {
     return BlocBuilder<SummarizeCubit, SummarizeState>(
       builder: (context, state) {
         return SegmentedButton<SummaryLength>(
-          segments: const [
+          segments: [
             ButtonSegment(
               value: SummaryLength.short,
-              label: Text('Short'),
+              label: Text(AppLocalizations.of(context)!.shortLength),
             ),
             ButtonSegment(
               value: SummaryLength.medium,
-              label: Text('Medium'),
+              label: Text(AppLocalizations.of(context)!.mediumLength),
             ),
             ButtonSegment(
               value: SummaryLength.long,
-              label: Text('Long'),
+              label: Text(AppLocalizations.of(context)!.longLength),
             ),
           ],
           selected: {

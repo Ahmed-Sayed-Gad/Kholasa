@@ -7,6 +7,7 @@ import '../../../core/Routs/app_routes_names.dart';
 
 import '../../widget/Validators.dart';
 import '../../widget/custom_form_field.dart';
+import '../../../l10n/app_localizations.dart';
 
 import '../cubit/register_cubit.dart';
 import '../cubit/register_state.dart';
@@ -38,7 +39,7 @@ class _RegisterViewState extends State<RegisterView> {
 
     if (!agree) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please accept terms and conditions')),
+        SnackBar(content: Text(AppLocalizations.of(context)!.acceptTerms)),
       );
       return;
     }
@@ -71,7 +72,7 @@ class _RegisterViewState extends State<RegisterView> {
         listener: (context, state) {
           if (state is RegisterSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Registration successful')),
+              SnackBar(content: Text(AppLocalizations.of(context)!.registrationSuccess)),
             );
 
             Navigator.pushReplacementNamed(
@@ -105,7 +106,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
 
                     Text(
-                      "Create your account",
+                      AppLocalizations.of(context)!.createYourAccountTitle,
                       style: TextStyle(
                         color: Theme.of(context).textTheme.bodyLarge!.color,
                         fontSize: 16,
@@ -114,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
 
                     Text(
-                      "Start summarizing documents with AI",
+                      AppLocalizations.of(context)!.startSummarizingDesc,
                       style: TextStyle(
                         fontSize: 14,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
@@ -137,13 +138,13 @@ class _RegisterViewState extends State<RegisterView> {
                           children: [
                             CustomFormField(
                               controller: usernameController,
-                              labelText: "Username",
+                              labelText: AppLocalizations.of(context)!.username,
                               validator: Validators.name,
                             ),
 
                             CustomFormField(
                               controller: emailController,
-                              labelText: "Email",
+                              labelText: AppLocalizations.of(context)!.email,
                               validator: Validators.email,
                             ),
 
@@ -151,7 +152,7 @@ class _RegisterViewState extends State<RegisterView> {
 
                             CustomFormField(
                               controller: passwordController,
-                              labelText: "Password",
+                              labelText: AppLocalizations.of(context)!.password,
                               isPassword: true,
                             ),
 
@@ -171,7 +172,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   },
                                 ),
                                 Text(
-                                  "I agree to terms",
+                                  AppLocalizations.of(context)!.agreeToTerms,
                                   style: TextStyle(
                                     color: Theme.of(
                                       context,
@@ -189,7 +190,7 @@ class _RegisterViewState extends State<RegisterView> {
                                     : () => _onRegisterPressed(context),
                                 child: isLoading
                                     ? const CircularProgressIndicator()
-                                    : const Text("Create Account"),
+                                    : Text(AppLocalizations.of(context)!.createAccount),
                               ),
                             ),
                           ],

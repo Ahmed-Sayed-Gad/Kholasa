@@ -45,7 +45,7 @@ class SummarizeRepositoryImpl
       file: file,
       language: language,
       format: 'text',
-      length: apiLength,
+      length: length,
       sessionId: 'default',
     );
 

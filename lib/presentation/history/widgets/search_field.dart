@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../cubit/history_cubit.dart';
 
 class SearchField extends StatelessWidget {
@@ -15,7 +14,7 @@ class SearchField extends StatelessWidget {
         hintText: "Search history...",
         prefixIcon: const Icon(Icons.search),
         filled: true,
-        fillColor: ColorManager.surfaceDark,
+        fillColor: Theme.of(context).inputDecorationTheme.fillColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
           borderSide: BorderSide.none,

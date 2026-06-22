@@ -11,6 +11,7 @@ import '../../link/views/link_view.dart';
 
 import '../../scan/cubit/scan_cubit.dart';
 import '../../scan/views/scan_view.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class UploadActionsSection extends StatelessWidget {
   const UploadActionsSection({super.key});
@@ -24,10 +25,10 @@ class UploadActionsSection extends StatelessWidget {
         vertical: 20,
       ),
       child: Row(
-        children: const [
+        children: [
           Expanded(
             child: _ActionCard(
-              title: 'Upload\nFile',
+              title: AppLocalizations.of(context)!.uploadFile,
               icon:
               Icons.upload_outlined,
               type:
@@ -39,7 +40,7 @@ class UploadActionsSection extends StatelessWidget {
           SizedBox(width: 12),
           Expanded(
             child: _ActionCard(
-              title: 'Paste\nLink',
+              title: AppLocalizations.of(context)!.pasteLinkHome,
               icon:
               Icons.link_rounded,
               type:
@@ -51,7 +52,7 @@ class UploadActionsSection extends StatelessWidget {
           SizedBox(width: 12),
           Expanded(
             child: _ActionCard(
-              title: 'Scan\nImage',
+              title: AppLocalizations.of(context)!.scanImageHome,
               icon: Icons
                   .qr_code_scanner_rounded,
               type:
@@ -148,7 +149,7 @@ class _ActionCard extends StatelessWidget {
                     .textTheme
                     .bodyLarge!
                     .color,
-                fontSize: 15,
+                fontSize: 11,
                 fontWeight:
                 FontWeight.w600,
                 height: 1.35,

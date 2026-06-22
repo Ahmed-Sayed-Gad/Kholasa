@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../cubit/summarize_cubit.dart';
 import '../cubit/summarize_state.dart';
@@ -13,21 +14,21 @@ class SummaryLanguageSelector extends StatelessWidget {
       builder: (context, state) {
         return DropdownButtonFormField<String>(
           value: state.language,
-          decoration: const InputDecoration(
-            labelText: 'Language',
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)!.language,
           ),
-          items: const [
+          items: [
             DropdownMenuItem(
               value: 'ar',
-              child: Text('Arabic'),
+              child: Text(AppLocalizations.of(context)!.arabic),
             ),
             DropdownMenuItem(
               value: 'en',
-              child: Text('English'),
+              child: Text(AppLocalizations.of(context)!.english),
             ),
             DropdownMenuItem(
               value: 'both',
-              child: Text('Both'),
+              child: Text(AppLocalizations.of(context)!.both),
             ),
           ],
           onChanged: (value) {

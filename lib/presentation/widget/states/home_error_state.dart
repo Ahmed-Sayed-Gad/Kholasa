@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../core/theme/color_manager.dart';
+import '../../../l10n/app_localizations.dart';
 
 class HomeErrorState extends StatelessWidget {
   final String message;
@@ -18,11 +17,11 @@ class HomeErrorState extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(message, style: TextStyle(color: ColorManager.error)),
+          Text(message, style: TextStyle(color: Theme.of(context).colorScheme.error)),
           const SizedBox(height: 12),
           ElevatedButton(
             onPressed: onRetry,
-            child: const Text("Retry"),
+            child: Text(AppLocalizations.of(context)!.retry),
           ),
         ],
       ),

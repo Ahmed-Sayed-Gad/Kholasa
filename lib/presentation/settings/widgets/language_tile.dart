@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../../language/cubit/language_cubit.dart';
 
@@ -10,7 +11,7 @@ class LanguageTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.language),
-      title: const Text("Language"),
+      title: Text(AppLocalizations.of(context)!.language),
       onTap: () {
         showModalBottomSheet(
           context: context,
@@ -20,14 +21,14 @@ class LanguageTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    title: const Text("English"),
+                    title: Text(AppLocalizations.of(context)!.english),
                     onTap: () {
                       context.read<LanguageCubit>().changeLanguage('en');
                       Navigator.pop(context);
                     },
                   ),
                   ListTile(
-                    title: const Text("العربية"),
+                    title: Text(AppLocalizations.of(context)!.arabic),
                     onTap: () {
                       context.read<LanguageCubit>().changeLanguage('ar');
                       Navigator.pop(context);

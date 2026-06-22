@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/color_manager.dart';
-
 class LinkCard extends StatelessWidget {
   final Widget child;
 
@@ -18,10 +16,10 @@ class LinkCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: ColorManager.secondaryDark,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: ColorManager.primary.withOpacity(.18),
+          color: Theme.of(context).primaryColor.withOpacity(.18),
         ),
       ),
       child: child,

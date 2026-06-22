@@ -3,6 +3,7 @@ import 'package:project_one_c3_team/presentation/App_pages/tabs/saved_tab_page.d
 import 'tabs/home_tab_page.dart';
 import 'tabs/history_tab_page.dart';
 import 'tabs/profile_tab_page.dart';
+import '../../../l10n/app_localizations.dart';
 
 class HomeShellPage extends StatefulWidget {
   const HomeShellPage({super.key});
@@ -32,11 +33,11 @@ class _HomeShellPageState extends State<HomeShellPage> {
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
         type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: "Saved"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.home), label: AppLocalizations.of(context)!.home),
+          BottomNavigationBarItem(icon: const Icon(Icons.history), label: AppLocalizations.of(context)!.history),
+          BottomNavigationBarItem(icon: const Icon(Icons.bookmark), label: AppLocalizations.of(context)!.saved),
+          BottomNavigationBarItem(icon: const Icon(Icons.person), label: AppLocalizations.of(context)!.profile),
         ],
       ),
     );

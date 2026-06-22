@@ -8,6 +8,7 @@ import '../widgets/upload_card.dart';
 import '../widgets/upload_tabs.dart';
 
 import '../../summarize/view/summarize_view.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class UploadView extends StatelessWidget {
   const UploadView({super.key});
@@ -65,7 +66,7 @@ class UploadView extends StatelessWidget {
                       width: 14),
 
                   Text(
-                    'New Summary',
+                    AppLocalizations.of(context)!.newSummary,
                     style:
                     TextStyle(
                       color: Theme.of(

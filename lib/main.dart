@@ -11,6 +11,7 @@ import 'presentation/theme/theme_state.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'presentation/language/cubit/language_cubit.dart';
 import 'presentation/language/cubit/language_state.dart';
 
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
 
-        BlocProvider(create: (_) => LanguageCubit()),
+        BlocProvider(create: (_) => LanguageCubit(getIt<SharedPreferences>())),
 
         // ✅ Global HistoryCubit
         BlocProvider(

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/di/di.dart';
-import '../../../core/theme/color_manager.dart';
 import '../cubit/history_cubit.dart';
 import '../cubit/history_state.dart';
 import '../widgets/filter_chips.dart';
 import '../widgets/history_card.dart';
 import '../widgets/language_chips.dart';
 import '../widgets/search_field.dart';
-
-
+import '../../widget/reduced_font_theme.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class HistoryView extends StatefulWidget {
   const HistoryView({super.key});
@@ -34,31 +32,32 @@ class _HistoryViewState extends State<HistoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-
-// 🔹 Title
-              const Text(
-                "History",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: ColorManager.textColor,
+    return ReducedFontTheme(
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+  
+  // 🔹 Title
+                Text(
+                  AppLocalizations.of(context)!.history,
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
+                  ),
                 ),
-              ),
 
               const SizedBox(height: 4),
 
-              const Text(
-                "View all your past summaries",
+              Text(
+                AppLocalizations.of(context)!.historyDesc,
                 style: TextStyle(
-                  color: ColorManager.textSecondary,
+                  color: Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
 
@@ -91,7 +90,7 @@ class _HistoryViewState extends State<HistoryView> {
                       final items = state.filteredItems;
 
                       if (items.isEmpty) {
-                        return const Center(child: Text("No history yet"));
+                        return Center(child: Text(AppLocalizations.of(context)!.noHistory));
                       }
 
                       return ListView.builder(
@@ -109,6 +108,6 @@ class _HistoryViewState extends State<HistoryView> {
           ),
         ),
       ),
-    );
+    ),);
   }
 }

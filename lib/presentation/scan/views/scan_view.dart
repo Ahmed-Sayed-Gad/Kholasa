@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../cubit/scan_cubit.dart';
 import '../cubit/scan_state.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ScanView extends StatelessWidget {
   const ScanView({super.key});
@@ -15,7 +15,7 @@ class ScanView extends StatelessWidget {
       Theme.of(context).scaffoldBackgroundColor,
 
       appBar: AppBar(
-        title: const Text('Scan Image'),
+        title: Text(AppLocalizations.of(context)!.scanImage),
       ),
 
       body: Padding(
@@ -81,7 +81,7 @@ class ScanView extends StatelessWidget {
                             .reset();
                       },
                       child:
-                      const Text("Scan Again"),
+                      Text(AppLocalizations.of(context)!.scanAgain),
                     ),
                   ),
                 ],
@@ -93,8 +93,7 @@ class ScanView extends StatelessWidget {
                 child: Text(
                   state.message,
                   style: TextStyle(
-                    color:
-                    ColorManager.error,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                 ),
               );

@@ -5,12 +5,12 @@ import '../../../core/di/di.dart';
 import '../../chat/cubit/chat_cubit.dart';
 import '../../chat/views/chat_view.dart';
 import '../../ui_models/recent_item_ui_model.dart';
+import '../../widget/reduced_font_theme.dart';
 import '../../widget/sections/home_upload_actions_section.dart';
 import '../cubit/home_cubit.dart';
 import '../../widget/search_bar/home_search_bar..dart';
 import '../../widget/sections/home_recent_section.dart';
 import '../../widget/sections/home_sliver_app_bar.dart';
-import '../../widget/states/home_empty_state.dart';
 import '../../widget/states/home_error_state.dart';
 import '../cubit/home_cubit_state.dart';
 
@@ -19,8 +19,9 @@ class HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: Container(
+    return ReducedFontTheme(
+      child: Scaffold(
+        floatingActionButton: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           boxShadow: [
@@ -105,6 +106,6 @@ class HomeBody extends StatelessWidget {
           return const SizedBox();
         },
       ),
-    );
+    ),);
   }
 }

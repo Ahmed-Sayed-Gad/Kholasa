@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class TermsOfUseView extends StatelessWidget {
   const TermsOfUseView({super.key});
@@ -7,7 +8,7 @@ class TermsOfUseView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Terms of Use"),
+        title: Text(AppLocalizations.of(context)!.terms),
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -66,7 +67,7 @@ These terms may be updated periodically. Continued use of the application indica
 ''',
           style: TextStyle(
             height: 1.6,
-            fontSize: 15,
+            fontSize: 13,
           ),
         ),
       ),

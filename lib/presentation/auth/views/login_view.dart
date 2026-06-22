@@ -5,10 +5,12 @@ import '../../../api/auth/request/login_request.dart';
 import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
 
+import '../../../l10n/app_localizations.dart';
 import '../../widget/custom_form_field.dart';
 
 import '../cubit/login_cubit.dart';
 import '../cubit/login_state.dart';
+import 'forget_password_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -78,18 +80,12 @@ class _LoginViewState extends State<LoginView> {
                     ),
 
                     Text(
-                      "Welcome back",
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyLarge!.color,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      AppLocalizations.of(context)!.welcomeBack,
                     ),
-
                     const SizedBox(height: 8),
 
                     Text(
-                      "Sign in to your account to continue",
+                      AppLocalizations.of(context)!.signInContinue,
                       style: TextStyle(
                         fontSize: 16,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
@@ -119,16 +115,8 @@ class _LoginViewState extends State<LoginView> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge!.color,
-                              ),
+                              AppLocalizations.of(context)!.login,
                             ),
-
                             const SizedBox(height: 6),
 
                             Text(
@@ -151,7 +139,7 @@ class _LoginViewState extends State<LoginView> {
                               keyboardType: TextInputType.emailAddress,
                               validator: (val) {
                                 if (val == null || val.isEmpty) {
-                                  return "Required";
+                                  return AppLocalizations.of(context)!.required;
                                 }
                                 return null;
                               },
@@ -166,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
                               isPassword: true,
                               validator: (val) {
                                 if (val == null || val.isEmpty) {
-                                  return "Required";
+                                  return AppLocalizations.of(context)!.required;
                                 }
                                 return null;
                               },
@@ -178,8 +166,14 @@ class _LoginViewState extends State<LoginView> {
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: TextButton(
-                                      onPressed: () {},
-                                      child: const Text("Create Account"),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          App_Routs_names.RegisterScreen,
+                                        );
+
+                                      },
+                                      child: Text(AppLocalizations.of(context)!.createAccount),
                                     ),
                                   ),
                                 ),
@@ -187,8 +181,14 @@ class _LoginViewState extends State<LoginView> {
                                   child: Align(
                                     alignment: Alignment.centerRight,
                                     child: TextButton(
-                                      onPressed: () {},
-                                      child: const Text("Forgot Password"),
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          App_Routs_names.forgetPasswordScreen,
+                                        );
+
+                                      },
+                                      child: Text(AppLocalizations.of(context)!.forgetPassword),
                                     ),
                                   ),
                                 ),
@@ -218,7 +218,7 @@ class _LoginViewState extends State<LoginView> {
                                         color: Colors.white,
                                       )
                                     : Text(
-                                        "Login",
+                                        AppLocalizations.of(context)!.login,
                                         style: TextStyle(
                                           color: Theme.of(
                                             context,

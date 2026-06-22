@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/color_manager.dart';
 
 class SummaryLengthOption extends StatelessWidget {
   final String title;
@@ -19,9 +18,9 @@ class SummaryLengthOption extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: selected ? ColorManager.primary : Colors.transparent,
+          color: selected ? Theme.of(context).primaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: ColorManager.primary),
+          border: Border.all(color: Theme.of(context).primaryColor),
         ),
         child: Column(
           children: [
@@ -30,8 +29,8 @@ class SummaryLengthOption extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: selected
-                    ? ColorManager.white
-                    : ColorManager.textColor,
+                    ? Colors.white
+                    : Theme.of(context).textTheme.bodyLarge?.color,
               ),
             ),
             const SizedBox(height: 4),
@@ -39,7 +38,7 @@ class SummaryLengthOption extends StatelessWidget {
               subtitle,
               style: TextStyle(
                 fontSize: 12,
-                color: ColorManager.hintTextColor,
+                color: Theme.of(context).hintColor,
               ),
               textAlign: TextAlign.center,
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'search_filter_button.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class HomeSearchBar extends StatelessWidget {
   final ValueChanged<String>? onChanged;
@@ -50,12 +51,11 @@ class _SearchField
             .textTheme
             .bodyLarge!
             .color,
-        fontSize: 14,
+        fontSize: 12,
       ),
       decoration:
       InputDecoration(
-        hintText:
-        'Search your task.....',
+        hintText: AppLocalizations.of(context)!.searchTask,
         prefixIcon: Icon(
           Icons.search,
           color:

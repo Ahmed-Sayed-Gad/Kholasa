@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../domain/export/export_type.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ExportDialog extends StatefulWidget {
 
@@ -29,7 +30,7 @@ class _ExportDialogState extends State<ExportDialog> {
 
     return AlertDialog(
 
-      title: const Text("Export Summary"),
+      title: Text(AppLocalizations.of(context)!.exportSummary),
 
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -46,16 +47,16 @@ class _ExportDialogState extends State<ExportDialog> {
 
           DropdownButton<ExportType>(
             value: type,
-            items: const [
+            items: [
 
               DropdownMenuItem(
                 value: ExportType.pdf,
-                child: Text("PDF"),
+                child: Text(AppLocalizations.of(context)!.pdf),
               ),
 
               DropdownMenuItem(
                 value: ExportType.txt,
-                child: Text("TXT"),
+                child: Text(AppLocalizations.of(context)!.txt),
               ),
 
             ],
@@ -75,7 +76,7 @@ class _ExportDialogState extends State<ExportDialog> {
 
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel"),
+          child: Text(AppLocalizations.of(context)!.cancel),
         ),
 
         ElevatedButton(
@@ -90,7 +91,7 @@ class _ExportDialogState extends State<ExportDialog> {
             Navigator.pop(context);
 
           },
-          child: const Text("Export"),
+          child: Text(AppLocalizations.of(context)!.export),
         )
 
       ],

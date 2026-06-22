@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../../../domain/profile/entities/profile_entity.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class ActivitySummaryCard extends StatelessWidget {
   final ProfileEntity profile;
@@ -22,29 +22,29 @@ class ActivitySummaryCard extends StatelessWidget {
       child: Column(
         children: [
           ActivityRow(
-            title: "Today",
-            value: "${profile.todayCount} summaries",
+            title: AppLocalizations.of(context)!.today,
+            value: "${profile.todayCount} ${AppLocalizations.of(context)!.summaries}",
           ),
 
           const Divider(),
 
           ActivityRow(
-            title: "Yesterday",
-            value: "${profile.yesterdayCount} summaries",
+            title: AppLocalizations.of(context)!.yesterday,
+            value: "${profile.yesterdayCount} ${AppLocalizations.of(context)!.summaries}",
           ),
 
           const Divider(),
 
           ActivityRow(
-            title: "This Week",
-            value: "${profile.weekCount} summaries",
+            title: AppLocalizations.of(context)!.thisWeek,
+            value: "${profile.weekCount} ${AppLocalizations.of(context)!.summaries}",
           ),
 
           const Divider(),
 
           ActivityRow(
-            title: "This Month",
-            value: "${profile.monthCount} summaries",
+            title: AppLocalizations.of(context)!.thisMonth,
+            value: "${profile.monthCount} ${AppLocalizations.of(context)!.summaries}",
           ),
         ],
       ),
@@ -76,8 +76,8 @@ class ActivityRow extends StatelessWidget {
 
           Text(
             value,
-            style: const TextStyle(
-              color: ColorManager.primary,
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
             ),
           ),

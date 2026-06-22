@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../l10n/app_localizations.dart';
 
 import '../../../core/di/di.dart';
 import '../../export/cubit/export_cubit.dart';
@@ -33,7 +34,7 @@ class SummarizeView extends StatelessWidget {
           }
         },
         child: Scaffold(
-          appBar: AppBar(title: const Text('Summary')),
+          appBar: AppBar(title: Text(AppLocalizations.of(context)!.summaryTitle)),
           body: const SummarizeBody(),
         ),
       ),

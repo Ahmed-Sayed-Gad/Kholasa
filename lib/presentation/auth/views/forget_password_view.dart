@@ -7,6 +7,7 @@ import '../cubit/forget_password_cubit.dart';
 import '../cubit/forget_password_state.dart';
 import '../../widget/custom_form_field.dart';
 import '../../widget/Validators.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -54,7 +55,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           final isLoading = state is ForgetPasswordLoading;
 
           return Scaffold(
-            appBar: AppBar(title: const Text("Forget Password")),
+            appBar: AppBar(title: Text(AppLocalizations.of(context)!.forgetPassword)),
             body: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -86,7 +87,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       isLoading ? null : () => _onContinuePressed(context),
                       child: isLoading
                           ? const CircularProgressIndicator()
-                          : const Text("Continue"),
+                          : Text(AppLocalizations.of(context)!.continueText),
                     ),
                   ),
                 ],

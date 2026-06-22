@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/theme/color_manager.dart';
 import '../cubit/history_cubit.dart';
 import '../cubit/history_state.dart';
 
@@ -43,16 +42,16 @@ class LanguageRow extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
             color: isSelected
-                ? ColorManager.primary.withOpacity(.2)
-                : ColorManager.surfaceDark,
+                ? Theme.of(context).primaryColor.withOpacity(.2)
+                : Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(
             text,
             style: TextStyle(
               color: isSelected
-                  ? ColorManager.primary
-                  : ColorManager.textSecondary,
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).textTheme.bodyMedium?.color,
             ),
           ),
         ),

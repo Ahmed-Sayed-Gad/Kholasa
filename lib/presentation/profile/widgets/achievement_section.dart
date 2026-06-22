@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class AchievementSection
     extends StatelessWidget {
@@ -9,25 +10,25 @@ class AchievementSection
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: const [
+      children: [
         Expanded(
           child: AchievementCard(
             emoji: "🎯",
-            title: "First Summary",
+            title: AppLocalizations.of(context)!.firstSummary,
           ),
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(
           child: AchievementCard(
             emoji: "🔥",
-            title: "Week Streak",
+            title: AppLocalizations.of(context)!.weekStreak,
           ),
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Expanded(
           child: AchievementCard(
             emoji: "⭐",
-            title: "50 Summaries",
+            title: AppLocalizations.of(context)!.fiftySummaries,
           ),
         ),
       ],
@@ -63,7 +64,7 @@ class AchievementCard
             emoji,
             style:
             const TextStyle(
-              fontSize: 24,
+              fontSize: 22,
             ),
           ),
           const SizedBox(height: 8),

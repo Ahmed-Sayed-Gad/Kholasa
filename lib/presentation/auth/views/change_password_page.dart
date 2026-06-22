@@ -6,6 +6,7 @@ import '../../../core/di/di.dart';
 import '../cubit/change_password_cubit.dart';
 import '../cubit/change_password_state.dart';
 import '../../widget/custom_form_field.dart';
+import '../../../l10n/app_localizations.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -45,7 +46,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     if (token == null || token.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Token not found, please login again")),
+        SnackBar(content: Text(AppLocalizations.of(context)!.tokenNotFound)),
       );
       return;
     }
@@ -66,8 +67,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         listener: (context, state) {
           if (state is ChangePasswordSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Password changed successfully"),
+              SnackBar(
+                content: Text(AppLocalizations.of(context)!.passwordChanged),
                 backgroundColor: Colors.green,
               ),
             );
@@ -87,7 +88,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           final isLoading = state is ChangePasswordLoading;
 
           return Scaffold(
-            appBar: AppBar(title: const Text("Change Password")),
+            appBar: AppBar(title: Text(AppLocalizations.of(context)!.changePassword)),
             body: Form(
               key: _formKey,
               child: SingleChildScrollView(
@@ -145,7 +146,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: isFormValid ? _onUpdatePressed : null,
-                          child: const Text("Update"),
+                          child: Text(AppLocalizations.of(context)!.update),
                         ),
                       ),
                   ],

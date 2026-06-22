@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/color_manager.dart';
 
 class HomeRecentEmpty extends StatelessWidget {
   const HomeRecentEmpty({super.key});
@@ -13,14 +12,14 @@ class HomeRecentEmpty extends StatelessWidget {
           Icon(
             Icons.inbox_outlined,
             size: 48,
-            color: ColorManager.hintTextColor,
+            color: Theme.of(context).hintColor,
           ),
           const SizedBox(height: 12),
           Text(
             "No recent items yet",
             style: TextStyle(
-              color: ColorManager.textColorSecondary,
-              fontSize: 14,
+              color: Theme.of(context).textTheme.bodyMedium?.color,
+              fontSize: 12,
             ),
           ),
         ],

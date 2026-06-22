@@ -8,6 +8,7 @@ import '../widgets/link_card.dart';
 import '../widgets/link_error_view.dart';
 import '../widgets/link_idle_view.dart';
 import '../widgets/link_loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class LinkView extends StatefulWidget {
   const LinkView({super.key});
@@ -62,8 +63,8 @@ class _LinkViewState extends State<LinkView> {
                     .read<LinkCubit>()
                     .reset();
               },
-              child: const Text(
-                "Summarize Another URL",
+              child: Text(
+                AppLocalizations.of(context)!.summarizeAnotherUrl,
               ),
             ),
           ],
@@ -87,7 +88,7 @@ class _LinkViewState extends State<LinkView> {
             .scaffoldBackgroundColor,
         elevation: 0,
         title: Text(
-          'Paste Link',
+          AppLocalizations.of(context)!.pasteLink,
           style: TextStyle(
             color: Theme.of(context)
                 .textTheme

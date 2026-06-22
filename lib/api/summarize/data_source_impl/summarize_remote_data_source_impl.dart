@@ -16,6 +16,7 @@ class SummarizeRemoteDataSourceImpl
   final ApiClient apiClient;
   final AuthErrorHandler errorHandler;
 
+
   SummarizeRemoteDataSourceImpl(
       this.apiClient,
       this.errorHandler,
@@ -30,14 +31,28 @@ class SummarizeRemoteDataSourceImpl
     required String sessionId,
   }) async {
     try {
+
       final multipartFile =
       await MultipartFile.fromFile(
         file.path,
         filename: file.path.split('/').last,
       );
+      print("FILE => ${file.path}");
+      print("LANGUAGE => $language");
+      print("FORMAT => $format");
+      print("LENGTH => $length");
+      print("SESSION => $sessionId");
+      final dio = Dio();
 
-      final response =
-      await apiClient.summarizeDocument(
+      final formData = FormData.fromMap({
+        "file": multipartFile,
+        "language": language,
+        "format": format,
+        "length": length,
+        "session_id": sessionId,
+      });
+
+      final response = await apiClient.summarizeDocument(
         multipartFile,
         language,
         format,
@@ -46,11 +61,18 @@ class SummarizeRemoteDataSourceImpl
       );
 
       return Success(
-        response.data.summary,
+        response.summary,
       );
+
     }catch (e, s) {
-      print('ERROR: $e');
-      print('STACK: $s');
+
+      if (e is DioException) {
+        print("STATUS => ${e.response?.statusCode}");
+        print("DATA => ${e.response?.data}");
+      }
+
+      print(e);
+      print(s);
 
       if (e is Exception) {
         return errorHandler.handle(e);

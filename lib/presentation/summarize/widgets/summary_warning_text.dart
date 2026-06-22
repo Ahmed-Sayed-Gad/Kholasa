@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/color_manager.dart';
 
 class SummaryWarningText extends StatelessWidget {
   const SummaryWarningText({super.key});
@@ -10,7 +9,7 @@ class SummaryWarningText extends StatelessWidget {
       child: Text(
         'Please upload a document first',
         style: TextStyle(
-          color: ColorManager.textColor,
+          color: Theme.of(context).textTheme.bodySmall?.color,
           fontSize: 12,
         ),
       ),
