@@ -32,33 +32,46 @@ dependencies:
   path_provider: ^2.1.2
   share_plus: ^7.2.1
   open_filex: ^4.4.0
-  hive_ce: ^2.10.1          # replaces hive
-  hive_ce_flutter: ^2.2.0   # replaces hive_flutter
+  hive_ce: ^2.10.1
+  hive_ce_flutter: ^2.2.0
   flutter_localizations:
     sdk: flutter
-  google_mlkit_text_recognition: ^0.13.0
   image_picker: ^1.1.2
   flutter_local_notifications:
   permission_handler: ^11.3.1
   intl: ^0.20.2
+
 dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
   build_runner:
   bloc_test:
   mocktail:
-  hive_ce_generator: ^1.8.0  # replaces hive_generator
-  flutter_lints: ^5.0.0
-  flutter_test:
-    sdk: flutter
+  hive_ce_generator: ^1.8.0
   injectable_generator:
   json_serializable:
   retrofit_generator: ^10.0.1
+
+  # App Icon
+  flutter_launcher_icons: ^0.14.3
 
 dependency_overrides:
   retrofit_generator: 10.0.1
   retrofit: 4.9.0
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/app_icon.png"
+
+  # Android 8+
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
+
 flutter:
   generate: true
   uses-material-design: true
+
   assets:
     - assets/images/

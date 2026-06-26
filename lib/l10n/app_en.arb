@@ -90,5 +90,12 @@
   "createYourAccountTitle": "Create your account",
   "startSummarizingDesc": "Start summarizing documents with AI",
   "username": "Username",
-  "agreeToTerms": "I agree to terms"
+  "agreeToTerms": "I agree to terms",
+  "selectDocToChat": "Select Document to Chat With",
+  "selectDocFromLibrary": "Select a document from library...",
+  "noDocSelected": "No Document Selected",
+  "noDocSelectedDesc": "Please choose a document from the dropdown above to start a conversation and ask questions about its content.",
+  "answersBasedOnDoc": "Answers are based only on the contents of the selected document",
+  "askQuestionAbout": "Ask a question about",
+  "send": "Send"
 }

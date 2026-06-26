@@ -1,92 +1,149 @@
-  // lib/presentation/chat/cubit/chat_cubit.dart
+// lib/presentation/chat/cubit/chat_cubit.dart
 
-  import 'package:flutter_bloc/flutter_bloc.dart';
-  import 'package:injectable/injectable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
-  import '../../../domain/chat/entities/chat_message_entity.dart';
+import '../../../domain/chat/entities/chat_message_entity.dart';
+import '../../../domain/chat/usecases/send_message_use_case.dart';
+import '../../../domain/history/entities/history_item.dart';
+import '../../../domain/history/use_cases/get_history_use_case.dart';
+import 'chat_state.dart';
 
-  import '../../../domain/chat/usecases/send_message_use_case.dart';
-  import 'chat_state.dart';
+@injectable
+class ChatCubit extends Cubit<ChatState> {
+  final SendMessageUseCase sendMessageUseCase;
+  final GetHistoryUseCase getHistoryUseCase;
 
-  @injectable
-  class ChatCubit extends Cubit<ChatState> {
-    final SendMessageUseCase sendMessageUseCase;
+  ChatCubit(
+    this.sendMessageUseCase,
+    this.getHistoryUseCase,
+  ) : super(ChatInitial()) {
+    loadChat();
+  }
 
-    ChatCubit(this.sendMessageUseCase) : super(ChatInitial()) {
+  void loadChat() {
+    final history = getHistoryUseCase();
+    emit(
+      ChatLoaded(
+        messages: [],
+        isTyping: false,
+        historyItems: history,
+        selectedDocument: null,
+      ),
+    );
+  }
+
+  void selectDocument(HistoryItem? document) {
+    if (state is! ChatLoaded) return;
+    final current = state as ChatLoaded;
+
+    if (document == null) {
+      emit(current.copyWith(
+        messages: [],
+        clearSelectedDocument: true,
+      ));
+      return;
+    }
+
+    emit(current.copyWith(
+      selectedDocument: document,
+      messages: [
+        ChatMessageEntity(
+          text: 'Hi! I\'m here to answer questions about "${document.title}". What would you like to know?',
+          isUser: false,
+          createdAt: DateTime.now(),
+        ),
+      ],
+    ));
+  }
+
+  void selectDocumentByTitle(String fileTitle) {
+    final history = getHistoryUseCase();
+    final matched = history.cast<HistoryItem?>().firstWhere(
+      (item) => item?.title == fileTitle,
+      orElse: () => null,
+    );
+    if (matched != null) {
       emit(
         ChatLoaded(
           messages: [
             ChatMessageEntity(
-              text:
-              "Hello! I'm your AI assistant. How can I help you today?",
+              text: 'Hi! I\'m here to answer questions about "${matched.title}". What would you like to know?',
               isUser: false,
               createdAt: DateTime.now(),
             ),
           ],
           isTyping: false,
+          historyItems: history,
+          selectedDocument: matched,
+        ),
+      );
+    } else {
+      emit(
+        ChatLoaded(
+          messages: [],
+          isTyping: false,
+          historyItems: history,
+          selectedDocument: null,
         ),
       );
     }
+  }
 
-    Future<void> sendMessage(
-        String text,
-        ) async {
+  Future<void> sendMessage(String text) async {
+    if (text.trim().isEmpty) return;
+    if (state is! ChatLoaded) return;
 
-      if (text.trim().isEmpty) return;
+    final current = state as ChatLoaded;
+    final selectedDoc = current.selectedDocument;
 
-      if (state is! ChatLoaded) return;
+    final userMessage = ChatMessageEntity(
+      text: text,
+      isUser: true,
+      createdAt: DateTime.now(),
+    );
 
-      final current =
-      state as ChatLoaded;
+    final updatedMessages = [
+      ...current.messages,
+      userMessage,
+    ];
 
-      final userMessage =
-      ChatMessageEntity(
-        text: text,
-        isUser: true,
-        createdAt: DateTime.now(),
-      );
+    emit(
+      current.copyWith(
+        messages: updatedMessages,
+        isTyping: true,
+      ),
+    );
 
-      final updatedMessages = [
-        ...current.messages,
-        userMessage,
-      ];
+    final result = await sendMessageUseCase(
+      text,
+      sessionId: selectedDoc?.sessionId,
+    );
 
-      emit(
-        ChatLoaded(
-          messages: updatedMessages,
-          isTyping: true,
-        ),
-      );
-
-      final result =
-      await sendMessageUseCase(
-        text,
-      );
-
-      result.fold(
-        onSuccess: (response) {
-          emit(
-            ChatLoaded(
-              messages: [
-                ...updatedMessages,
-                ChatMessageEntity(
-                  text: response,
-                  isUser: false,
-                  createdAt:
-                  DateTime.now(),
-                ),
-              ],
-              isTyping: false,
-            ),
-          );
-        },
-        onFailure: (failure) {
-          emit(
-            ChatError(
-              failure.userFriendlyMessage,
-            ),
-          );
-        },
-      );
-    }  }
+    result.fold(
+      onSuccess: (response) {
+        emit(
+          current.copyWith(
+            messages: [
+              ...updatedMessages,
+              ChatMessageEntity(
+                text: response,
+                isUser: false,
+                createdAt: DateTime.now(),
+              ),
+            ],
+            isTyping: false,
+          ),
+        );
+      },
+      onFailure: (failure) {
+        emit(
+          ChatError(
+            failure.userFriendlyMessage,
+          ),
+        );
+      },
+    );
+  }
+}

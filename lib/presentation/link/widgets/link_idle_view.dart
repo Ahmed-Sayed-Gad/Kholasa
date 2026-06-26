@@ -33,7 +33,7 @@ class LinkIdleView extends StatelessWidget {
                 .textTheme
                 .bodyLarge!
                 .color,
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: FontWeight.w700,
           ),
         ),

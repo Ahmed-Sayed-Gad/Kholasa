@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import '../../history/entities/history_item.dart';
 import '../../history/repositories/history_repository.dart';
 import '../../settings/repositories/settings_repository.dart';
+import '../entities/summary_result.dart';
 import '../repositories/summarize_repository.dart';
 
 @injectable
@@ -19,8 +20,7 @@ class GenerateSummaryUseCase {
       this.settingsRepository,
       );
 
-  Future<String> call({
-    required File file,
+  Future<SummaryResult> call({    required File file,
     required String length,
     required String language,
     required List<String> focusAreas,
@@ -47,18 +47,29 @@ class GenerateSummaryUseCase {
 
     final detectedLanguage = isArabic ? "ar" : "en";
     // 🔥 SAVE
+    print("SESSION FROM API => ${result.sessionId}");
     await historyRepository.saveItem(
-      HistoryItem(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        title: file.path.split('/').last,
-        summary: result.summary,
-        createdAt: DateTime.now(),
-        isSaved: false,
-        type: type,
-        language: detectedLanguage,
-      ),
-    );
+        HistoryItem(
 
-    return result.summary;
-  }
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+
+          sessionId: result.sessionId,
+
+          title: result.filename,
+
+          summary: result.summary,
+
+          createdAt: DateTime.now(),
+
+          isSaved: false,
+
+          type: type,
+
+          language: result.language,
+        )
+
+    );
+    print("SESSION SAVED => ${result.sessionId}");
+
+    return result;  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
@@ -35,8 +36,6 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
     final args =
         ModalRoute.of(context)?.settings.arguments;
 
-    print("VERIFY SCREEN ARGS => $args");
-
     email = args?.toString() ?? '';
   }
 
@@ -51,11 +50,6 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
     if (_code.length != 6) {
       return;
     }
-
-    print("=================================");
-    print("EMAIL => $email");
-    print("CODE => $_code");
-    print("=================================");
 
     cubit.verifyCode(
       email: email,
@@ -98,11 +92,6 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
           VerifyResetCodeState>(
         listener: (context, state) {
           if (state is VerifyResetCodeSuccess) {
-
-            print("GOING TO RESET SCREEN");
-            print(email);
-            print(_code);
-
             Navigator.pushReplacementNamed(
               context,
               App_Routs_names.resetPasswordScreen,
@@ -112,8 +101,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
               },
             );
           }
-          if (state
-          is VerifyResetCodeError) {
+          if (state is VerifyResetCodeError) {
             ScaffoldMessenger.of(context)
                 .showSnackBar(
               SnackBar(
@@ -127,7 +115,8 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
           final loading =
           state is VerifyResetCodeLoading;
 
-          return Scaffold(
+          return ReducedFontTheme(
+            child: Scaffold(
             appBar: AppBar(
               title:
               Text(AppLocalizations.of(context)!.verification),
@@ -173,7 +162,7 @@ class _VerifyCodeViewState extends State<VerifyCodeView> {
                 ),
               ],
             ),
-          );
+          ),);
         },
       ),
     );

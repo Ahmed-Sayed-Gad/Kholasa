@@ -90,5 +90,12 @@
   "createYourAccountTitle": "أنشئ حسابك",
   "startSummarizingDesc": "ابدأ في تلخيص المستندات باستخدام الذكاء الاصطناعي",
   "username": "اسم المستخدم",
-  "agreeToTerms": "أوافق على الشروط"
+  "agreeToTerms": "أوافق على الشروط",
+  "selectDocToChat": "اختر مستنداً للمحادثة معه",
+  "selectDocFromLibrary": "اختر مستنداً من المكتبة...",
+  "noDocSelected": "لم يتم اختيار مستند",
+  "noDocSelectedDesc": "يرجى اختيار مستند من القائمة المنسدلة أعلاه لبدء محادثة وطرح أسئلة حول محتواه.",
+  "answersBasedOnDoc": "تستند الإجابات فقط على محتويات المستند المحدد",
+  "askQuestionAbout": "اطرح سؤالاً حول",
+  "send": "إرسال"
 }

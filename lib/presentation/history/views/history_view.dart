@@ -46,7 +46,7 @@ class _HistoryViewState extends State<HistoryView> {
                 Text(
                   AppLocalizations.of(context)!.history,
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),

@@ -49,7 +49,7 @@ class UploadDropZone extends StatelessWidget {
             'Tap to browse or drag file',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 18,
               fontWeight: FontWeight.w700,
               color: Theme.of(context)
                   .textTheme
@@ -62,7 +62,7 @@ class UploadDropZone extends StatelessWidget {
             'Supports PDF, Word, TXT, JPG, PNG',
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 11,
               color: Theme.of(context)
                   .textTheme
                   .bodyMedium!

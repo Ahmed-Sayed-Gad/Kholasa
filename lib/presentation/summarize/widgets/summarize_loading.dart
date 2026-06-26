@@ -13,7 +13,7 @@ class SummarizeLoadingView extends StatelessWidget {
           SizedBox(height: 20),
           Text(
             'Analyzing your document…',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 6),
           Text(

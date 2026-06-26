@@ -53,7 +53,7 @@ class _Header extends StatelessWidget {
           'Recent',
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyLarge?.color,
-            fontSize: 16,
+            fontSize: 13,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -65,7 +65,7 @@ class _Header extends StatelessWidget {
             'See all',
             style: TextStyle(
               color: Theme.of(context).hintColor,
-              fontSize: 11,
+              fontSize: 9,
             ),
           ),
         ),

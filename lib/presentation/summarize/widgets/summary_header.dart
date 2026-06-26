@@ -17,7 +17,7 @@ class SummaryHeader extends StatelessWidget {
           'Customize how your document is summarized',
           style: TextStyle(
             color: Theme.of(context).textTheme.bodyMedium?.color,
-            fontSize: 13,
+            fontSize: 10,
           ),
         ),
       ],

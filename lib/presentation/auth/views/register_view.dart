@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../../../api/auth/request/register_request.dart';
 import '../../../core/di/di.dart';
@@ -93,7 +94,8 @@ class _RegisterViewState extends State<RegisterView> {
         builder: (context, state) {
           final isLoading = state is RegisterLoading;
 
-          return Scaffold(
+          return ReducedFontTheme(
+            child: Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Center(
               child: SingleChildScrollView(
@@ -109,7 +111,7 @@ class _RegisterViewState extends State<RegisterView> {
                       AppLocalizations.of(context)!.createYourAccountTitle,
                       style: TextStyle(
                         color: Theme.of(context).textTheme.bodyLarge!.color,
-                        fontSize: 16,
+                        fontSize: 13,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -117,7 +119,7 @@ class _RegisterViewState extends State<RegisterView> {
                     Text(
                       AppLocalizations.of(context)!.startSummarizingDesc,
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 11,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                         fontWeight: FontWeight.bold,
                       ),
@@ -201,7 +203,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
             ),
-          );
+          ),);
         },
       ),
     );

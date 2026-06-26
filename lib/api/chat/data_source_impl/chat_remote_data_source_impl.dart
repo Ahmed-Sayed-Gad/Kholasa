@@ -18,13 +18,14 @@ class ChatRemoteDataSourceImpl
 
   @override
   Future<Result<String>> sendMessage(
-      String message,
-      ) async {
+      String message, {
+      String? sessionId,
+      }) async {
     try {
       final response =
       await apiClient.chat(
-        "default",
-        "default",
+        sessionId ?? "default",
+        sessionId ?? "default",
         message,
       );
 

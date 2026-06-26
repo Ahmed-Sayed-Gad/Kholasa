@@ -66,7 +66,7 @@ class _TabItem extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 11,
             fontWeight: FontWeight.w600,
             color: selected
                 ? Theme.of(context)

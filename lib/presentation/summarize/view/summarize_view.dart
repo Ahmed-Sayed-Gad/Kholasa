@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 import '../../../../l10n/app_localizations.dart';
 
 import '../../../core/di/di.dart';
@@ -33,10 +34,11 @@ class SummarizeView extends StatelessWidget {
             context.read<HistoryCubit>().loadHistory();
           }
         },
-        child: Scaffold(
+        child: ReducedFontTheme(
+          child: Scaffold(
           appBar: AppBar(title: Text(AppLocalizations.of(context)!.summaryTitle)),
           body: const SummarizeBody(),
-        ),
+        ),),
       ),
     );
   }

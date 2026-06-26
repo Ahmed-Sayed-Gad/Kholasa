@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../../../api/auth/request/login_request.dart';
 import '../../../core/Routs/app_routes_names.dart';
@@ -66,7 +67,8 @@ class _LoginViewState extends State<LoginView> {
         builder: (context, state) {
           final isLoading = state is LoginLoading;
 
-          return Scaffold(
+          return ReducedFontTheme(
+            child: Scaffold(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Center(
               child: SingleChildScrollView(
@@ -87,7 +89,7 @@ class _LoginViewState extends State<LoginView> {
                     Text(
                       AppLocalizations.of(context)!.signInContinue,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         color: Theme.of(context).textTheme.bodyMedium!.color,
                         fontWeight: FontWeight.bold,
                       ),
@@ -122,7 +124,7 @@ class _LoginViewState extends State<LoginView> {
                             Text(
                               "Enter your credentials to access your account",
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 11,
                                 color: Theme.of(
                                   context,
                                 ).textTheme.bodyMedium!.color,
@@ -235,7 +237,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
             ),
-          );
+          ),);
         },
       ),
     );

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import '../../../domain/summarize/entities/summary_result.dart';
+
 enum SummaryLength {
   short,
   medium,
@@ -51,9 +53,7 @@ class SummarizeLoading extends SummarizeState {
     required super.focusAreas,
   });
 
-  factory SummarizeLoading.from(
-      SummarizeState state,
-      ) {
+  factory SummarizeLoading.from(SummarizeState state) {
     return SummarizeLoading(
       file: state.file,
       length: state.length,
@@ -64,10 +64,10 @@ class SummarizeLoading extends SummarizeState {
 }
 
 class SummarizeSuccess extends SummarizeState {
-  final String summary;
+  final SummaryResult result;
 
   const SummarizeSuccess({
-    required this.summary,
+    required this.result,
     required super.file,
     required super.length,
     required super.language,
@@ -76,10 +76,10 @@ class SummarizeSuccess extends SummarizeState {
 
   factory SummarizeSuccess.from(
       SummarizeState state,
-      String summary,
+      SummaryResult result,
       ) {
     return SummarizeSuccess(
-      summary: summary,
+      result: result,
       file: state.file,
       length: state.length,
       language: state.language,

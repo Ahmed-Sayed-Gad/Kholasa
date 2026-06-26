@@ -64,7 +64,7 @@ class AchievementCard
             emoji,
             style:
             const TextStyle(
-              fontSize: 22,
+              fontSize: 18,
             ),
           ),
           const SizedBox(height: 8),

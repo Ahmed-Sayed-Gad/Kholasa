@@ -283,4 +283,27 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get agreeToTerms => 'I agree to terms';
+
+  @override
+  String get selectDocToChat => 'Select Document to Chat With';
+
+  @override
+  String get selectDocFromLibrary => 'Select a document from library...';
+
+  @override
+  String get noDocSelected => 'No Document Selected';
+
+  @override
+  String get noDocSelectedDesc =>
+      'Please choose a document from the dropdown above to start a conversation and ask questions about its content.';
+
+  @override
+  String get answersBasedOnDoc =>
+      'Answers are based only on the contents of the selected document';
+
+  @override
+  String get askQuestionAbout => 'Ask a question about';
+
+  @override
+  String get send => 'Send';
 }

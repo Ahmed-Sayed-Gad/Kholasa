@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
@@ -37,15 +38,10 @@ class _ResetPasswordViewState
     final args =
         ModalRoute.of(context)?.settings.arguments;
 
-    print("RESET ARGS => $args");
-
     if (args is Map<String, dynamic>) {
       email = args["email"] ?? '';
       token = args["token"] ?? '';
     }
-
-    print("RESET EMAIL => $email");
-    print("RESET TOKEN => $token");
   }
 
   void _submit(BuildContext context) {
@@ -134,7 +130,8 @@ class _ResetPasswordViewState
           state
           is ResetPasswordLoading;
 
-          return Scaffold(
+          return ReducedFontTheme(
+            child: Scaffold(
             appBar: AppBar(
               title: const Text(
                 "Reset Password",
@@ -215,7 +212,7 @@ class _ResetPasswordViewState
                 ),
               ),
             ),
-          );
+          ),);
         },
       ),
     );

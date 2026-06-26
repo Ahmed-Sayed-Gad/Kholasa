@@ -17,7 +17,9 @@ class HomeUiMapper {
     final isUrgent = item.isHighPriority;
 
     return RecentItemUiModel(
+      id: item.id,
       title: item.title,
+      summary: item.summary,
       category: item.category,
       dueText: _formatDueDate(item.dueDate),
       isUrgent: isUrgent,

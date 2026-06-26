@@ -7,6 +7,8 @@ import '../widgets/summarize_loading.dart';
 import '../widgets/summarize_error.dart';
 import '../widgets/summarize_result.dart';
 import '../widgets/summary_language_selector.dart';
+import '../../../domain/history/entities/history_item.dart';
+import 'document_detail_view.dart';
 import '../widgets/summary_warning_text.dart';
 import '../widgets/summary_length_slider.dart';
 import '../widgets/focus_area_chips.dart';
@@ -28,7 +30,22 @@ class SummarizeBody extends StatelessWidget {
         }
 
         if (state is SummarizeSuccess) {
-          return SummarizeResult(summary: state.summary);
+          final title = state.file.path.split(RegExp(r'[/\\]')).last;
+          final isArabic = RegExp(r'[\u0600-\u06FF]').hasMatch(state.result.summary);
+          return DocumentDetailView(
+            item: HistoryItem(
+              id: state.result.sessionId,
+              sessionId: state.result.sessionId,
+              title: state.result.filename,
+              summary: state.result.summary,
+              createdAt: DateTime.now(),
+              isSaved: state.result.saved,
+              type: title.endsWith('.jpg') || title.endsWith('.png')
+                  ? 'image'
+                  : 'file',
+              language: state.result.language,
+            )
+          );
         }
 
         return SingleChildScrollView(

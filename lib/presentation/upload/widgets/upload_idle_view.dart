@@ -52,7 +52,7 @@ class UploadIdleView
           textAlign:
           TextAlign.center,
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 18,
             fontWeight:
             FontWeight.w700,
             color: Theme.of(
@@ -71,7 +71,7 @@ class UploadIdleView
           textAlign:
           TextAlign.center,
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 11,
             color: Theme.of(
                 context)
                 .textTheme
@@ -164,7 +164,7 @@ class _Chip
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 12,
+          fontSize: 10,
           color: Theme.of(
               context)
               .textTheme

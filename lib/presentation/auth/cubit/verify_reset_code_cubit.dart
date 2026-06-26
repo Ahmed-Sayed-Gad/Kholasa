@@ -22,11 +22,6 @@ class VerifyResetCodeCubit
 
     emit(VerifyResetCodeLoading());
 
-    print("=================================");
-    print("EMAIL => $email");
-    print("CODE => $code");
-    print("=================================");
-
     final result = await _useCase(
       VerifyResetPassword(
         email: email,

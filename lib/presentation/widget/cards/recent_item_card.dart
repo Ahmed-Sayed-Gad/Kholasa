@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../ui_models/recent_item_ui_model.dart';
+import 'package:project_one_c3_team/core/di/di.dart';
+import 'package:project_one_c3_team/presentation/export/cubit/export_cubit.dart';
+import 'package:project_one_c3_team/presentation/summarize/widgets/summarize_result.dart';
+import 'package:project_one_c3_team/l10n/app_localizations.dart';
 
 class RecentItemCard extends StatelessWidget {
   final RecentItemUiModel item;
@@ -11,34 +16,54 @@ class RecentItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin:
-      const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
-      ),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius:
-        BorderRadius.circular(14),
-      ),
-      child: Row(
-        children: [
-          _PriorityIndicator(
-            color: item.priorityColor,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _ItemInfo(
-              item: item,
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (_) => getIt<ExportCubit>(),
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(AppLocalizations.of(context)!.summaryTitle),
+                ),
+                body: SummarizeResult(
+                  summary: item.summary,
+                  fileTitle: item.title,
+                ),
+              ),
             ),
           ),
-          _DueDate(
-            text: item.dueText,
-            isUrgent: item.isUrgent,
-          ),
-        ],
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 8,
+        ),
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            _PriorityIndicator(
+              color: item.priorityColor,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _ItemInfo(
+                item: item,
+              ),
+            ),
+            _DueDate(
+              text: item.dueText,
+              isUrgent: item.isUrgent,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +89,7 @@ class _ItemInfo extends StatelessWidget {
                 .textTheme
                 .bodyLarge!
                 .color,
-            fontSize: 14,
+            fontSize: 11,
             fontWeight:
             FontWeight.w600,
           ),
@@ -77,7 +102,7 @@ class _ItemInfo extends StatelessWidget {
                 .textTheme
                 .bodyMedium!
                 .color,
-            fontSize: 10,
+            fontSize: 8,
           ),
         ),
       ],
@@ -142,7 +167,7 @@ class _DueDate extends StatelessWidget {
                 .textTheme
                 .bodyMedium!
                 .color,
-            fontSize: 10,
+            fontSize: 8,
             fontWeight:
             FontWeight.w500,
           ),

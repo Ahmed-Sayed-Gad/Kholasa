@@ -29,7 +29,7 @@ class UploadFormatsCard
           Text(
             'Supported Formats',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 12,
               fontWeight:
               FontWeight.w600,
               color: Theme.of(
@@ -96,7 +96,7 @@ class _Chip
       child: Text(
         title,
         style: TextStyle(
-          fontSize: 12,
+          fontSize: 10,
           color: Theme.of(
               context)
               .textTheme

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'core/services/auth_storage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_ce_flutter/adapters.dart';
@@ -70,9 +71,10 @@ class MyApp extends StatelessWidget {
                     scaffoldMessengerKey: SnackbarService.messengerKey,
                     debugShowCheckedModeBanner: false,
 
-                    initialRoute: App_Routs_names.HomeView,
+                    initialRoute: App_Routs_names.splash,
 
                     onGenerateRoute: AppRoutsPage.route,
+
 
                     theme: AppTheme.lightTheme,
                     darkTheme: AppTheme.darkTheme,

@@ -29,7 +29,7 @@ class ProfileHeader extends StatelessWidget {
                   ? profile.name[0].toUpperCase()
                   : "U",
               style: const TextStyle(
-                fontSize: 26,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -50,7 +50,7 @@ class ProfileHeader extends StatelessWidget {
                     .textTheme
                     .bodyLarge
                     ?.copyWith(
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),

@@ -7,10 +7,6 @@ class UserStorage {
     required String name,
     required String email,
   }) async {
-
-    print("SAVING USER => $name");
-    print("SAVING EMAIL => $email");
-
     await _storage.write(key: "name", value: name);
     await _storage.write(key: "email", value: email);
   }

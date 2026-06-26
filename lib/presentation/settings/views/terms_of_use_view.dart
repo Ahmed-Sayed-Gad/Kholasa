@@ -67,7 +67,7 @@ These terms may be updated periodically. Continued use of the application indica
 ''',
           style: TextStyle(
             height: 1.6,
-            fontSize: 13,
+            fontSize: 11,
           ),
         ),
       ),

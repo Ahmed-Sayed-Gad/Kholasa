@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
+import 'package:project_one_c3_team/core/errors/result/results.dart';
 
 import '../../../domain/scan/use_case/extract_text_use_case.dart';
 import 'scan_state.dart';
@@ -28,14 +29,24 @@ class ScanCubit extends Cubit<ScanState> {
 
       final file = File(picked.path);
 
-      final text =
-      await extractTextUseCase(file);
+      final result = await extractTextUseCase(file);
 
-      emit(
-        ScanSuccess(
-          image: file,
-          text: text,
-        ),
+      result.fold(
+        onSuccess: (text) {
+          emit(
+            ScanSuccess(
+              image: file,
+              text: text,
+            ),
+          );
+        },
+        onFailure: (failure) {
+          emit(
+            ScanFailure(
+              failure.userFriendlyMessage,
+            ),
+          );
+        },
       );
     } catch (e) {
       emit(

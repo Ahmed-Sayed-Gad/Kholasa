@@ -10,10 +10,12 @@ class SendMessageUseCase {
   SendMessageUseCase(this.repository);
 
   Future<Result<String>> call(
-      String message,
-      ) {
+      String message, {
+      String? sessionId,
+      }) {
     return repository.sendMessage(
       message,
+      sessionId: sessionId,
     );
   }
 }

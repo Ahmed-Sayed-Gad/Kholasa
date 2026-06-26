@@ -32,7 +32,7 @@ class UploadHeader extends StatelessWidget {
         Text(
           'New Summary',
           style: TextStyle(
-            fontSize: 28,
+            fontSize: 23,
             fontWeight: FontWeight.w700,
             color: Theme.of(context)
                 .textTheme

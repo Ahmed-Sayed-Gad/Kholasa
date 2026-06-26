@@ -18,32 +18,35 @@ class HistoryModelAdapter extends TypeAdapter<HistoryModel> {
     };
     return HistoryModel(
       id: fields[0] as String,
-      title: fields[1] as String,
-      summary: fields[2] as String,
-      createdAt: fields[3] as DateTime,
-      isSaved: fields[4] as bool,
-      type: fields[5] as String,
-      language: fields[6] as String,
+      sessionId: fields[1] as String,
+      title: fields[2] as String,
+      summary: fields[3] as String,
+      createdAt: fields[4] as DateTime,
+      isSaved: fields[5] as bool,
+      type: fields[6] as String,
+      language: fields[7] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, HistoryModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.title)
+      ..write(obj.sessionId)
       ..writeByte(2)
-      ..write(obj.summary)
+      ..write(obj.title)
       ..writeByte(3)
-      ..write(obj.createdAt)
+      ..write(obj.summary)
       ..writeByte(4)
-      ..write(obj.isSaved)
+      ..write(obj.createdAt)
       ..writeByte(5)
-      ..write(obj.type)
+      ..write(obj.isSaved)
       ..writeByte(6)
+      ..write(obj.type)
+      ..writeByte(7)
       ..write(obj.language);
   }
 

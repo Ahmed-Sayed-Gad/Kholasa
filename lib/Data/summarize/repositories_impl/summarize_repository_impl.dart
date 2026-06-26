@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
 
@@ -7,12 +8,10 @@ import '../../../domain/summarize/repositories/summarize_repository.dart';
 import '../data_source/summarize_remote_data_source.dart';
 
 @LazySingleton(as: SummarizeRepository)
-class SummarizeRepositoryImpl
-    implements SummarizeRepository {
+class SummarizeRepositoryImpl implements SummarizeRepository {
   final SummarizeRemoteDataSource remoteDataSource;
-  SummarizeRepositoryImpl(
-      this.remoteDataSource,
-      );
+
+  SummarizeRepositoryImpl(this.remoteDataSource);
 
   @override
   Future<SummaryResult> generateSummary({
@@ -20,8 +19,7 @@ class SummarizeRepositoryImpl
     required String length,
     required String language,
     required List<String> focusAreas,
-  })async {
-
+  }) async {
     String apiLength;
 
     switch (length) {
@@ -45,21 +43,32 @@ class SummarizeRepositoryImpl
       file: file,
       language: language,
       format: 'text',
-      length: length,
-      sessionId: 'default',
+      length: apiLength,
+      sessionId: file.path.split(RegExp(r'[/\\]')).last,
     );
 
     return result.fold(
       onSuccess: (summary) {
+        // Normalize language from API
+        String normalizedLanguage = summary.language.toLowerCase();
+
+        if (normalizedLanguage == "english") {
+          normalizedLanguage = "en";
+        } else if (normalizedLanguage == "arabic") {
+          normalizedLanguage = "ar";
+        }
+
         return SummaryResult(
-          summary: summary,
+          sessionId: summary.id,
+          summary: summary.summary,
+          filename: summary.filename,
+          language: normalizedLanguage,
+          saved: summary.saved,
         );
       },
       onFailure: (failure) {
-        throw Exception(
-          failure.userFriendlyMessage,
-        );
+        throw Exception(failure.userFriendlyMessage);
       },
     );
   }
-  }
+}

@@ -50,7 +50,7 @@ class _SettingsBody extends StatelessWidget {
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyLarge?.color,
               fontWeight: FontWeight.bold,
-              fontSize: 26,
+              fontSize: 21,
             ),
           ),
         ),
@@ -68,7 +68,7 @@ class _SettingsBody extends StatelessWidget {
               children: [
                 Text(
                   locale.managePreferences,
-                  style: TextStyle(color: Theme.of(context).hintColor, fontSize: 12),
+                  style: TextStyle(color: Theme.of(context).hintColor, fontSize: 10),
                 ),
 
               const SizedBox(height: 24),
@@ -380,7 +380,7 @@ class _SectionTitle extends StatelessWidget {
       title,
       style: TextStyle(
         color: Theme.of(context).hintColor,
-        fontSize: 10,
+        fontSize: 8,
         fontWeight: FontWeight.bold,
         letterSpacing: 1,
       ),

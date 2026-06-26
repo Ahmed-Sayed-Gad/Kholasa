@@ -64,18 +64,13 @@ class ProfileView extends StatelessWidget {
   
                     const SizedBox(height: 12),
   
-                    ActivitySummaryCard(
-                      profile: profile,
-                    ),
-                    const SizedBox(height: 24),
-  
                     Text(
                       AppLocalizations.of(context)!.achievements,
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(
-                        fontSize: 20,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

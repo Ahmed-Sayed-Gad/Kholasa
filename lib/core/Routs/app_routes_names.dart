@@ -1,4 +1,5 @@
 class App_Routs_names{
+  static const String splash = "/";
   static const String LoginScreen = "/login";
   static const String RegisterScreen = "/register";
   static const String HomeView = "/homeview";
@@ -7,4 +8,4 @@ class App_Routs_names{
   static const String forgetPasswordScreen = "/forgetpassword";
   static const String verifyCodeScreen = "/verifycode";
 
-}
+}

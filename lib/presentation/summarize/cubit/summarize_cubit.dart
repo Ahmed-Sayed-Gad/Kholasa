@@ -42,7 +42,7 @@ class SummarizeCubit extends Cubit<SummarizeState> {
     emit(SummarizeLoading.from(state));
 
     try {
-      final summary = await generateSummaryUseCase(
+      final result = await generateSummaryUseCase(
         file: state.file,
         length: state.length.name,
         language: state.language,
@@ -57,7 +57,7 @@ class SummarizeCubit extends Cubit<SummarizeState> {
         await NotificationService.showSuccess("Summary generated successfully");
       }
 
-      emit(SummarizeSuccess.from(state, summary));
+      emit(SummarizeSuccess.from(state, result));
     } catch (e) {
       SnackbarService.showError("Failed to generate summary");
 

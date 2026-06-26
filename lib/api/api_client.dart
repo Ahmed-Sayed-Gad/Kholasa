@@ -1,8 +1,9 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:project_one_c3_team/api/profile/response/profile_response.dart';
+import 'package:project_one_c3_team/api/quiz/response/quiz_response.dart';
 import 'package:project_one_c3_team/api/summarize/response/summarize_response.dart';
+import 'package:project_one_c3_team/api/compare/request/compare_request.dart';
+import 'package:project_one_c3_team/api/compare/response/compare_response.dart';
 import 'package:retrofit/retrofit.dart';
 import 'auth/request/change_password_request.dart';
 import 'auth/request/forgot_password_request.dart';
@@ -41,19 +42,19 @@ abstract class ApiClient {
   @MultiPart()
   @POST("Documents/summarize-url")
   Future<SummarizeUrlResponse> summarizeUrl(
-      @Part(name: "url") String url,
-      @Part(name: "language") String language,
-      @Part(name: "format") String format,
-      @Part(name: "length") String length,
-      @Part(name: "session_id") String sessionId,
-      );
+    @Part(name: "url") String url,
+    @Part(name: "language") String language,
+    @Part(name: "format") String format,
+    @Part(name: "length") String length,
+    @Part(name: "session_id") String sessionId,
+  );
   @MultiPart()
   @POST("Documents/chat")
   Future<ChatResponse> chat(
-      @Part(name: "sessionId") String sessionId,
-      @Part(name: "session_id") String sessionId2,
-      @Part(name: "message") String message,
-      );
+    @Part(name: "sessionId") String sessionId,
+    @Part(name: "session_id") String sessionId2,
+    @Part(name: "message") String message,
+  );
   @PATCH("v1/views/changePassword")
   Future<ChangeProfilePasswordResponse> changePassword(
     @Header("token") String token,
@@ -62,11 +63,22 @@ abstract class ApiClient {
   @MultiPart()
   @POST("Documents/summarize")
   Future<SummarizeResponse> summarizeDocument(
-      @Part(name: "file") MultipartFile file,
-      @Part(name: "language") String language,
-      @Part(name: "format") String format,
-      @Part(name: "length") String length,
+    @Part(name: "file") MultipartFile file,
+    @Part(name: "language") String language,
+    @Part(name: "format") String format,
+    @Part(name: "length") String length,
+    @Part(name: "session_id") String sessionId,
+  );
+
+  @MultiPart()
+  @POST("Documents/quiz")
+  Future<QuizResponse> getQuiz(
       @Part(name: "session_id") String sessionId,
+      @Part(name: "language") String language,
+      );
+
+  @POST("Documents/compare-topics")
+  Future<CompareResponse> compareDocuments(
+      @Body() CompareRequest request,
       );
 }
-

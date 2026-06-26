@@ -10,7 +10,7 @@ class SummaryWarningText extends StatelessWidget {
         'Please upload a document first',
         style: TextStyle(
           color: Theme.of(context).textTheme.bodySmall?.color,
-          fontSize: 12,
+          fontSize: 10,
         ),
       ),
     );

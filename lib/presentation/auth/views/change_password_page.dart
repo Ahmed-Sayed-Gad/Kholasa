@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/di/di.dart';
@@ -87,7 +88,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         builder: (context, state) {
           final isLoading = state is ChangePasswordLoading;
 
-          return Scaffold(
+          return ReducedFontTheme(
+            child: Scaffold(
             appBar: AppBar(title: Text(AppLocalizations.of(context)!.changePassword)),
             body: Form(
               key: _formKey,
@@ -153,7 +155,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
               ),
             ),
-          );
+          ),);
         },
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../cubit/upload_cubit.dart';
 import '../cubit/upload_state.dart';
@@ -15,7 +16,8 @@ class UploadView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ReducedFontTheme(
+      child: Scaffold(
       backgroundColor:
       Theme.of(context).scaffoldBackgroundColor,
 
@@ -75,7 +77,7 @@ class UploadView extends StatelessWidget {
                           .bodyLarge!
                           .color,
                       fontSize:
-                      28,
+                      23,
                       fontWeight:
                       FontWeight
                           .w700,
@@ -113,6 +115,6 @@ class UploadView extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ),);
   }
 }

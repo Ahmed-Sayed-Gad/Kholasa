@@ -7,27 +7,30 @@ part 'history_model.g.dart';
 class HistoryModel extends HiveObject {
   @HiveField(0)
   String id;
-
   @HiveField(1)
-  String title;
+  String sessionId;
 
   @HiveField(2)
-  String summary;
+  String title;
 
   @HiveField(3)
-  DateTime createdAt;
+  String summary;
 
   @HiveField(4)
-  bool isSaved;
+  DateTime createdAt;
 
   @HiveField(5)
-  String type;
+  bool isSaved;
 
   @HiveField(6)
+  String type;
+
+  @HiveField(7)
   String language;
 
   HistoryModel({
     required this.id,
+    required this.sessionId,
     required this.title,
     required this.summary,
     required this.createdAt,
@@ -42,10 +45,12 @@ class HistoryModel extends HiveObject {
       id: id,
       title: title,
       summary: summary,
+
       createdAt: createdAt,
       isSaved: isSaved,
       type: type,
       language: language,
+      sessionId: sessionId,
     );
   }
 
@@ -53,6 +58,7 @@ class HistoryModel extends HiveObject {
   factory HistoryModel.fromEntity(HistoryItem item) {
     return HistoryModel(
       id: item.id,
+      sessionId: item.sessionId,
       title: item.title,
       summary: item.summary,
       createdAt: item.createdAt,

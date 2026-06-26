@@ -53,8 +53,6 @@ class ExportRepositoryImpl implements ExportRepository {
           );
       }
     } catch (e) {
-      print("EXPORT ERROR => $e");
-
       return Failure(
         ServerFailure(
           message: e.toString(),

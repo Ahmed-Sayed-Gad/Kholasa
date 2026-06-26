@@ -16,7 +16,7 @@ class LanguageBottomSheet extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context)!.languagePreference,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 20),

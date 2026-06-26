@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../di/di.dart';
+import '../../presentation/splash/view/splash_view.dart';
+import '../../presentation/splash/cubit/splash_cubit.dart';
 import '../../presentation/App_pages/home_shell_page.dart';
 
 import '../../presentation/auth/views/login_view.dart';
@@ -12,6 +16,13 @@ import 'app_routes_names.dart';
 interface class AppRoutsPage {
   static Route route(RouteSettings settings) {
     switch (settings.name) {
+      case App_Routs_names.splash:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (_) => getIt<SplashCubit>(),
+            child: const SplashView(),
+          ),
+        );
       case App_Routs_names.RegisterScreen:
         return MaterialPageRoute(builder: (context) => RegisterView());
       case App_Routs_names.LoginScreen:
@@ -37,3 +48,4 @@ interface class AppRoutsPage {
     }
   }
 }
+

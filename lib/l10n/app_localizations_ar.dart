@@ -285,4 +285,27 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get agreeToTerms => 'أوافق على الشروط';
+
+  @override
+  String get selectDocToChat => 'اختر مستنداً للمحادثة معه';
+
+  @override
+  String get selectDocFromLibrary => 'اختر مستنداً من المكتبة...';
+
+  @override
+  String get noDocSelected => 'لم يتم اختيار مستند';
+
+  @override
+  String get noDocSelectedDesc =>
+      'يرجى اختيار مستند من القائمة المنسدلة أعلاه لبدء محادثة وطرح أسئلة حول محتواه.';
+
+  @override
+  String get answersBasedOnDoc =>
+      'تستند الإجابات فقط على محتويات المستند المحدد';
+
+  @override
+  String get askQuestionAbout => 'اطرح سؤالاً حول';
+
+  @override
+  String get send => 'إرسال';
 }

@@ -29,8 +29,12 @@ import 'package:project_one_c3_team/api/auth/data_source_impl/VerifyResetCodeDat
     as _i811;
 import 'package:project_one_c3_team/api/chat/data_source_impl/chat_remote_data_source_impl.dart'
     as _i701;
+import 'package:project_one_c3_team/api/compare/data_sources_impl/compare_remote_data_source_impl.dart'
+    as _i788;
 import 'package:project_one_c3_team/api/home/link/data_source_impl/summarize_url_remote_data_source_impl.dart'
     as _i116;
+import 'package:project_one_c3_team/api/quiz/data_sources_impl/quiz_remote_data_source_impl.dart'
+    as _i300;
 import 'package:project_one_c3_team/api/summarize/data_source_impl/summarize_remote_data_source_impl.dart'
     as _i318;
 import 'package:project_one_c3_team/core/di/app_module.dart' as _i961;
@@ -71,6 +75,10 @@ import 'package:project_one_c3_team/Data/chat/datasource/chat_remote_data_source
     as _i281;
 import 'package:project_one_c3_team/Data/chat/repository/chat_repository_impl.dart'
     as _i914;
+import 'package:project_one_c3_team/Data/compare/data_sources/compare_remote_data_source.dart'
+    as _i740;
+import 'package:project_one_c3_team/Data/compare/repositories_impl/compare_repository_impl.dart'
+    as _i875;
 import 'package:project_one_c3_team/Data/history/models/history_model.dart'
     as _i1007;
 import 'package:project_one_c3_team/Data/home/repositries_Imp/home_repository_impl.dart'
@@ -83,8 +91,10 @@ import 'package:project_one_c3_team/Data/profile/data_source/profile_local_data_
     as _i874;
 import 'package:project_one_c3_team/Data/profile/repositories_impl/profile_repository_impl.dart'
     as _i256;
-import 'package:project_one_c3_team/Data/scan/data_source/scan_mlkit_data_source.dart'
-    as _i469;
+import 'package:project_one_c3_team/Data/quiz/data_sources/quiz_remote_data_source.dart'
+    as _i439;
+import 'package:project_one_c3_team/Data/quiz/repositories_impl/quiz_repository_impl.dart'
+    as _i518;
 import 'package:project_one_c3_team/Data/scan/repositories_impl/scan_repository_impl.dart'
     as _i1048;
 import 'package:project_one_c3_team/Data/settings/data_source/settings_local_data_source.dart'
@@ -127,6 +137,10 @@ import 'package:project_one_c3_team/domain/chat/repository/chat_repository.dart'
     as _i601;
 import 'package:project_one_c3_team/domain/chat/usecases/send_message_use_case.dart'
     as _i1026;
+import 'package:project_one_c3_team/domain/compare/repositories/compare_repository.dart'
+    as _i878;
+import 'package:project_one_c3_team/domain/compare/use_cases/compare_documents_use_case.dart'
+    as _i97;
 import 'package:project_one_c3_team/domain/export/repositories/export_repository.dart'
     as _i994;
 import 'package:project_one_c3_team/domain/export/use_case/export_summary_use_case.dart'
@@ -155,6 +169,10 @@ import 'package:project_one_c3_team/domain/profile/repositories/profile_reposito
     as _i22;
 import 'package:project_one_c3_team/domain/profile/use_case/get_profile_use_case.dart'
     as _i791;
+import 'package:project_one_c3_team/domain/quiz/repositories/quiz_repository.dart'
+    as _i270;
+import 'package:project_one_c3_team/domain/quiz/use_cases/get_quiz_use_case.dart'
+    as _i398;
 import 'package:project_one_c3_team/domain/scan/repositories/scan_repository.dart'
     as _i1068;
 import 'package:project_one_c3_team/domain/scan/use_case/extract_text_use_case.dart'
@@ -195,6 +213,8 @@ import 'package:project_one_c3_team/presentation/auth/cubit/verify_reset_code_cu
     as _i735;
 import 'package:project_one_c3_team/presentation/chat/cubit/chat_cubit.dart'
     as _i819;
+import 'package:project_one_c3_team/presentation/compare/cubit/compare_cubit.dart'
+    as _i307;
 import 'package:project_one_c3_team/presentation/export/cubit/export_cubit.dart'
     as _i575;
 import 'package:project_one_c3_team/presentation/history/cubit/history_cubit.dart'
@@ -205,12 +225,16 @@ import 'package:project_one_c3_team/presentation/link/cubit/link_cubit.dart'
     as _i1059;
 import 'package:project_one_c3_team/presentation/profile/cubit/profile_cubit.dart'
     as _i799;
+import 'package:project_one_c3_team/presentation/quiz/cubit/quiz_cubit.dart'
+    as _i1045;
 import 'package:project_one_c3_team/presentation/scan/cubit/scan_cubit.dart'
     as _i931;
 import 'package:project_one_c3_team/presentation/session/cubit/upload_session_cubit.dart'
     as _i681;
 import 'package:project_one_c3_team/presentation/settings/cubit/settings_cubit.dart'
     as _i805;
+import 'package:project_one_c3_team/presentation/splash/cubit/splash_cubit.dart'
+    as _i3;
 import 'package:project_one_c3_team/presentation/summarize/cubit/summarize_cubit.dart'
     as _i622;
 import 'package:project_one_c3_team/presentation/upload/cubit/upload_cubit.dart'
@@ -252,9 +276,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i994.ExportRepository>(
       () => exportModule.exportRepository(),
     );
-    gh.lazySingleton<_i469.ScanMlKitDataSource>(
-      () => _i469.ScanMlKitDataSource(),
-    );
     gh.lazySingleton<_i681.UploadSessionCubit>(
       () => _i681.UploadSessionCubit(),
     );
@@ -287,6 +308,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i398.SettingsRepository>(
       () => _i788.SettingsRepositoryImpl(gh<_i387.SettingsLocalDataSource>()),
     );
+    gh.factory<_i439.QuizRemoteDataSource>(
+      () => _i300.QuizRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
+      ),
+    );
     gh.lazySingleton<_i662.HistoryRepository>(
       () =>
           historyModule.historyRepository(gh<_i919.Box<_i1007.HistoryModel>>()),
@@ -308,14 +335,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1070.AuthErrorHandler>(),
       ),
     );
+    gh.factory<_i740.CompareRemoteDataSource>(
+      () => _i788.CompareRemoteDataSourceImpl(
+        gh<_i777.ApiClient>(),
+        gh<_i1070.AuthErrorHandler>(),
+      ),
+    );
     gh.factory<_i754.LoginRemoteDataSource>(
       () => _i597.LoginRemoteDataSourceImpl(
         gh<_i777.ApiClient>(),
         gh<_i1070.AuthErrorHandler>(),
       ),
-    );
-    gh.lazySingleton<_i1068.ScanRepository>(
-      () => _i1048.ScanRepositoryImpl(gh<_i469.ScanMlKitDataSource>()),
     );
     gh.factory<_i1023.ExportSummaryUseCase>(
       () => exportModule.exportSummaryUseCase(gh<_i994.ExportRepository>()),
@@ -329,9 +359,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i615.VerifyResetCodeUseCase>(
       () =>
           _i615.VerifyResetCodeUseCase(gh<_i978.VerifyResetCodeRepositories>()),
-    );
-    gh.factory<_i1055.ExtractTextUseCase>(
-      () => _i1055.ExtractTextUseCase(gh<_i1068.ScanRepository>()),
     );
     gh.factory<_i590.GetHistoryUseCase>(
       () => historyModule.getHistoryUseCase(gh<_i662.HistoryRepository>()),
@@ -382,6 +409,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i811.RememberMeUseCase>(
       () => _i851.RememberMeUseCaseImpl(gh<_i861.RememberMeRepository>()),
     );
+    gh.lazySingleton<_i878.CompareRepository>(
+      () => _i875.CompareRepositoryImpl(gh<_i740.CompareRemoteDataSource>()),
+    );
     gh.factory<_i847.ChangePasswordRepository>(
       () => _i921.ChangePasswordRepositoryImpl(
         gh<_i827.ChangePasswordDataSource>(),
@@ -427,6 +457,12 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i1066.SummarizeRepositoryImpl(gh<_i39.SummarizeRemoteDataSource>()),
     );
+    gh.lazySingleton<_i270.QuizRepository>(
+      () => _i518.QuizRepositoryImpl(gh<_i439.QuizRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i1068.ScanRepository>(
+      () => _i1048.ScanRepositoryImpl(gh<_i39.SummarizeRemoteDataSource>()),
+    );
     gh.factory<_i22.ProfileRepository>(
       () => _i256.ProfileRepositoryImpl(
         gh<_i874.ProfileLocalDataSource>(),
@@ -454,14 +490,17 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i655.SummarizeUrlRemoteDataSource>(),
       ),
     );
+    gh.factory<_i97.CompareDocumentsUseCase>(
+      () => _i97.CompareDocumentsUseCase(gh<_i878.CompareRepository>()),
+    );
+    gh.factory<_i307.CompareCubit>(
+      () => _i307.CompareCubit(gh<_i97.CompareDocumentsUseCase>()),
+    );
     gh.factory<_i584.HistoryCubit>(
       () => historyModule.historyCubit(
         gh<_i590.GetHistoryUseCase>(),
         gh<_i215.ToggleSavedUseCase>(),
       ),
-    );
-    gh.factory<_i931.ScanCubit>(
-      () => _i931.ScanCubit(gh<_i1055.ExtractTextUseCase>()),
     );
     gh.factory<_i1060.ChangePasswordUseCase>(
       () => _i1060.ChangePasswordUseCase(gh<_i847.ChangePasswordRepository>()),
@@ -478,8 +517,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1021.ResetPasswordUseCase>(
       () => _i1021.ResetPasswordUseCase(gh<_i1046.ResetPasswordRepositories>()),
     );
-    gh.factory<_i819.ChatCubit>(
-      () => _i819.ChatCubit(gh<_i1026.SendMessageUseCase>()),
+    gh.factory<_i1055.ExtractTextUseCase>(
+      () => _i1055.ExtractTextUseCase(gh<_i1068.ScanRepository>()),
+    );
+    gh.factory<_i3.SplashCubit>(
+      () => _i3.SplashCubit(gh<_i811.RememberMeUseCase>()),
     );
     gh.factory<_i805.SettingsCubit>(
       () => _i805.SettingsCubit(
@@ -490,14 +532,26 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i415.UpdateAutoSaveUseCase>(),
       ),
     );
+    gh.factory<_i819.ChatCubit>(
+      () => _i819.ChatCubit(
+        gh<_i1026.SendMessageUseCase>(),
+        gh<_i590.GetHistoryUseCase>(),
+      ),
+    );
     gh.factory<_i218.ResetPasswordCubit>(
       () => _i218.ResetPasswordCubit(gh<_i1021.ResetPasswordUseCase>()),
     );
     gh.factory<_i742.RegisterUseCase>(
       () => _i742.RegisterUseCase(gh<_i97.RegisterRepository>()),
     );
+    gh.factory<_i398.GetQuizUseCase>(
+      () => _i398.GetQuizUseCase(gh<_i270.QuizRepository>()),
+    );
     gh.factory<_i297.ForgetPasswordCubit>(
       () => _i297.ForgetPasswordCubit(gh<_i94.ForgotPasswordUseCase>()),
+    );
+    gh.factory<_i1045.QuizCubit>(
+      () => _i1045.QuizCubit(gh<_i398.GetQuizUseCase>()),
     );
     gh.factory<_i317.LoginUseCase>(
       () => _i317.LoginUseCase(gh<_i478.LoginRepositories>()),
@@ -516,6 +570,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i461.LoginCubit>(
       () => _i461.LoginCubit(gh<_i317.LoginUseCase>()),
+    );
+    gh.factory<_i931.ScanCubit>(
+      () => _i931.ScanCubit(gh<_i1055.ExtractTextUseCase>()),
     );
     gh.factory<_i823.RegisterCubit>(
       () => _i823.RegisterCubit(gh<_i742.RegisterUseCase>()),

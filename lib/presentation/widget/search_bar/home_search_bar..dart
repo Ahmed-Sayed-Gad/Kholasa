@@ -51,7 +51,7 @@ class _SearchField
             .textTheme
             .bodyLarge!
             .color,
-        fontSize: 12,
+        fontSize: 10,
       ),
       decoration:
       InputDecoration(

@@ -13,8 +13,9 @@ class ChatRepositoryImpl
 
   @override
   Future<Result<String>> sendMessage(
-      String message,
-      ) {
-    return remote.sendMessage(message);
+      String message, {
+      String? sessionId,
+      }) {
+    return remote.sendMessage(message, sessionId: sessionId);
   }
 }

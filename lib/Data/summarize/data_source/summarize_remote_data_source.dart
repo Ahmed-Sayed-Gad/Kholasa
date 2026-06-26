@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import '../../../api/summarize/response/summarize_response.dart';
 import '../../../core/errors/result/results.dart';
 
 abstract class SummarizeRemoteDataSource {
-  Future<Result<String>> summarize({
+  Future<Result<SummarizeResponse>> summarize({
     required File file,
     required String language,
     required String format,

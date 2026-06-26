@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../cubit/link_cubit.dart';
 import '../cubit/link_state.dart';
@@ -51,7 +52,7 @@ class _LinkViewState extends State<LinkView> {
             Text(
               state.summary,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 13,
               ),
             ),
 
@@ -78,7 +79,8 @@ class _LinkViewState extends State<LinkView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ReducedFontTheme(
+      child: Scaffold(
       backgroundColor:
       Theme.of(context)
           .scaffoldBackgroundColor,
@@ -109,6 +111,6 @@ class _LinkViewState extends State<LinkView> {
           },
         ),
       ),
-    );
+    ),);
   }
 }

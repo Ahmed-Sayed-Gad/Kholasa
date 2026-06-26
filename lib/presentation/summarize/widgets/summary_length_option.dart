@@ -37,7 +37,7 @@ class SummaryLengthOption extends StatelessWidget {
             Text(
               subtitle,
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: Theme.of(context).hintColor,
               ),
               textAlign: TextAlign.center,

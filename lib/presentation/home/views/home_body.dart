@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/di/di.dart';
-import '../../chat/cubit/chat_cubit.dart';
-import '../../chat/views/chat_view.dart';
 import '../../ui_models/recent_item_ui_model.dart';
 import '../../widget/reduced_font_theme.dart';
 import '../../widget/sections/home_upload_actions_section.dart';
@@ -21,34 +18,7 @@ class HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ReducedFontTheme(
       child: Scaffold(
-        floatingActionButton: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).colorScheme.primary.withOpacity(.35),
-              blurRadius: 18,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        child: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => BlocProvider(
-                  create: (_) => getIt<ChatCubit>(),
-                  child: const ChatView(),
-                ),
-              ),
-            );
-          },
-          child: const Icon(Icons.chat_outlined),
-        ),
-      ),
-      body: BlocBuilder<HomeCubit, HomeState>(
+        body: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           if (state is HomeLoading || state is HomeInitial) {
             return const Center(child: CircularProgressIndicator());

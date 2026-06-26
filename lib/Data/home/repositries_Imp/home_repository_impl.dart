@@ -38,7 +38,9 @@ class HomeRepositoryImpl implements HomeRepository {
         .take(5)
         .map(
           (item) => RecentItem(
+        id: item.id,
         title: item.title,
+        summary: item.summary,
         category: item.type.toUpperCase(),
         isHighPriority: false,
         dueDate: item.createdAt,

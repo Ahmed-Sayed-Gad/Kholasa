@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../widget/reduced_font_theme.dart';
 
 import '../../../core/Routs/app_routes_names.dart';
 import '../../../core/di/di.dart';
@@ -35,9 +36,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
       child: BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
         listener: (context, state) {
           if (state is ForgetPasswordSuccess) {
-            print(
-              "FORGET PASSWORD EMAIL => ${emailController.text.trim()}",
-            );
             Navigator.pushReplacementNamed(
               context,
               App_Routs_names.verifyCodeScreen,
@@ -54,7 +52,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         builder: (context, state) {
           final isLoading = state is ForgetPasswordLoading;
 
-          return Scaffold(
+          return ReducedFontTheme(
+            child: Scaffold(
             appBar: AppBar(title: Text(AppLocalizations.of(context)!.forgetPassword)),
             body: Padding(
               padding: const EdgeInsets.all(16),
@@ -93,7 +92,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ],
               ),
             ),
-          );
+          ),);
         },
       ),
     );

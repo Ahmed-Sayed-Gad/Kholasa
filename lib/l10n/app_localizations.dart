@@ -649,6 +649,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I agree to terms'**
   String get agreeToTerms;
+
+  /// No description provided for @selectDocToChat.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Document to Chat With'**
+  String get selectDocToChat;
+
+  /// No description provided for @selectDocFromLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a document from library...'**
+  String get selectDocFromLibrary;
+
+  /// No description provided for @noDocSelected.
+  ///
+  /// In en, this message translates to:
+  /// **'No Document Selected'**
+  String get noDocSelected;
+
+  /// No description provided for @noDocSelectedDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Please choose a document from the dropdown above to start a conversation and ask questions about its content.'**
+  String get noDocSelectedDesc;
+
+  /// No description provided for @answersBasedOnDoc.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers are based only on the contents of the selected document'**
+  String get answersBasedOnDoc;
+
+  /// No description provided for @askQuestionAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask a question about'**
+  String get askQuestionAbout;
+
+  /// No description provided for @send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get send;
 }
 
 class _AppLocalizationsDelegate
