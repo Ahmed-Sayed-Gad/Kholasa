@@ -35,7 +35,6 @@ class HomeRepositoryImpl implements HomeRepository {
     final history = historyRepository.getAll();
 
     final recentItems = history
-        .take(5)
         .map(
           (item) => RecentItem(
         id: item.id,

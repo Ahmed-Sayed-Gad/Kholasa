@@ -4,15 +4,21 @@
 
 import 'package:hive_ce/hive.dart';
 import 'package:project_one_c3_team/Data/history/models/history_model.dart';
+import 'package:project_one_c3_team/Data/notification/models/notification_model.dart';
+import 'package:project_one_c3_team/Data/quiz/models/quiz_attempt_model.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
     registerAdapter(HistoryModelAdapter());
+    registerAdapter(NotificationModelAdapter());
+    registerAdapter(QuizAttemptModelAdapter());
   }
 }
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
     registerAdapter(HistoryModelAdapter());
+    registerAdapter(NotificationModelAdapter());
+    registerAdapter(QuizAttemptModelAdapter());
   }
 }

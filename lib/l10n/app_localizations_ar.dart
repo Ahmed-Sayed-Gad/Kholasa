@@ -308,4 +308,101 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get send => 'إرسال';
+
+  @override
+  String get summaryTab => 'الملخص';
+
+  @override
+  String get compareTab => 'مقارنة';
+
+  @override
+  String get chatTab => 'دردشة';
+
+  @override
+  String get quizTab => 'اختبار';
+
+  @override
+  String get aiSummary => 'ملخص بالذكاء الاصطناعي';
+
+  @override
+  String get generatedJustNow => 'تم الإنشاء للتو';
+
+  @override
+  String get aiSummaryDisclaimer =>
+      'تم إنشاء هذا الملخص باستخدام الذكاء الاصطناعي. يرجى التحقق من المعلومات الهامة.';
+
+  @override
+  String get exportPdf => 'تصدير PDF';
+
+  @override
+  String get exportTxt => 'تصدير TXT';
+
+  @override
+  String get openFile => 'فتح الملف';
+
+  @override
+  String get shareFile => 'مشاركة الملف';
+
+  @override
+  String get documents => 'المستندات';
+
+  @override
+  String get summariesCapitalized => 'الملخصات';
+
+  @override
+  String get hoursSaved => 'ساعات موفرة';
+
+  @override
+  String get avidReader => 'قارئ نهم';
+
+  @override
+  String get rememberMe => 'تذكرني';
+
+  @override
+  String get totalSummaries => 'إجمالي الملخصات';
+
+  @override
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get stayUpdated => 'ابق على اطلاع بملخصاتك أولاً بأول';
+
+  @override
+  String get markAllAsRead => 'تحديد الكل كمقروء';
+
+  @override
+  String get noSavedYet => 'لا توجد ملخصات محفوظة بعد';
+
+  @override
+  String get saveSummariesQuickly => 'احفظ الملخصات للوصول إليها سريعاً.';
+
+  @override
+  String get justNow => 'الآن';
+
+  @override
+  String minutesAgo(Object count) {
+    return 'منذ $count دقيقة';
+  }
+
+  @override
+  String hoursAgo(Object count) {
+    return 'منذ $count ساعة';
+  }
+
+  @override
+  String daysAgo(Object count) {
+    return 'منذ $count يوم';
+  }
+
+  @override
+  String get todayHeader => 'اليوم';
+
+  @override
+  String get yesterdayHeader => 'أمس';
+
+  @override
+  String get olderHeader => 'أقدم';
+
+  @override
+  String get openAction => 'فتح';
 }

@@ -51,6 +51,18 @@ class ExportRepositoryImpl implements ExportRepository {
               name: '$fileName.pdf',
             ),
           );
+
+        case ExportType.docx:
+          final file = File('${dir.path}/$fileName.docx');
+
+          await file.writeAsString(summary);
+
+          return Success(
+            ExportFile(
+              path: file.path,
+              name: '$fileName.docx',
+            ),
+          );
       }
     } catch (e) {
       return Failure(

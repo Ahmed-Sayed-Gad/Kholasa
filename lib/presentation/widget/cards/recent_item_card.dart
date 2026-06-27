@@ -89,7 +89,7 @@ class _ItemInfo extends StatelessWidget {
                 .textTheme
                 .bodyLarge!
                 .color,
-            fontSize: 11,
+            fontSize: 19,
             fontWeight:
             FontWeight.w600,
           ),
@@ -102,7 +102,7 @@ class _ItemInfo extends StatelessWidget {
                 .textTheme
                 .bodyMedium!
                 .color,
-            fontSize: 8,
+            fontSize: 15,
           ),
         ),
       ],
@@ -167,7 +167,7 @@ class _DueDate extends StatelessWidget {
                 .textTheme
                 .bodyMedium!
                 .color,
-            fontSize: 8,
+            fontSize: 15,
             fontWeight:
             FontWeight.w500,
           ),

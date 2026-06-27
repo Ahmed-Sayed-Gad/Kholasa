@@ -46,7 +46,7 @@ class _HistoryViewState extends State<HistoryView> {
                 Text(
                   AppLocalizations.of(context)!.history,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 27,
                     fontWeight: FontWeight.bold,
                     color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
@@ -96,7 +96,21 @@ class _HistoryViewState extends State<HistoryView> {
                       return ListView.builder(
                         itemCount: items.length,
                         itemBuilder: (context, index) {
-                          return HistoryCard(item: items[index]);
+                          final item = items[index];
+                          return Dismissible(
+                            key: Key('history_${item.id}'),
+                            direction: DismissDirection.startToEnd,
+                            background: Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              color: Colors.red.withOpacity(0.15),
+                              child: const Icon(Icons.delete_outline, color: Colors.red),
+                            ),
+                            onDismissed: (direction) {
+                              context.read<HistoryCubit>().deleteItem(item.id);
+                            },
+                            child: HistoryCard(item: item),
+                          );
                         },
                       );
                     }

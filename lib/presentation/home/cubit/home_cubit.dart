@@ -5,6 +5,7 @@ import 'package:project_one_c3_team/core/errors/result/results.dart';
 
 import '../../../domain/home/UseCase/get_home_banners_use_case.dart';
 import '../../../domain/home/UseCase/get_recent_items_use_case.dart';
+import '../../../domain/history/use_cases/delete_item_use_case.dart';
 import '../../mappers/home_ui_mapper.dart';
 import 'home_cubit_state.dart';
 
@@ -12,12 +13,14 @@ import 'home_cubit_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final GetHomeBannersUseCase getHomeBanners;
   final GetRecentItemsUseCase getRecentItems;
+  final DeleteItemUseCase deleteItemUseCase;
 
   Timer? _searchDebounce;
 
   HomeCubit(
       this.getHomeBanners,
       this.getRecentItems,
+      this.deleteItemUseCase,
       ) : super(HomeInitial());
 
   // ========================
@@ -97,6 +100,11 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       );
     }
+  }
+
+  Future<void> deleteItem(String id) async {
+    await deleteItemUseCase(id);
+    loadHome();
   }
 
   @override

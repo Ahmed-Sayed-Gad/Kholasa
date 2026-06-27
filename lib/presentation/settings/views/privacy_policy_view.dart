@@ -68,7 +68,7 @@ For questions regarding this Privacy Policy, please contact the Kholasa developm
 ''',
           style: TextStyle(
             height: 1.6,
-            fontSize: 11,
+            fontSize: 18,
           ),
         ),
       ),

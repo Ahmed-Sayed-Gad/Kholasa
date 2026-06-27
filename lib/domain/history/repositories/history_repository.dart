@@ -9,5 +9,5 @@ abstract class HistoryRepository {
 
   Future<void> saveItem(HistoryItem item);
   Future<void> toggleSaved(String id);
-
+  Future<void> deleteItem(String id);
 }

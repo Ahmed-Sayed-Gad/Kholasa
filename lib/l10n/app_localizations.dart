@@ -691,6 +691,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Send'**
   String get send;
+
+  /// No description provided for @summaryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summaryTab;
+
+  /// No description provided for @compareTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Compare'**
+  String get compareTab;
+
+  /// No description provided for @chatTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get chatTab;
+
+  /// No description provided for @quizTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiz'**
+  String get quizTab;
+
+  /// No description provided for @aiSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Summary'**
+  String get aiSummary;
+
+  /// No description provided for @generatedJustNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated just now'**
+  String get generatedJustNow;
+
+  /// No description provided for @aiSummaryDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'This summary was generated using AI. Please verify important information.'**
+  String get aiSummaryDisclaimer;
+
+  /// No description provided for @exportPdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Export PDF'**
+  String get exportPdf;
+
+  /// No description provided for @exportTxt.
+  ///
+  /// In en, this message translates to:
+  /// **'Export TXT'**
+  String get exportTxt;
+
+  /// No description provided for @openFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Open file'**
+  String get openFile;
+
+  /// No description provided for @shareFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Share file'**
+  String get shareFile;
+
+  /// No description provided for @documents.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get documents;
+
+  /// No description provided for @summariesCapitalized.
+  ///
+  /// In en, this message translates to:
+  /// **'Summaries'**
+  String get summariesCapitalized;
+
+  /// No description provided for @hoursSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours Saved'**
+  String get hoursSaved;
+
+  /// No description provided for @avidReader.
+  ///
+  /// In en, this message translates to:
+  /// **'Avid Reader'**
+  String get avidReader;
+
+  /// No description provided for @rememberMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember me'**
+  String get rememberMe;
+
+  /// No description provided for @totalSummaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Summaries'**
+  String get totalSummaries;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @stayUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay updated with your summaries'**
+  String get stayUpdated;
+
+  /// No description provided for @markAllAsRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get markAllAsRead;
+
+  /// No description provided for @noSavedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved summaries yet'**
+  String get noSavedYet;
+
+  /// No description provided for @saveSummariesQuickly.
+  ///
+  /// In en, this message translates to:
+  /// **'Save summaries to access them quickly.'**
+  String get saveSummariesQuickly;
+
+  /// No description provided for @justNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Just now'**
+  String get justNow;
+
+  /// No description provided for @minutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} minutes ago'**
+  String minutesAgo(Object count);
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hours ago'**
+  String hoursAgo(Object count);
+
+  /// No description provided for @daysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} days ago'**
+  String daysAgo(Object count);
+
+  /// No description provided for @todayHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayHeader;
+
+  /// No description provided for @yesterdayHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterdayHeader;
+
+  /// No description provided for @olderHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'Older'**
+  String get olderHeader;
+
+  /// No description provided for @openAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get openAction;
 }
 
 class _AppLocalizationsDelegate

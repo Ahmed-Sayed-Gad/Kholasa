@@ -21,8 +21,10 @@ class UploadActionsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-      child: Row(
-        children: [
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Expanded(
             child: _ActionCard(
               title: AppLocalizations.of(context)!.uploadFile,
@@ -50,6 +52,7 @@ class UploadActionsSection extends StatelessWidget {
             ),
           ),
         ],
+        ),
       ),
     );
   }
@@ -76,7 +79,6 @@ class _ActionCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(18),
       onTap: () => _onTap(context),
       child: Container(
-        height: 160,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
@@ -101,7 +103,7 @@ class _ActionCard extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Theme.of(context).textTheme.bodyLarge!.color,
-                fontSize: 9,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 height: 1.35,
               ),

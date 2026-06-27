@@ -9,6 +9,7 @@ import '../../widget/export_dialog.dart';
 import '../../../../core/di/di.dart';
 import '../../chat/cubit/chat_cubit.dart';
 import '../../chat/views/chat_view.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class SummarizeResult extends StatelessWidget {
   final String summary;
@@ -24,6 +25,7 @@ class SummarizeResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final locale = AppLocalizations.of(context)!;
     return BlocListener<ExportCubit, ExportState>(
       listener: (context, state) {
         if (state is ExportSuccess) {
@@ -40,7 +42,7 @@ class SummarizeResult extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                     title: Text(
-                      "Open file",
+                      locale.openFile,
                       style: TextStyle(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
@@ -56,7 +58,7 @@ class SummarizeResult extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                     ),
                     title: Text(
-                      "Share file",
+                      locale.shareFile,
                       style: TextStyle(
                         color: Theme.of(context).textTheme.bodyLarge?.color,
                       ),
@@ -127,7 +129,7 @@ class SummarizeResult extends StatelessWidget {
                               CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "AI Summary",
+                                  locale.aiSummary,
                                   style: TextStyle(
                                     color:
                                     Theme.of(context).textTheme.bodyLarge?.color,
@@ -138,7 +140,7 @@ class SummarizeResult extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
-                                  "Generated just now",
+                                  locale.generatedJustNow,
                                   style: TextStyle(
                                     color: Theme.of(context).hintColor,
                                   ),
@@ -199,31 +201,31 @@ class SummarizeResult extends StatelessWidget {
                       const SizedBox(height: 24),
 
                       Container(
-                        padding:
-                        const EdgeInsets.all(16),
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor
-                              .withOpacity(.08),
-                          borderRadius:
-                          BorderRadius.circular(18),
+                          color: Theme.of(context).primaryColor.withOpacity(.08),
+                          borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: Theme.of(context).primaryColor
-                                .withOpacity(.15),
+                            color: Theme.of(context).primaryColor.withOpacity(.15),
                           ),
                         ),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Icon(
                               Icons.auto_awesome,
-                              color:
-                              Theme.of(context).primaryColor,
+                              color: Theme.of(context).primaryColor,
+                              size: 18,
                             ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Text(
-                                "This summary was generated using AI. Please verify important information.",
+                                locale.aiSummaryDisclaimer,
                                 style: TextStyle(
                                   color: Theme.of(context).textTheme.bodyMedium?.color,
+                                  fontSize: 12,
+                                  height: 1.4,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
@@ -243,14 +245,13 @@ class SummarizeResult extends StatelessWidget {
                   Expanded(
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
-                        minimumSize:
-                        const Size.fromHeight(56),
+                        minimumSize: const Size.fromHeight(56),
                         side: BorderSide(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).colorScheme.secondary.withOpacity(0.8),
+                          width: 1.5,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(18),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       onPressed: () {
@@ -258,11 +259,57 @@ class SummarizeResult extends StatelessWidget {
                           context: context,
                           builder: (_) {
                             return ExportDialog(
-                              onExport:
-                                  (type, name) {
-                                context
-                                    .read<ExportCubit>()
-                                    .exportSummary(
+                              onExport: (type, name) {
+                                context.read<ExportCubit>().exportSummary(
+                                  summary: summary,
+                                  type: type,
+                                  fileName: name,
+                                );
+                              },
+                            );
+                          },
+                        );
+                      },
+                      icon: Icon(
+                        Icons.picture_as_pdf,
+                        color: Theme.of(context).colorScheme.secondary,
+                        size: 20,
+                      ),
+                      label: Text(
+                        locale.exportPdf,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: 12),
+
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(56),
+                        backgroundColor: ColorManager.successBg,
+                        foregroundColor: ColorManager.success,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                          side: BorderSide(
+                            color: ColorManager.success.withOpacity(0.3),
+                            width: 1.5,
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) {
+                            return ExportDialog(
+                              onExport: (type, name) {
+                                context.read<ExportCubit>().exportSummary(
                                   summary: summary,
                                   type: type,
                                   fileName: name,
@@ -273,54 +320,17 @@ class SummarizeResult extends StatelessWidget {
                         );
                       },
                       icon: const Icon(
-                        Icons.picture_as_pdf,
-                      ),
-                      label: const Text(
-                        "Export PDF",
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(width: 12),
-
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize:
-                        const Size.fromHeight(56),
-                        backgroundColor:
-                        ColorManager.successBg,
-                        foregroundColor:
-                        ColorManager.success,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(18),
-                        ),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (_) {
-                            return ExportDialog(
-                              onExport:
-                                  (type, name) {
-                                context
-                                    .read<ExportCubit>()
-                                    .exportSummary(
-                                  summary: summary,
-                                  type: type,
-                                  fileName: name
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      icon: const Icon(
                         Icons.text_snippet,
+                        color: ColorManager.success,
+                        size: 20,
                       ),
-                      label: const Text(
-                        "Export TXT",
+                      label: Text(
+                        locale.exportTxt,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: ColorManager.success,
+                        ),
                       ),
                     ),
                   ),

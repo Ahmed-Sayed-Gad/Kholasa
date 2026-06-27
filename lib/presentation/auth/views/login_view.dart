@@ -12,6 +12,7 @@ import '../../widget/custom_form_field.dart';
 import '../cubit/login_cubit.dart';
 import '../cubit/login_state.dart';
 import 'forget_password_view.dart';
+import '../../../domain/home/UseCase/remember_me_usecase.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -27,6 +28,24 @@ class _LoginViewState extends State<LoginView> {
 
   final passwordController = TextEditingController();
 
+  bool _rememberMe = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadRememberedCredentials();
+  }
+
+  Future<void> _loadRememberedCredentials() async {
+    final rememberMeResult = await getIt<RememberMeUseCase>().loadRememberMe();
+    if (rememberMeResult.rememberMe && rememberMeResult.email != null) {
+      setState(() {
+        emailController.text = rememberMeResult.email!;
+        _rememberMe = true;
+      });
+    }
+  }
+
   void _onLoginPressed(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
@@ -35,7 +54,7 @@ class _LoginViewState extends State<LoginView> {
       password: passwordController.text.trim(),
     );
 
-    context.read<LoginCubit>().login(request);
+    context.read<LoginCubit>().login(request, _rememberMe);
   }
 
   @override
@@ -160,6 +179,45 @@ class _LoginViewState extends State<LoginView> {
                                 }
                                 return null;
                               },
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: Checkbox(
+                                    value: _rememberMe,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        _rememberMe = val ?? false;
+                                      });
+                                    },
+                                    activeColor: Theme.of(context).primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _rememberMe = !_rememberMe;
+                                    });
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.rememberMe,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
 
                             Row(

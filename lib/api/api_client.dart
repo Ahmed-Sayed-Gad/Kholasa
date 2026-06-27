@@ -15,6 +15,8 @@ import 'auth/response/change_profile_password_response.dart';
 import 'auth/response/login_response.dart';
 import 'chat/response/chat_response.dart';
 import 'home/link/response/summarize_url_response.dart';
+import 'profile/response/dashboard_response.dart';
+import 'saved/response/saved_response.dart';
 
 part 'api_client.g.dart';
 
@@ -37,8 +39,14 @@ abstract class ApiClient {
   @GET("Auth/users")
   Future<List<ProfileResponse>> getUsers(@Header("Authorization") String token);
 
+  @POST("Auth/logout")
+  Future<void> logout(@Header("Authorization") String token);
+
   @POST("Auth/reset-password")
   Future<void> resetPassword(@Body() Reset_Password request);
+
+  @GET("Profile/dashboard")
+  Future<DashboardResponse> getDashboard();
   @MultiPart()
   @POST("Documents/summarize-url")
   Future<SummarizeUrlResponse> summarizeUrl(
@@ -81,4 +89,7 @@ abstract class ApiClient {
   Future<CompareResponse> compareDocuments(
       @Body() CompareRequest request,
       );
+
+  @GET("Documents/favorites")
+  Future<SavedListResponse> getFavorites();
 }

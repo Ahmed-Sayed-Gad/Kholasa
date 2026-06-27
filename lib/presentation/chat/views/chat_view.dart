@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:project_one_c3_team/l10n/app_localizations.dart';
 import '../../../domain/history/entities/history_item.dart';
 import '../cubit/chat_cubit.dart';
@@ -57,6 +58,7 @@ class _ChatViewState extends State<ChatView> {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: BlocConsumer<ChatCubit, ChatState>(
           listener: (_, __) {
@@ -475,14 +477,34 @@ class _MessageBubble extends StatelessWidget {
                     borderRadius: BorderRadius.circular(18),
                     border: isUser ? null : Border.all(color: Theme.of(context).dividerColor),
                   ),
-                  child: Text(
-                    text,
-                    style: TextStyle(
-                      color: textColor,
-                      height: 1.5,
-                      fontSize: 15,
-                    ),
-                  ),
+                  child: isUser
+                      ? Text(
+                          text,
+                          style: TextStyle(
+                            color: textColor,
+                            height: 1.5,
+                            fontSize: 15,
+                          ),
+                        )
+                      : MarkdownBody(
+                          data: text,
+                          selectable: true,
+                          styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+                            p: TextStyle(
+                              color: textColor,
+                              height: 1.5,
+                              fontSize: 15,
+                            ),
+                            listBullet: TextStyle(
+                              color: textColor,
+                              fontSize: 15,
+                            ),
+                            strong: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
                 ),
               ],
             ),

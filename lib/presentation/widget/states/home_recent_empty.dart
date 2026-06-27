@@ -19,7 +19,7 @@ class HomeRecentEmpty extends StatelessWidget {
             "No recent items yet",
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyMedium?.color,
-              fontSize: 10,
+              fontSize: 17,
             ),
           ),
         ],

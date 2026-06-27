@@ -3,7 +3,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:project_one_c3_team/core/errors/result/results.dart';
-
+import '../../../core/services/notification_manager.dart';
 import '../../../domain/chat/entities/chat_message_entity.dart';
 import '../../../domain/chat/usecases/send_message_use_case.dart';
 import '../../../domain/history/entities/history_item.dart';
@@ -14,10 +14,12 @@ import 'chat_state.dart';
 class ChatCubit extends Cubit<ChatState> {
   final SendMessageUseCase sendMessageUseCase;
   final GetHistoryUseCase getHistoryUseCase;
+  final NotificationManager notificationManager;
 
   ChatCubit(
     this.sendMessageUseCase,
     this.getHistoryUseCase,
+    this.notificationManager,
   ) : super(ChatInitial()) {
     loadChat();
   }
@@ -123,6 +125,12 @@ class ChatCubit extends Cubit<ChatState> {
 
     result.fold(
       onSuccess: (response) {
+        // Trigger Notification
+        notificationManager.chatCompleted(
+          selectedDoc?.title ?? "Document",
+          selectedDoc?.sessionId ?? '',
+        );
+
         emit(
           current.copyWith(
             messages: [

@@ -8,6 +8,8 @@ import '../../../l10n/app_localizations.dart';
 class HomeShellPage extends StatefulWidget {
   const HomeShellPage({super.key});
 
+  static final ValueNotifier<int> tabNotifier = ValueNotifier<int>(0);
+
   @override
   State<HomeShellPage> createState() => _HomeShellPageState();
 }
@@ -23,6 +25,27 @@ class _HomeShellPageState extends State<HomeShellPage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    HomeShellPage.tabNotifier.value = 0;
+    HomeShellPage.tabNotifier.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    if (mounted) {
+      setState(() {
+        _currentIndex = HomeShellPage.tabNotifier.value;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    HomeShellPage.tabNotifier.removeListener(_onTabChanged);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
@@ -31,7 +54,7 @@ class _HomeShellPageState extends State<HomeShellPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (i) => setState(() => _currentIndex = i),
+        onTap: (i) => HomeShellPage.tabNotifier.value = i,
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: const Icon(Icons.home), label: AppLocalizations.of(context)!.home),
@@ -43,4 +66,3 @@ class _HomeShellPageState extends State<HomeShellPage> {
     );
   }
 }
-

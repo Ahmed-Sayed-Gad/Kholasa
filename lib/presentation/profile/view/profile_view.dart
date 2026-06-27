@@ -9,6 +9,7 @@ import '../widgets/profile_header.dart';
 import '../widgets/profile_stats_section.dart';
 import '../widgets/activity_summary_card.dart';
 import '../widgets/achievement_section.dart';
+import '../widgets/quiz_history_section.dart';
 import '../../widget/reduced_font_theme.dart';
 import '../../../../l10n/app_localizations.dart';
 
@@ -62,7 +63,7 @@ class ProfileView extends StatelessWidget {
                       profile: profile,
                     ),
   
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 24),
   
                     Text(
                       AppLocalizations.of(context)!.achievements,
@@ -70,22 +71,26 @@ class ProfileView extends StatelessWidget {
                           .textTheme
                           .bodyLarge
                           ?.copyWith(
-                        fontSize: 16,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
   
                     const SizedBox(height: 12),
   
-                    const AchievementSection(),
+                    AchievementSection(achievements: profile.achievements),
+
+                    const SizedBox(height: 24),
+
+                    const QuizHistorySection(),
                 ],
               ),
             );
           }
-
+ 
           return const SizedBox();
         },
       ),
     ),);
   }
-}
+}

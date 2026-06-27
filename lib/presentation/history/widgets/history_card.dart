@@ -61,7 +61,7 @@ class HistoryCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Theme.of(context).textTheme.bodyMedium?.color,
-                      fontSize: 8,
+                      fontSize: 15,
                     ),
                   ),
                 ],

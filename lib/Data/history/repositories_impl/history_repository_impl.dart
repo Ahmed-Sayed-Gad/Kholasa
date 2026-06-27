@@ -40,4 +40,9 @@ class HistoryRepositoryImpl implements HistoryRepository {
     item.isSaved = !item.isSaved;
     await item.save();
   }
+
+  @override
+  Future<void> deleteItem(String id) async {
+    await box.delete(id);
+  }
 }

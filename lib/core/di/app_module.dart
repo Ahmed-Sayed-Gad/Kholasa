@@ -4,8 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_ce_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 
+import '../services/notification_manager.dart';
 import '../../Data/export/repositories_impl/export_repository_impl.dart';
 import '../../Data/history/models/history_model.dart';
+import '../../Data/quiz/models/quiz_attempt_model.dart';
+import '../../Data/notification/models/notification_model.dart';
 import '../../Data/history/repositories_impl/history_repository_impl.dart';
 import '../../Data/upload/data_sources/file_picker_data_source.dart';
 import '../../Data/upload/upload_repository_impl.dart';
@@ -14,6 +17,7 @@ import '../../domain/export/repositories/export_repository.dart';
 import '../../domain/export/use_case/export_summary_use_case.dart';
 import '../../domain/history/repositories/history_repository.dart';
 import '../../domain/history/use_cases/get_history_use_case.dart';
+import '../../domain/history/use_cases/delete_item_use_case.dart';
 import '../../domain/history/use_cases/toggle_saved_use_case.dart';
 import '../../domain/upload/repositories/upload_repository.dart';
 import '../../domain/upload/usecases/pick_and_validate_file_usecase.dart';
@@ -86,11 +90,17 @@ abstract class HistoryModule {
       ToggleSavedUseCase(repo);
 
   @factory
+  DeleteItemUseCase deleteItemUseCase(HistoryRepository repo) =>
+      DeleteItemUseCase(repo);
+
+  @factory
   HistoryCubit historyCubit(
       GetHistoryUseCase getHistoryUseCase,
       ToggleSavedUseCase toggleSavedUseCase,
+      DeleteItemUseCase deleteItemUseCase,
+      NotificationManager notificationManager,
       ) =>
-      HistoryCubit(getHistoryUseCase, toggleSavedUseCase);
+      HistoryCubit(getHistoryUseCase, toggleSavedUseCase, deleteItemUseCase, notificationManager);
 }@module
 abstract class ExportModule {
   @lazySingleton
@@ -102,4 +112,26 @@ abstract class ExportModule {
       ExportRepository repository,
       ) =>
       ExportSummaryUseCase(repository);
+}
+
+@module
+abstract class QuizAttemptModule {
+  @preResolve
+  Future<Box<QuizAttemptModel>> quizAttemptBox() async {
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(QuizAttemptModelAdapter());
+    }
+    return await Hive.openBox<QuizAttemptModel>('quizAttemptBox');
+  }
+}
+
+@module
+abstract class NotificationBoxModule {
+  @preResolve
+  Future<Box<NotificationModel>> notificationBox() async {
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(NotificationModelAdapter());
+    }
+    return await Hive.openBox<NotificationModel>('notificationBox');
+  }
 }

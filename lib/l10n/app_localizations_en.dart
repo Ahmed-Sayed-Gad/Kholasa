@@ -306,4 +306,101 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get send => 'Send';
+
+  @override
+  String get summaryTab => 'Summary';
+
+  @override
+  String get compareTab => 'Compare';
+
+  @override
+  String get chatTab => 'Chat';
+
+  @override
+  String get quizTab => 'Quiz';
+
+  @override
+  String get aiSummary => 'AI Summary';
+
+  @override
+  String get generatedJustNow => 'Generated just now';
+
+  @override
+  String get aiSummaryDisclaimer =>
+      'This summary was generated using AI. Please verify important information.';
+
+  @override
+  String get exportPdf => 'Export PDF';
+
+  @override
+  String get exportTxt => 'Export TXT';
+
+  @override
+  String get openFile => 'Open file';
+
+  @override
+  String get shareFile => 'Share file';
+
+  @override
+  String get documents => 'Documents';
+
+  @override
+  String get summariesCapitalized => 'Summaries';
+
+  @override
+  String get hoursSaved => 'Hours Saved';
+
+  @override
+  String get avidReader => 'Avid Reader';
+
+  @override
+  String get rememberMe => 'Remember me';
+
+  @override
+  String get totalSummaries => 'Total Summaries';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get stayUpdated => 'Stay updated with your summaries';
+
+  @override
+  String get markAllAsRead => 'Mark all as read';
+
+  @override
+  String get noSavedYet => 'No saved summaries yet';
+
+  @override
+  String get saveSummariesQuickly => 'Save summaries to access them quickly.';
+
+  @override
+  String get justNow => 'Just now';
+
+  @override
+  String minutesAgo(Object count) {
+    return '$count minutes ago';
+  }
+
+  @override
+  String hoursAgo(Object count) {
+    return '$count hours ago';
+  }
+
+  @override
+  String daysAgo(Object count) {
+    return '$count days ago';
+  }
+
+  @override
+  String get todayHeader => 'Today';
+
+  @override
+  String get yesterdayHeader => 'Yesterday';
+
+  @override
+  String get olderHeader => 'Older';
+
+  @override
+  String get openAction => 'Open';
 }

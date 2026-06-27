@@ -1,15 +1,15 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-
+import '../../../core/services/notification_manager.dart';
 import 'upload_state.dart';
 
 @injectable
-
 class UploadCubit extends Cubit<UploadState> {
-  UploadCubit() : super(const UploadIdle());
+  final NotificationManager notificationManager;
+
+  UploadCubit(this.notificationManager) : super(const UploadIdle());
 
   Future<void> pickFile() async {
     try {
@@ -35,12 +35,17 @@ class UploadCubit extends Cubit<UploadState> {
       }
 
       final file = File(result.files.single.path!);
+      final filename = file.path.split('/').last.split('\\').last;
+
+      notificationManager.uploadCompleted(filename);
 
       emit(UploadSuccess(file));
     } catch (e) {
       emit(const UploadFailure('Failed to pick file'));
     }
   }
+
   void reset() {
     emit(const UploadIdle());
-  } }
+  }
+}

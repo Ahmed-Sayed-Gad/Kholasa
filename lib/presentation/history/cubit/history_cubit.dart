@@ -1,16 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/services/notification_manager.dart';
 import '../../../domain/history/entities/history_item.dart';
 import '../../../domain/history/use_cases/get_history_use_case.dart';
+import '../../../domain/history/use_cases/delete_item_use_case.dart';
 import '../../../domain/history/use_cases/toggle_saved_use_case.dart';
 import 'history_state.dart';
-
 
 class HistoryCubit extends Cubit<HistoryState> {
   final GetHistoryUseCase getHistoryUseCase;
   final ToggleSavedUseCase toggleSavedUseCase;
+  final DeleteItemUseCase deleteItemUseCase;
+  final NotificationManager notificationManager;
 
-  HistoryCubit(this.getHistoryUseCase, this.toggleSavedUseCase)
-      : super(HistoryInitial());
+  HistoryCubit(
+    this.getHistoryUseCase,
+    this.toggleSavedUseCase,
+    this.deleteItemUseCase,
+    this.notificationManager,
+  ) : super(HistoryInitial());
 
   void loadHistory() {
     final items = getHistoryUseCase();
@@ -19,7 +26,7 @@ class HistoryCubit extends Cubit<HistoryState> {
       HistoryLoaded(
         allItems: items,
         filteredItems: items,
-        language: "all", // 🔥 لازم تضيفها
+        language: "all",
         filterType: "all",
         searchQuery: "",
       ),
@@ -27,7 +34,28 @@ class HistoryCubit extends Cubit<HistoryState> {
   }
 
   void toggleSaved(String id) async {
-    await toggleSavedUseCase(id);
+    final current = state;
+    if (current is HistoryLoaded) {
+      final items = current.allItems;
+      final matchIndex = items.indexWhere((element) => element.id == id);
+      if (matchIndex != -1) {
+        final item = items[matchIndex];
+        final wasSaved = item.isSaved;
+
+        await toggleSavedUseCase(id);
+        loadHistory();
+
+        if (wasSaved) {
+          notificationManager.favoriteRemoved(item.title, item.sessionId);
+        } else {
+          notificationManager.favoriteAdded(item.title, item.sessionId);
+        }
+      }
+    }
+  }
+
+  Future<void> deleteItem(String id) async {
+    await deleteItemUseCase(id);
     loadHistory();
   }
 

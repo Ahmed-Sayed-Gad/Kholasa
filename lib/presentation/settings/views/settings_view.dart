@@ -4,7 +4,6 @@ import 'package:project_one_c3_team/presentation/settings/views/privacy_policy_v
 import 'package:project_one_c3_team/presentation/settings/views/terms_of_use_view.dart';
 
 import '../../../core/di/di.dart';
-import '../../../core/services/auth_storage.dart';
 import '../../../core/services/user_storage.dart';
 import '../../../core/theme/color_manager.dart';
 
@@ -18,14 +17,19 @@ import '../../theme/theme_cubit.dart';
 import '../cubit/settings_cubit.dart';
 import '../cubit/settings_state.dart';
 import '../widgets/language_tile.dart';
+import '../../auth/cubit/logout_cubit.dart';
+import '../../auth/cubit/logout_state.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<SettingsCubit>()..load(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<SettingsCubit>()..load()),
+        BlocProvider(create: (_) => getIt<LogoutCubit>()),
+      ],
       child: const _SettingsBody(),
     );
   }
@@ -50,7 +54,7 @@ class _SettingsBody extends StatelessWidget {
             style: TextStyle(
               color: Theme.of(context).textTheme.bodyLarge?.color,
               fontWeight: FontWeight.bold,
-              fontSize: 21,
+              fontSize: 31,
             ),
           ),
         ),
@@ -68,7 +72,7 @@ class _SettingsBody extends StatelessWidget {
               children: [
                 Text(
                   locale.managePreferences,
-                  style: TextStyle(color: Theme.of(context).hintColor, fontSize: 10),
+                  style: TextStyle(color: Theme.of(context).hintColor, fontSize: 17),
                 ),
 
               const SizedBox(height: 24),
@@ -307,55 +311,77 @@ class _SettingsBody extends StatelessWidget {
               const SizedBox(height: 24),
 
               /// SIGN OUT
-              _Card(
-                child: ListTile(
-                  leading: Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
-                  title: Text(
-                    locale.logout,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  onTap: () async {
-                    final result = await showDialog<bool>(
-                      context: context,
-                      builder: (_) => AlertDialog(
-                        title: Text(locale.logout),
-                        content: const Text(
-                          "Are you sure you want to sign out?",
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context, false);
-                            },
-                            child: Text(locale.cancel),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context, true);
-                            },
-                            child: Text(locale.logout),
-                          ),
-                        ],
-                      ),
-                    );
-
-                    if (result != true) return;
-
-                    await UserStorage.clear();
-                    await AuthStorage.logout();
-
-                    if (!context.mounted) return;
-
+              BlocConsumer<LogoutCubit, LogoutState>(
+                listener: (context, state) {
+                  if (state is LogoutSuccess) {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (_) => const LoginView()),
                       (route) => false,
                     );
-                  },
-                ),
+                  }
+                  if (state is LogoutError) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                        backgroundColor: Theme.of(context).colorScheme.error,
+                      ),
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  final isLoading = state is LogoutLoading;
+                  return _Card(
+                    child: ListTile(
+                      leading: isLoading
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : Icon(Icons.logout, color: Theme.of(context).colorScheme.error),
+                      title: Text(
+                        locale.logout,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      onTap: isLoading
+                          ? null
+                          : () async {
+                              final result = await showDialog<bool>(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                  title: Text(locale.logout),
+                                  content: const Text(
+                                    "Are you sure you want to sign out?",
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context, false);
+                                      },
+                                      child: Text(locale.cancel),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context, true);
+                                      },
+                                      child: Text(locale.logout),
+                                    ),
+                                  ],
+                                ),
+                              );
+
+                              if (result != true) return;
+
+                              if (!context.mounted) return;
+                              context.read<LogoutCubit>().logout();
+                            },
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(height: 24),
@@ -380,7 +406,7 @@ class _SectionTitle extends StatelessWidget {
       title,
       style: TextStyle(
         color: Theme.of(context).hintColor,
-        fontSize: 8,
+        fontSize: 15,
         fontWeight: FontWeight.bold,
         letterSpacing: 1,
       ),

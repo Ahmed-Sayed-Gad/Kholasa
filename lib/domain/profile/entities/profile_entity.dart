@@ -5,13 +5,17 @@ class ProfileEntity {
   final String role;
   final DateTime createdAt;
 
+  final int totalDocuments;
   final int totalSummaries;
-  final int savedSummaries;
+  final int totalFavorites;
+  final int hoursSaved;
 
   final int todayCount;
   final int yesterdayCount;
   final int weekCount;
   final int monthCount;
+
+  final List<String> achievements;
 
   const ProfileEntity({
     required this.id,
@@ -19,11 +23,14 @@ class ProfileEntity {
     required this.email,
     required this.role,
     required this.createdAt,
+    required this.totalDocuments,
     required this.totalSummaries,
-    required this.savedSummaries,
+    required this.totalFavorites,
+    required this.hoursSaved,
     required this.todayCount,
     required this.yesterdayCount,
     required this.weekCount,
     required this.monthCount,
+    required this.achievements,
   });
 }

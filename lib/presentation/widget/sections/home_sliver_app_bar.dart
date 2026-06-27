@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../theme/theme_cubit.dart';
 import '../../theme/theme_state.dart';
+import '../../App_pages/home_shell_page.dart';
 
 class HomeSliverAppBar extends StatelessWidget {
   const HomeSliverAppBar({super.key});
@@ -82,7 +83,9 @@ class HomeSliverAppBar extends StatelessWidget {
                   .iconTheme
                   .color,
             ),
-            onPressed: () {},
+            onPressed: () {
+              HomeShellPage.tabNotifier.value = 2; // Navigate to Saved / Notifications Tab
+            },
           ),
         ),
       ],
